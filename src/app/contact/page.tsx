@@ -17,9 +17,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { MapPin, Mail, Phone, Send, Github, Twitter, Linkedin, Instagram } from 'lucide-react'; // Added Instagram
+import { MapPin, Mail, Phone, Send, Github, Twitter, Linkedin, Instagram } from 'lucide-react';
 import Link from "next/link";
-
+import { db } from "@/lib/firebase/firebase"; // Import Firestore instance
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 // Define the form schema using Zod
 const contactFormSchema = z.object({
@@ -38,18 +39,30 @@ const contactFormSchema = z.object({
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
-// Server action to handle form submission (placeholder)
-async function submitContactForm(data: ContactFormValues) {
-  console.log("Submitting contact form data:", data);
-  // Replace with actual API call to backend
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  // Simulate success/failure
-  const success = Math.random() > 0.2;
-  if (!success) {
-    throw new Error("Failed to send message. Please try again later.");
+// --- Server Action to Handle Form Submission ---
+async function submitContactFormAction(data: ContactFormValues) {
+  'use server'; // Mark this as a Server Action
+
+  console.log("Submitting contact form data to Firestore:", data);
+
+  try {
+    // Add a new document with a generated ID to the "contacts" collection
+    const docRef = await addDoc(collection(db, "contactSubmissions"), {
+      name: data.name,
+      email: data.email,
+      message: data.message,
+      submittedAt: serverTimestamp(), // Add a server timestamp
+    });
+    console.log("Document written with ID: ", docRef.id);
+    return { success: true, message: "Your message has been sent successfully!" };
+  } catch (e) {
+    console.error("Error adding document: ", e);
+    // Return a more specific error if possible, otherwise a generic one
+    const errorMessage = e instanceof Error ? e.message : "Failed to save message.";
+    return { success: false, message: `Error: ${errorMessage}` };
   }
-  return { message: "Your message has been sent successfully!" };
 }
+// --- End Server Action ---
 
 
 export default function ContactPage() {
@@ -68,19 +81,32 @@ export default function ContactPage() {
 
   async function onSubmit(data: ContactFormValues) {
     try {
-      const result = await submitContactForm(data);
-      toast({
-        title: "Message Sent!",
-        description: result.message,
-        variant: "default", // Use default variant for success
-      });
-      form.reset(); // Reset form after successful submission
+       // Call the Server Action directly
+      const result = await submitContactFormAction(data);
+
+      if (result.success) {
+         toast({
+            title: "Message Sent!",
+            description: result.message,
+            variant: "default",
+         });
+         form.reset(); // Reset form after successful submission
+       } else {
+         // Handle submission failure reported by the Server Action
+         toast({
+            title: "Submission Error",
+            description: result.message,
+            variant: "destructive",
+         });
+      }
     } catch (error) {
+      // Catch unexpected errors during Server Action invocation (less likely now)
+      console.error("Unexpected form submission error:", error);
       const message = error instanceof Error ? error.message : "An unknown error occurred.";
       toast({
         title: "Submission Error",
         description: message,
-        variant: "destructive", // Use destructive variant for errors
+        variant: "destructive",
       });
     }
   }
@@ -111,6 +137,7 @@ export default function ContactPage() {
             </CardHeader>
             <CardContent>
               <Form {...form}>
+                {/* Form now directly calls the onSubmit handler which invokes the Server Action */}
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
@@ -119,10 +146,11 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Your Name</FormLabel>
                         <FormControl>
+                           {/* Ensure Input receives all necessary field props */}
                           <Input
                             placeholder="e.g., Jane Doe"
-                            className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" // Input transparency
-                            {...field}
+                            className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50"
+                            {...field} // Spread field props here
                           />
                         </FormControl>
                         <FormMessage />
@@ -136,11 +164,12 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Your Email</FormLabel>
                         <FormControl>
+                          {/* Ensure Input receives all necessary field props */}
                           <Input
                             type="email"
                             placeholder="e.g., jane.doe@example.com"
-                            className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" // Input transparency
-                            {...field}
+                            className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50"
+                             {...field} // Spread field props here
                           />
                         </FormControl>
                         <FormMessage />
@@ -154,11 +183,12 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Your Message</FormLabel>
                         <FormControl>
+                           {/* Ensure Textarea receives all necessary field props */}
                           <Textarea
                             placeholder="Tell us how we can help..."
-                            className="resize-none min-h-[120px] bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" // Textarea transparency
+                            className="resize-none min-h-[120px] bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50"
                             rows={5}
-                            {...field}
+                            {...field} // Spread field props here
                           />
                         </FormControl>
                         <FormMessage />
@@ -230,4 +260,3 @@ export default function ContactPage() {
   );
 }
 
-    
