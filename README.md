@@ -1,5 +1,14 @@
-# Firebase Studio
+# GenSyx Solutions
 
-This is a NextJS starter in Firebase Studio.
+We provide Quality Software and Web site for your needs..
 
-To get started, take a look at src/app/page.tsx.
+Our Services
+★ 🖥️ Website Design 
+★ 🌐 SEO(Search Engine Optimization)
+★ 💎 Logo and Brand Building 
+★ 📶 Digital Marketing 
+★ 📱 Social Media Platform 
+★ 🎖️ Google Profile Management
+
+For more enquiries contact
+gensyx6@gmail.com
