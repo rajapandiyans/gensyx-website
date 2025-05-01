@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -180,6 +181,9 @@
    .card-hover:hover {
        @apply shadow-xl scale-[1.02]; /* Simpler hover effect */
    }
+
+   /* Added for sections with background images */
+   .isolate { isolation: isolate; }
 }
 
 /* Header specific styles */

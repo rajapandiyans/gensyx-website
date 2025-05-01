@@ -1,8 +1,10 @@
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Rocket, Code, Target, Eye, Zap, CheckCircle, Award, Users, Search, Palette, ExternalLink, ArrowRight } from "lucide-react"; // Added missing icons
+import { Rocket, Code, Target, Eye, Zap, CheckCircle, Award, Users, Search, Palette, ExternalLink, ArrowRight } from "lucide-react";
 import Image from "next/image";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"; // Added CardFooter
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"; // Ensure Avatar components are imported
 
 // Sample data (replace with actual data if needed)
 const featuredProjects = [
@@ -10,7 +12,7 @@ const featuredProjects = [
     id: 1,
     title: "GPT3 Integration",
     description: "Harnessing AI for creative and business solutions.",
-    imageUrl: "/images/gpt3.png", // Make sure this image exists
+    imageUrl: "/images/gpt3.png", // Make sure this image exists or use picsum
     link: "/projects", // Link to projects page or specific project
     aiHint: "ai interface abstract technology",
   },
@@ -18,9 +20,26 @@ const featuredProjects = [
     id: 2,
     title: "Travela Booking Platform",
     description: "Your perfect travel companion for seamless trip planning.",
-    imageUrl: "/images/travela.png", // Make sure this image exists
+    imageUrl: "/images/travela.png", // Make sure this image exists or use picsum
     link: "/projects",
     aiHint: "travel website destination booking",
+  },
+  // Added the other two projects
+   {
+    id: 3,
+    title: "Caterserv Event Planning",
+    description: "Simplify event planning with all-in-one vendor bookings.",
+    imageUrl: "/images/caterserv.png", // Placeholder
+    link: "/projects",
+    aiHint: "catering event food planning",
+  },
+  {
+    id: 4,
+    title: "Modern E-Commerce Store",
+    description: "Seamless UX, secure payments, and AI-driven recommendations.",
+    imageUrl: "/images/ecommerce.png", // Placeholder
+    link: "/projects",
+    aiHint: "online shopping interface e-commerce",
   },
 ];
 
@@ -35,14 +54,14 @@ const featuredServices = [
   {
     id: "seo",
     title: "SEO Strategy",
-    icon: Search, // Corrected icon import
+    icon: Search,
     description: "Boosting visibility on search engines for organic traffic.",
     link: "/services/seo",
   },
    {
     id: "branding",
     title: "Branding & Identity",
-    icon: Palette, // Corrected icon import
+    icon: Palette,
     description: "Crafting memorable logos and cohesive brand identities.",
     link: "/services/branding",
   },
@@ -54,8 +73,8 @@ export default function Home() {
       {/* Hero Section with Background Image */}
       <section
         className="relative flex flex-col items-center justify-center min-h-[calc(80vh)] md:min-h-[calc(90vh)] text-center px-4 md:px-8 py-20 md:py-32 bg-cover bg-center bg-no-repeat text-white"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/homepagefresh/1920/1080')" }} // Updated image seed
-        data-ai-hint="modern technology abstract background fresh unique"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/homepageHeroUnique/1920/1080')" }} // Updated seed for unique image
+        data-ai-hint="modern technology abstract background fresh unique creative"
       >
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black/80 z-0"></div>
@@ -91,8 +110,13 @@ export default function Home() {
       </section>
 
        {/* Services Overview Section */}
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container mx-auto px-4">
+      <section
+        className="relative py-16 md:py-24 bg-cover bg-center"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/servicesBg/1920/1080')" }}
+        data-ai-hint="digital services tech pattern subtle geometric"
+      >
+        <div className="absolute inset-0 bg-background/90 backdrop-blur-sm z-0"></div> {/* Overlay */}
+        <div className="relative container mx-auto px-4 z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-primary">What We Do</h2>
           <p className="text-center text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">
             Offering a suite of services designed to build, grow, and enhance your online presence.
@@ -101,7 +125,7 @@ export default function Home() {
             {featuredServices.map((service, index) => (
                <Card
                  key={service.id}
-                 className="card-base group overflow-hidden animate-subtle-slide-up text-center border-border/30 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-2"
+                 className="card-base group overflow-hidden animate-subtle-slide-up text-center border-border/30 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-2 bg-card/80 backdrop-blur-md" // Added card background transparency
                  style={{ animationDelay: `${index * 0.1}s` }}
                >
                  <CardHeader className="items-center pb-4">
@@ -132,8 +156,13 @@ export default function Home() {
       </section>
 
       {/* Featured Projects Section */}
-       <section className="py-16 md:py-24 bg-muted/40">
-         <div className="container mx-auto px-4">
+       <section
+         className="relative py-16 md:py-24 bg-cover bg-center"
+         style={{ backgroundImage: "url('https://picsum.photos/seed/projectsBg/1920/1080')" }}
+         data-ai-hint="portfolio showcase technology project grid"
+       >
+         <div className="absolute inset-0 bg-muted/90 backdrop-blur-sm z-0"></div> {/* Overlay */}
+         <div className="relative container mx-auto px-4 z-10">
            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-primary">Featured Projects</h2>
            <p className="text-center text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">
              Take a glimpse at some of the impactful solutions we've delivered for our clients.
@@ -142,7 +171,7 @@ export default function Home() {
              {featuredProjects.map((project, index) => (
                <Card
                  key={project.id}
-                 className="card-base group overflow-hidden animate-subtle-scale-in flex flex-col md:flex-row items-center border-border/30 hover:shadow-xl transition-all duration-300"
+                 className="card-base group overflow-hidden animate-subtle-scale-in flex flex-col md:flex-row items-center border-border/30 hover:shadow-xl transition-all duration-300 bg-card/80 backdrop-blur-md" // Card transparency
                  style={{ animationDelay: `${index * 0.15}s` }}
                >
                  <div className="relative w-full md:w-1/3 h-48 md:h-full overflow-hidden flex-shrink-0">
@@ -152,7 +181,7 @@ export default function Home() {
                        fill
                        className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
                        data-ai-hint={project.aiHint}
-                       sizes="(max-width: 768px) 100vw, 33vw"
+                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Responsive sizes
                     />
                  </div>
                  <div className="flex flex-col justify-between p-6 flex-grow">
@@ -161,7 +190,7 @@ export default function Home() {
                       <CardDescription className="mb-4">{project.description}</CardDescription>
                    </div>
                     <Button variant="outline" size="sm" asChild className="mt-auto w-full sm:w-auto self-start border-primary/50 text-primary/90 hover:bg-primary/10 hover:text-primary">
-                       <Link href={project.link}>
+                       <Link href={project.link} target="_blank" rel="noopener noreferrer">
                           <span className="flex items-center justify-center gap-2">
                              View Project <ExternalLink className="h-4 w-4" />
                           </span>
@@ -182,8 +211,13 @@ export default function Home() {
        </section>
 
        {/* Why Choose Us Section */}
-       <section className="py-16 md:py-24 bg-background">
-        <div className="container mx-auto px-4">
+       <section
+         className="relative py-16 md:py-24 bg-cover bg-center"
+         style={{ backgroundImage: "url('https://picsum.photos/seed/whyUsBg/1920/1080')" }}
+         data-ai-hint="business partnership trust handshake abstract"
+       >
+         <div className="absolute inset-0 bg-background/95 backdrop-blur-sm z-0"></div> {/* Overlay */}
+        <div className="relative container mx-auto px-4 z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">Why Partner with GenSyx?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
             <div className="flex flex-col items-center animate-fade-in-up" style={{ animationDelay: '0s' }}>
@@ -212,8 +246,13 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section - Added */}
-      <section className="py-16 md:py-24 bg-muted/40">
-        <div className="container mx-auto px-4">
+      <section
+        className="relative py-16 md:py-24 bg-cover bg-center"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/testimonialsBg/1920/1080')" }}
+        data-ai-hint="client reviews feedback stars social proof"
+      >
+        <div className="absolute inset-0 bg-muted/90 backdrop-blur-sm z-0"></div> {/* Overlay */}
+        <div className="relative container mx-auto px-4 z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-primary">What Our Clients Say</h2>
           <p className="text-center text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">
             Hear from businesses we've helped succeed in the digital world.
@@ -222,7 +261,7 @@ export default function Home() {
             {[1, 2, 3].map((i) => ( // Placeholder loop for 3 testimonials
                <Card
                  key={`testimonial-${i}`}
-                 className="card-base animate-subtle-slide-up border-border/30 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1"
+                 className="card-base animate-subtle-slide-up border-border/30 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1 bg-card/80 backdrop-blur-md" // Card transparency
                  style={{ animationDelay: `${i * 0.1}s` }}
                >
                  <CardContent className="pt-6">
@@ -269,9 +308,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Footer Section - Added */}
+      <footer className="py-6 bg-card border-t border-border/20">
+        <div className="container mx-auto text-center text-muted-foreground text-sm">
+          &copy; {new Date().getFullYear()} GenSyx Solutions. All rights reserved.
+        </div>
+      </footer>
+
     </div>
   );
 }
-
-// Add imports for newly used components
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";

@@ -83,115 +83,123 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-16 md:py-20 lg:py-24">
-      <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-8 animate-fade-in-down text-primary">Get in Touch</h1>
-      <p className="text-center text-lg text-muted-foreground mb-16 max-w-3xl mx-auto animate-fade-in-down" style={{ animationDelay: '0.1s' }}>
-        We're excited to hear about your project or answer any questions you may have. Reach out using the form below or through our contact details.
-      </p>
+     <div className="relative isolate overflow-hidden bg-background py-16 md:py-20 lg:py-24">
+       {/* Background Image and Overlay */}
+       <div
+        className="absolute inset-0 -z-10 h-full w-full bg-cover bg-center bg-fixed"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/contactUsBg/1920/1080')" }}
+        data-ai-hint="contact communication map globe network connection"
+       ></div>
+       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/80 via-background/90 to-background/95"></div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-        {/* Contact Form Card (Spanning 3 columns on large screens) */}
-        <Card className="lg:col-span-3 card-base animate-subtle-slide-up shadow-xl bg-card border border-border/30">
-          <CardHeader>
-            <CardTitle className="text-2xl md:text-3xl text-foreground">Send Us a Message</CardTitle>
-            <CardDescription className="text-muted-foreground">We'll get back to you as soon as possible.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Your Name</FormLabel>
-                      <FormControl>
-                        {/* Ensure Input is the single direct child */}
-                        <Input placeholder="e.g., Jane Doe" {...field} className="bg-input border-border/50 focus:border-primary focus:ring-primary/50" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Your Email</FormLabel>
-                      <FormControl>
-                         {/* Ensure Input is the single direct child */}
-                        <Input type="email" placeholder="e.g., jane.doe@example.com" {...field} className="bg-input border-border/50 focus:border-primary focus:ring-primary/50" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Your Message</FormLabel>
-                      <FormControl>
-                         {/* Ensure Textarea is the single direct child */}
-                        <Textarea
-                          placeholder="Tell us how we can help..."
-                          className="resize-none min-h-[120px] bg-input border-border/50 focus:border-primary focus:ring-primary/50"
-                          rows={5}
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                 <Button type="submit" className="w-full mt-2 transform hover:scale-105 transition-transform duration-300" size="lg" disabled={isSubmitting}>
-                   <span className="flex items-center justify-center gap-2">
-                       <Send className="mr-1 h-5 w-5" />
-                       {isSubmitting ? "Sending..." : "Send Message"}
-                    </span>
-                 </Button>
-              </form>
-            </Form>
-          </CardContent>
-        </Card>
 
-        {/* Contact Info & Map Card (Spanning 2 columns on large screens) */}
-        <div className="lg:col-span-2 space-y-8 animate-subtle-slide-up" style={{ animationDelay: '0.2s' }}>
-           <Card className="card-base shadow-xl bg-card border border-border/30">
-             <CardHeader>
-                <CardTitle className="text-2xl md:text-3xl text-foreground">Contact Information</CardTitle>
-                <CardDescription className="text-muted-foreground">Other ways to reach us.</CardDescription>
-             </CardHeader>
-             <CardContent className="space-y-5">
-                <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
-                   <Mail className="h-6 w-6 text-primary flex-shrink-0" strokeWidth={1.5} />
-                   <a href="mailto:info@gensyx.com" className="text-foreground hover:text-primary text-base break-all">info@gensyx.com</a>
-                 </div>
-                <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
-                  <Phone className="h-6 w-6 text-primary flex-shrink-0" strokeWidth={1.5} />
-                  <span className="text-foreground text-base">(123) 456-7890</span>
-                </div>
-                <div className="flex items-start gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
-                  <MapPin className="h-6 w-6 text-primary flex-shrink-0 mt-1" strokeWidth={1.5} />
-                  <span className="text-foreground text-base">123 Digital Avenue, Tech City, TX 75001</span>
-                </div>
-             </CardContent>
-           </Card>
+      <div className="container mx-auto px-4 relative z-10"> {/* Content container */}
+        <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-8 animate-fade-in-down text-primary">Get in Touch</h1>
+        <p className="text-center text-lg text-muted-foreground mb-16 max-w-3xl mx-auto animate-fade-in-down" style={{ animationDelay: '0.1s' }}>
+          We're excited to hear about your project or answer any questions you may have. Reach out using the form below or through our contact details.
+        </p>
 
-          {/* Placeholder for Map */}
-          <Card className="card-base shadow-xl overflow-hidden bg-card border border-border/30">
-             <CardHeader>
-                <CardTitle className="text-2xl md:text-3xl text-foreground">Our Location</CardTitle>
-             </CardHeader>
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+          {/* Contact Form Card (Spanning 3 columns on large screens) */}
+          <Card className="lg:col-span-3 card-base animate-subtle-slide-up shadow-xl bg-card/80 backdrop-blur-md border border-border/30"> {/* Card transparency */}
+            <CardHeader>
+              <CardTitle className="text-2xl md:text-3xl text-foreground">Send Us a Message</CardTitle>
+              <CardDescription className="text-muted-foreground">We'll get back to you as soon as possible.</CardDescription>
+            </CardHeader>
             <CardContent>
-                <div className="aspect-video bg-muted/50 rounded-lg flex items-center justify-center text-muted-foreground border border-border transform hover:scale-105 transition-transform duration-300">
-                   <MapPin className="h-16 w-16 opacity-30" />
-                   <span className="ml-3 text-lg font-medium opacity-70">Interactive Map Coming Soon</span>
-                </div>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Your Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="e.g., Jane Doe" {...field} className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" /> {/* Input transparency */}
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Your Email</FormLabel>
+                        <FormControl>
+                           <Input type="email" placeholder="e.g., jane.doe@example.com" {...field} className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" /> {/* Input transparency */}
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Your Message</FormLabel>
+                        <FormControl>
+                           <Textarea
+                            placeholder="Tell us how we can help..."
+                            className="resize-none min-h-[120px] bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" // Textarea transparency
+                            rows={5}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                   <Button type="submit" className="w-full mt-2 transform hover:scale-105 transition-transform duration-300" size="lg" disabled={isSubmitting}>
+                     <span className="flex items-center justify-center gap-2">
+                         <Send className="mr-1 h-5 w-5" />
+                         {isSubmitting ? "Sending..." : "Send Message"}
+                      </span>
+                   </Button>
+                </form>
+              </Form>
             </CardContent>
           </Card>
+
+          {/* Contact Info & Map Card (Spanning 2 columns on large screens) */}
+          <div className="lg:col-span-2 space-y-8 animate-subtle-slide-up" style={{ animationDelay: '0.2s' }}>
+             <Card className="card-base shadow-xl bg-card/80 backdrop-blur-md border border-border/30"> {/* Card transparency */}
+               <CardHeader>
+                  <CardTitle className="text-2xl md:text-3xl text-foreground">Contact Information</CardTitle>
+                  <CardDescription className="text-muted-foreground">Other ways to reach us.</CardDescription>
+               </CardHeader>
+               <CardContent className="space-y-5">
+                  <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
+                     <Mail className="h-6 w-6 text-primary flex-shrink-0" strokeWidth={1.5} />
+                     <a href="mailto:info@gensyx.com" className="text-foreground hover:text-primary text-base break-all">info@gensyx.com</a>
+                   </div>
+                  <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
+                    <Phone className="h-6 w-6 text-primary flex-shrink-0" strokeWidth={1.5} />
+                    <span className="text-foreground text-base">(123) 456-7890</span>
+                  </div>
+                  <div className="flex items-start gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
+                    <MapPin className="h-6 w-6 text-primary flex-shrink-0 mt-1" strokeWidth={1.5} />
+                    <span className="text-foreground text-base">123 Digital Avenue, Tech City, TX 75001</span>
+                  </div>
+               </CardContent>
+             </Card>
+
+            {/* Placeholder for Map */}
+            <Card className="card-base shadow-xl overflow-hidden bg-card/80 backdrop-blur-md border border-border/30"> {/* Card transparency */}
+               <CardHeader>
+                  <CardTitle className="text-2xl md:text-3xl text-foreground">Our Location</CardTitle>
+               </CardHeader>
+              <CardContent>
+                  <div className="aspect-video bg-muted/50 rounded-lg flex items-center justify-center text-muted-foreground border border-border transform hover:scale-105 transition-transform duration-300">
+                     <MapPin className="h-16 w-16 opacity-30" />
+                     <span className="ml-3 text-lg font-medium opacity-70">Interactive Map Coming Soon</span>
+                  </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
