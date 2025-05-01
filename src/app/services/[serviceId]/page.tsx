@@ -123,7 +123,7 @@ export default function ServiceDetailPage() {
          <Button onClick={() => router.back()} variant="outline" className="transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300">
            {/* Ensure single child */}
             <span className="flex items-center justify-center gap-2">
-              <ArrowLeft className="mr-2 h-4 w-4" /> Go Back
+              <ArrowLeft className="mr-1 h-4 w-4" /> Go Back
             </span>
          </Button>
        </div>
@@ -137,7 +137,7 @@ export default function ServiceDetailPage() {
        <Button onClick={() => router.back()} variant="ghost" className="mb-8 group animate-fade-in-down transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300">
          {/* Ensure single child */}
          <span className="flex items-center justify-center gap-2">
-          <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1" /> Back to Services
+          <ArrowLeft className="mr-1 h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1" /> Back to Services
          </span>
        </Button>
 
@@ -192,7 +192,7 @@ export default function ServiceDetailPage() {
               <Link href="/contact">
                 {/* Ensure single child wrapper */}
                 <span className="flex items-center justify-center gap-2">
-                 <Mail className="mr-2 h-5 w-5" /> Request a Consultation
+                 <Mail className="mr-1 h-5 w-5" /> Request a Consultation
                 </span>
               </Link>
             </Button>

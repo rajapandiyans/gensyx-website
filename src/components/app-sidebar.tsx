@@ -59,11 +59,11 @@ export function AppSidebar() {
                   tooltip={{ children: "Home", side: "right", align: "center", sideOffset: 10 }}
                 >
                   <Link href="/">
-                     {/* Wrap icon and text in a single span */}
-                     <span className="flex items-center gap-2.5">
-                       <Home />
-                       <span>Home</span>
-                     </span>
+                    {/* Wrap icon and text in a single span */}
+                    <span className="flex items-center gap-2.5">
+                      <Home />
+                      <span>Home</span>
+                    </span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -164,14 +164,14 @@ export function AppSidebar() {
                <div className="flex flex-col gap-2 items-center">
                   <SidebarMenuButton asChild tooltip={{ children: "Login", side: "right", align: "center", sideOffset: 10 }}>
                      <Link href="/login">
-                       {/* Ensure single child */}
-                       <LogIn />
+                       {/* Ensure single child by wrapping icon */}
+                       <span><LogIn /></span>
                      </Link>
                   </SidebarMenuButton>
                   <SidebarMenuButton asChild tooltip={{ children: "Sign Up", side: "right", align: "center", sideOffset: 10 }}>
                     <Link href="/signup">
-                      {/* Ensure single child */}
-                      <UserPlus />
+                      {/* Ensure single child by wrapping icon */}
+                      <span><UserPlus /></span>
                     </Link>
                   </SidebarMenuButton>
                </div>

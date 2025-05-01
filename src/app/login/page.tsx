@@ -52,7 +52,7 @@ async function handleLogin(data: LoginFormValues) {
 
 
 export default function LoginPage() {
-  const { toast } } from useToast();
+  const { toast } = useToast();
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -134,7 +134,7 @@ export default function LoginPage() {
                 <Button type="submit" className="w-full mt-2 transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300" size="lg" disabled={isSubmitting}>
                  {/* Ensure single child */}
                  <span className="flex items-center justify-center gap-2">
-                     <LogIn className="mr-2 h-5 w-5" />
+                     <LogIn className="mr-1 h-5 w-5" />
                      {isSubmitting ? "Logging In..." : "Log In"}
                  </span>
                </Button>
