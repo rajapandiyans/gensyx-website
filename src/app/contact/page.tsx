@@ -1,3 +1,4 @@
+
 'use client';
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -90,9 +91,9 @@ export default function ContactPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
         {/* Contact Form Card (Spanning 3 columns on large screens) */}
-        <Card className="lg:col-span-3 card-base animate-subtle-slide-up shadow-xl bg-card border border-border/30"> {/* Removed 3D styles */}
+        <Card className="lg:col-span-3 card-base animate-subtle-slide-up shadow-xl bg-card border border-border/30">
           <CardHeader>
-            <CardTitle className="text-2xl md:text-3xl text-foreground">Send Us a Message</CardTitle> {/* Ensured foreground color */}
+            <CardTitle className="text-2xl md:text-3xl text-foreground">Send Us a Message</CardTitle>
             <CardDescription className="text-muted-foreground">We'll get back to you as soon as possible.</CardDescription>
           </CardHeader>
           <CardContent>
@@ -105,7 +106,8 @@ export default function ContactPage() {
                     <FormItem>
                       <FormLabel>Your Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., Jane Doe" {...field} className="bg-input border-border/50 focus:border-primary focus:ring-primary/50" /> {/* Added input styling */}
+                        {/* Ensure Input is the single direct child */}
+                        <Input placeholder="e.g., Jane Doe" {...field} className="bg-input border-border/50 focus:border-primary focus:ring-primary/50" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -118,7 +120,8 @@ export default function ContactPage() {
                     <FormItem>
                       <FormLabel>Your Email</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="e.g., jane.doe@example.com" {...field} className="bg-input border-border/50 focus:border-primary focus:ring-primary/50" /> {/* Added input styling */}
+                         {/* Ensure Input is the single direct child */}
+                        <Input type="email" placeholder="e.g., jane.doe@example.com" {...field} className="bg-input border-border/50 focus:border-primary focus:ring-primary/50" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -131,9 +134,10 @@ export default function ContactPage() {
                     <FormItem>
                       <FormLabel>Your Message</FormLabel>
                       <FormControl>
+                         {/* Ensure Textarea is the single direct child */}
                         <Textarea
                           placeholder="Tell us how we can help..."
-                          className="resize-none min-h-[120px] bg-input border-border/50 focus:border-primary focus:ring-primary/50" /* Added input styling */
+                          className="resize-none min-h-[120px] bg-input border-border/50 focus:border-primary focus:ring-primary/50"
                           rows={5}
                           {...field}
                         />
@@ -155,21 +159,21 @@ export default function ContactPage() {
 
         {/* Contact Info & Map Card (Spanning 2 columns on large screens) */}
         <div className="lg:col-span-2 space-y-8 animate-subtle-slide-up" style={{ animationDelay: '0.2s' }}>
-           <Card className="card-base shadow-xl bg-card border border-border/30"> {/* Removed 3D styles */}
+           <Card className="card-base shadow-xl bg-card border border-border/30">
              <CardHeader>
-                <CardTitle className="text-2xl md:text-3xl text-foreground">Contact Information</CardTitle> {/* Ensured foreground color */}
+                <CardTitle className="text-2xl md:text-3xl text-foreground">Contact Information</CardTitle>
                 <CardDescription className="text-muted-foreground">Other ways to reach us.</CardDescription>
              </CardHeader>
              <CardContent className="space-y-5">
-                <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1"> {/* Removed 3D translate */}
+                <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
                    <Mail className="h-6 w-6 text-primary flex-shrink-0" strokeWidth={1.5} />
                    <a href="mailto:info@gensyx.com" className="text-foreground hover:text-primary text-base break-all">info@gensyx.com</a>
                  </div>
-                <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1"> {/* Removed 3D translate */}
+                <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
                   <Phone className="h-6 w-6 text-primary flex-shrink-0" strokeWidth={1.5} />
                   <span className="text-foreground text-base">(123) 456-7890</span>
                 </div>
-                <div className="flex items-start gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1"> {/* Removed 3D translate */}
+                <div className="flex items-start gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
                   <MapPin className="h-6 w-6 text-primary flex-shrink-0 mt-1" strokeWidth={1.5} />
                   <span className="text-foreground text-base">123 Digital Avenue, Tech City, TX 75001</span>
                 </div>
@@ -177,12 +181,12 @@ export default function ContactPage() {
            </Card>
 
           {/* Placeholder for Map */}
-          <Card className="card-base shadow-xl overflow-hidden bg-card border border-border/30"> {/* Removed 3D styles */}
+          <Card className="card-base shadow-xl overflow-hidden bg-card border border-border/30">
              <CardHeader>
-                <CardTitle className="text-2xl md:text-3xl text-foreground">Our Location</CardTitle> {/* Ensured foreground color */}
+                <CardTitle className="text-2xl md:text-3xl text-foreground">Our Location</CardTitle>
              </CardHeader>
             <CardContent>
-                <div className="aspect-video bg-muted/50 rounded-lg flex items-center justify-center text-muted-foreground border border-border transform hover:scale-105 transition-transform duration-300"> {/* Removed 3D style */}
+                <div className="aspect-video bg-muted/50 rounded-lg flex items-center justify-center text-muted-foreground border border-border transform hover:scale-105 transition-transform duration-300">
                    <MapPin className="h-16 w-16 opacity-30" />
                    <span className="ml-3 text-lg font-medium opacity-70">Interactive Map Coming Soon</span>
                 </div>

@@ -1,3 +1,4 @@
+
 'use client';
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -91,12 +92,12 @@ export default function SignupPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4 bg-background animate-background-pan"> {/* Use background animation */}
-      <Card className="w-full max-w-md card-base shadow-2xl border border-border/30 animate-rotate-in bg-card"> {/* Removed 3D styles, adjusted styles */}
+      <Card className="w-full max-w-md card-base shadow-2xl border border-border/30 animate-rotate-in bg-card">
          <CardHeader className="text-center p-8">
-            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary/10 to-accent/10 text-primary animate-pulse-glow transform hover:scale-110 transition-transform duration-300"> {/* Kept icon glow */}
+            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary/10 to-accent/10 text-primary animate-pulse-glow transform hover:scale-110 transition-transform duration-300">
              <UserPlus size={32} strokeWidth={1.5} />
            </div>
-           <CardTitle className="text-3xl font-bold text-foreground">Create Your Account</CardTitle> {/* Ensured text color */}
+           <CardTitle className="text-3xl font-bold text-foreground">Create Your Account</CardTitle>
            <CardDescription className="text-lg text-muted-foreground mt-1">Join GenSyx and start your digital journey.</CardDescription>
          </CardHeader>
          <CardContent className="px-6 pb-6">
@@ -107,9 +108,10 @@ export default function SignupPage() {
                  name="name"
                  render={({ field }) => (
                    <FormItem>
-                     <FormLabel className="flex items-center gap-1.5 text-muted-foreground"><User size={16}/> Full Name</FormLabel> {/* Adjusted label color */}
+                     <FormLabel className="flex items-center gap-1.5 text-muted-foreground"><User size={16}/> Full Name</FormLabel>
                      <FormControl>
-                       <Input placeholder="e.g., John Smith" {...field} className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"/> {/* Added input style */}
+                       {/* Ensure Input is the single direct child */}
+                       <Input placeholder="e.g., John Smith" {...field} className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"/>
                      </FormControl>
                      <FormMessage />
                    </FormItem>
@@ -120,9 +122,10 @@ export default function SignupPage() {
                  name="email"
                  render={({ field }) => (
                    <FormItem>
-                     <FormLabel className="flex items-center gap-1.5 text-muted-foreground"><Mail size={16}/> Email Address</FormLabel> {/* Adjusted label color */}
+                     <FormLabel className="flex items-center gap-1.5 text-muted-foreground"><Mail size={16}/> Email Address</FormLabel>
                      <FormControl>
-                       <Input type="email" placeholder="you@example.com" {...field} className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"/> {/* Added input style */}
+                       {/* Ensure Input is the single direct child */}
+                       <Input type="email" placeholder="you@example.com" {...field} className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"/>
                      </FormControl>
                      <FormMessage />
                    </FormItem>
@@ -133,9 +136,10 @@ export default function SignupPage() {
                  name="password"
                  render={({ field }) => (
                    <FormItem>
-                     <FormLabel className="flex items-center gap-1.5 text-muted-foreground"><Lock size={16}/> Password</FormLabel> {/* Adjusted label color */}
+                     <FormLabel className="flex items-center gap-1.5 text-muted-foreground"><Lock size={16}/> Password</FormLabel>
                      <FormControl>
-                       <Input type="password" placeholder="Choose a strong password (min 8 chars)" {...field} className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"/> {/* Added input style */}
+                       {/* Ensure Input is the single direct child */}
+                       <Input type="password" placeholder="Choose a strong password (min 8 chars)" {...field} className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"/>
                      </FormControl>
                      <FormMessage />
                    </FormItem>
@@ -150,7 +154,7 @@ export default function SignupPage() {
              </form>
            </Form>
          </CardContent>
-          <CardFooter className="flex flex-col items-center text-center p-6 pt-4 border-t border-border/20"> {/* Lighter border */}
+          <CardFooter className="flex flex-col items-center text-center p-6 pt-4 border-t border-border/20">
              <p className="text-sm text-muted-foreground">
                Already have an account?{' '}
                <Link href="/login" className="font-medium text-primary hover:underline transition-colors">
