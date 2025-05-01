@@ -40,7 +40,7 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2 mr-4 flex-shrink-0">
           {/* Updated image path to the new logo */}
           <Image
-            src="/images/gensyx-logo.png" // Place your logo here: public/images/gensyx-logo.png
+            src="/images/gensyx-logo.jpg" // Place your logo here: public/images/gensyx-logo.png
             alt="GenSyx Logo"
             width={140} // Adjust width as needed, keeping aspect ratio
             height={32} // Adjust height as needed, keeping aspect ratio
