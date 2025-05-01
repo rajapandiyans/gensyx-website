@@ -110,7 +110,6 @@ export default function SignupPage() {
                    <FormItem>
                      <FormLabel className="flex items-center gap-1.5 text-muted-foreground"><User size={16}/> Full Name</FormLabel>
                      <FormControl>
-                       {/* Ensure Input is the single direct child */}
                        <Input placeholder="e.g., John Smith" {...field} className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"/>
                      </FormControl>
                      <FormMessage />
@@ -124,7 +123,6 @@ export default function SignupPage() {
                    <FormItem>
                      <FormLabel className="flex items-center gap-1.5 text-muted-foreground"><Mail size={16}/> Email Address</FormLabel>
                      <FormControl>
-                       {/* Ensure Input is the single direct child */}
                        <Input type="email" placeholder="you@example.com" {...field} className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"/>
                      </FormControl>
                      <FormMessage />
@@ -138,7 +136,6 @@ export default function SignupPage() {
                    <FormItem>
                      <FormLabel className="flex items-center gap-1.5 text-muted-foreground"><Lock size={16}/> Password</FormLabel>
                      <FormControl>
-                       {/* Ensure Input is the single direct child */}
                        <Input type="password" placeholder="Choose a strong password (min 8 chars)" {...field} className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"/>
                      </FormControl>
                      <FormMessage />

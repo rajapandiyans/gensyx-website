@@ -97,7 +97,6 @@ export default function LoginPage() {
                    <FormItem>
                      <FormLabel className="flex items-center gap-1.5 text-muted-foreground"> <Mail size={16} /> Email Address</FormLabel>
                      <FormControl>
-                       {/* Ensure Input is the single direct child */}
                        <Input type="email" placeholder="you@example.com" {...field} className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"/>
                      </FormControl>
                      <FormMessage />
@@ -111,7 +110,6 @@ export default function LoginPage() {
                    <FormItem>
                      <FormLabel className="flex items-center gap-1.5 text-muted-foreground"><Lock size={16} /> Password</FormLabel>
                      <FormControl>
-                       {/* Ensure Input is the single direct child */}
                        <Input type="password" placeholder="••••••••" {...field} className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"/>
                      </FormControl>
                      <FormMessage />
