@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -42,10 +43,10 @@ export function Header() {
           <Image
             src="/images/gensyx-logo.jpg" // Place your logo here: public/images/gensyx-logo.png
             alt="GenSyx Logo"
-            width={70} // Adjust width as needed, keeping aspect ratio
+            width={140} // Adjust width as needed, keeping aspect ratio
             height={32} // Adjust height as needed, keeping aspect ratio
             priority // Load logo faster
-            className="h-8 w-auto" // Maintain height, auto width for aspect ratio
+            // Removed className="h-8 w-auto" to avoid conflict with width/height props
           />
         </Link>
 
@@ -91,10 +92,10 @@ export function Header() {
                  <Image
                    src="/images/gensyx-logo.png" // Use new logo path here too
                    alt="GenSyx Logo"
-                    width={120} // Adjust width for mobile
-                    height={28} // Adjust height for mobile
+                    width={120} // Explicit width for mobile
+                    height={28} // Explicit height for mobile
                    priority
-                   className="h-7 w-auto" // Maintain height, auto width
+                   // Removed className="h-7 w-auto" to avoid conflict with width/height props
                  />
                </Link>
                 <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
