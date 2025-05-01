@@ -73,134 +73,142 @@
         100% { transform: rotateY(90deg) scale(0.8); opacity: 0; }
       }
 
+     @keyframes background-pan {
+      from { background-position: 0% center; }
+      to { background-position: -200% center; }
+     }
+
   :root {
-    --background: 0 0% 100%; /* White */
-    --foreground: 210 29% 24%; /* Dark Slate */
-    --card: 0 0% 100%; /* White */
-    --card-foreground: 210 29% 24%; /* Dark Slate */
-    --popover: 0 0% 100%; /* White */
-    --popover-foreground: 210 29% 24%; /* Dark Slate */
-    --primary: 210 29% 24%; /* Dark Slate */
-    --primary-foreground: 0 0% 98%; /* Near White */
-    --secondary: 182 100% 90%; /* Lighter Electric Blue */
-    --secondary-foreground: 210 29% 24%; /* Dark Slate */
-    --muted: 0 0% 96.1%; /* Light Gray */
-    --muted-foreground: 210 10% 45%; /* Grayish Slate */
-    --accent: 111 100% 54%; /* Neon Green */
-    --accent-foreground: 210 29% 24%; /* Dark Slate */
-    --destructive: 0 84.2% 60.2%; /* Red */
-    --destructive-foreground: 0 0% 98%; /* Near White */
-    --border: 210 10% 85%; /* Light Gray */
-    --input: 210 10% 85%; /* Light Gray */
-    --ring: 111 100% 54%; /* Neon Green */
-    --chart-1: 182 100% 74%; /* Electric Blue */
-    --chart-2: 111 100% 54%; /* Neon Green */
-    --chart-3: 210 29% 40%; /* Medium Slate */
-    --chart-4: 182 80% 60%; /* Bright Blue */
-    --chart-5: 111 80% 40%; /* Darker Green */
-    --radius: 0.75rem; /* Slightly larger radius */
-    --sidebar-background: 0 0% 98%; /* Near White */
-    --sidebar-foreground: 210 29% 24%; /* Dark Slate */
-    --sidebar-primary: 210 29% 24%; /* Dark Slate */
-    --sidebar-primary-foreground: 0 0% 98%; /* Near White */
-    --sidebar-accent: 111 100% 90%; /* Light Neon Green */
-    --sidebar-accent-foreground: 210 29% 24%; /* Dark Slate */
-    --sidebar-border: 210 10% 85%; /* Light Gray */
-    --sidebar-ring: 111 100% 54%; /* Neon Green */
+    /* Light Theme (kept for reference, but dark is default) */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 262 84% 58%; /* Vibrant Purple */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 217 91% 60%; /* Bright Blue */
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 290 75% 65%; /* Lighter Purple/Pink */
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 262 84% 58%; /* Primary Purple */
+    --chart-1: 262 84% 58%; /* Primary Purple */
+    --chart-2: 217 91% 60%; /* Secondary Blue */
+    --chart-3: 290 75% 65%; /* Accent Purple/Pink */
+    --chart-4: 111 100% 54%; /* Neon Green */
+    --chart-5: 0 0% 60%; /* Gray */
+    --radius: 0.75rem;
   }
+
   .dark {
-    --background: 220 20% 5%; /* Darker blue-ish background */
-    --foreground: 210 40% 98%; /* Lighter foreground */
-    --card: 216 15% 12%; /* Slightly lighter dark card */
-    --card-foreground: 210 40% 98%; /* Lighter card text */
-    --popover: 220 20% 5%; /* Darker popover */
-    --popover-foreground: 210 40% 98%; /* Lighter popover text */
-    --primary: 111 100% 60%; /* Slightly brighter Neon Green */
-    --primary-foreground: 210 30% 10%; /* Darker primary button text */
-    --secondary: 182 100% 80%; /* Slightly brighter Electric Blue */
-    --secondary-foreground: 210 30% 10%; /* Darker secondary text */
-    --muted: 216 15% 18%; /* Slightly lighter muted background */
-    --muted-foreground: 210 40% 65%; /* Lighter muted text */
-    --accent: 182 100% 74%; /* Electric Blue - Accent for hover states etc. */
-    --accent-foreground: 210 30% 10%; /* Darker accent text */
-    --destructive: 0 70% 55%; /* Slightly adjusted Red */
-    --destructive-foreground: 0 0% 98%; /* Near White */
-    --border: 216 15% 25%; /* Slightly lighter border */
-    --input: 216 15% 25%; /* Slightly lighter input background */
-    --ring: 111 100% 54%; /* Neon Green */
-    --chart-1: 182 100% 74%; /* Electric Blue */
-    --chart-2: 111 100% 54%; /* Neon Green */
-    --chart-3: 210 29% 40%; /* Medium Slate */
-    --chart-4: 182 80% 60%; /* Bright Blue */
-    --chart-5: 111 80% 40%; /* Darker Green */
-    --sidebar-background: 216 15% 12%; /* Match card background */
-    --sidebar-foreground: 210 40% 98%; /* Lighter sidebar text */
-    --sidebar-primary: 111 100% 60%; /* Match primary color */
-    --sidebar-primary-foreground: 210 30% 10%; /* Match primary foreground */
-    --sidebar-accent: 216 15% 25%; /* Match border/input */
-    --sidebar-accent-foreground: 210 40% 98%; /* Lighter sidebar accent text */
-    --sidebar-border: 216 15% 25%; /* Match border */
-    --sidebar-ring: 111 100% 54%; /* Neon Green */
+    /* Dark Theme - Inspired by the reference image */
+    --background: 240 10% 4%; /* Very Dark Blue/Black */
+    --foreground: 0 0% 98%; /* Almost White */
+    --card: 240 8% 10%; /* Dark Blue-Gray Card */
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 4%; /* Match Background */
+    --popover-foreground: 0 0% 98%;
+    --primary: 262 84% 62%; /* Brighter Vibrant Purple */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 217 91% 65%; /* Brighter Blue */
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 5% 15%; /* Slightly Lighter Dark Muted */
+    --muted-foreground: 240 5% 65%; /* Lighter Muted Text */
+    --accent: 290 75% 70%; /* Brighter Lighter Purple/Pink */
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5% 20%; /* Dark Border */
+    --input: 240 5% 18%; /* Dark Input */
+    --ring: 262 84% 62%; /* Primary Purple */
+    --chart-1: 262 84% 62%;
+    --chart-2: 217 91% 65%;
+    --chart-3: 290 75% 70%;
+    --chart-4: 111 80% 50%; /* Slightly darker green */
+    --chart-5: 0 0% 70%; /* Lighter Gray */
+    /* Sidebar vars removed */
   }
 }
 
 /* Apply base styles and animations */
 @layer base {
   * {
-    @apply border-border transition-colors duration-300 ease-in-out; /* Smoother transitions for color changes */
+    @apply border-border transition-colors duration-300 ease-in-out;
   }
   body {
     @apply bg-background text-foreground antialiased;
-    @apply bg-gradient-to-br from-background via-primary/5 to-secondary/5; /* Subtle gradient background */
-    background-size: 200% 200%;
-    animation: subtle-gradient 15s ease infinite; /* Apply background animation */
-    @apply perspective-[1000px]; /* Add perspective for 3D effects */
+    /* Removed gradient animation, simple background */
+    /* Removed invalid perspective-[1000px] apply */
   }
 
   /* Enhanced transitions for interactive elements */
   button, a, input, textarea, select {
     @apply transition-all duration-300 ease-in-out;
   }
+  /* Keep subtle hover effect */
   button:hover, a:hover {
-    @apply brightness-110 /* Slightly brighter */ transform scale-[1.03] translate-z-[5px]; /* Subtle scale and 3D lift */
+    @apply brightness-110 transform scale-[1.02];
   }
    button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
        @apply ring-2 ring-ring ring-offset-2 ring-offset-background;
    }
 
   button:active, a:active {
-    @apply scale-[0.97] brightness-90 transform translate-z-[-2px]; /* More noticeable active state with 3D effect */
+    @apply scale-[0.98] brightness-95; /* Slightly simpler active state */
   }
 
-  /* Specific styling for links to use accent color */
+  /* Links styled to match header style (adjust if needed elsewhere) */
   a {
-    @apply text-accent hover:text-accent/80 hover:underline;
+    @apply text-foreground hover:text-primary hover:no-underline;
   }
 
   h1, h2, h3, h4, h5, h6 {
-      @apply font-semibold tracking-tight; /* Consistent heading style */
+      @apply font-semibold tracking-tight text-foreground; /* Ensure headings use foreground */
   }
 
-  /* Default Card styling adjustment with 3D */
+  /* Default Card styling adjustment - Removed 3D hover */
   .card-base {
-       @apply rounded-xl border bg-card text-card-foreground shadow-lg; /* Use larger radius, stronger shadow */
-       @apply transition-all duration-500 ease-in-out; /* Slower transition for 3D */
-       @apply transform-style-3d; /* Enable 3D transforms */
+       @apply rounded-xl border bg-card text-card-foreground shadow-lg;
+       @apply transition-all duration-300 ease-in-out;
    }
-   .card-hover {
-      /* Add a subtle 3D rotation on hover */
-       @apply hover:shadow-xl hover:rotate-y-[-5deg] hover:rotate-x-[3deg] hover:scale-[1.03] hover:translate-z-[15px];
-       /* Adjust rotation and translation for desired effect */
+   .card-hover:hover {
+       @apply shadow-xl scale-[1.02]; /* Simpler hover effect */
    }
-
 }
+
+/* Header specific styles */
+@layer components {
+  .header {
+    @apply sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60;
+  }
+  .header-container {
+    @apply container flex h-16 max-w-screen-2xl items-center;
+  }
+  .header-nav {
+    @apply flex items-center gap-6 text-sm;
+  }
+  .header-nav-link {
+    @apply transition-colors hover:text-primary text-foreground/70;
+  }
+  .header-nav-link-active {
+    @apply text-foreground font-medium;
+  }
+}
+
 
 /* Reusable animation classes */
 .animate-subtle-fade-in {
   animation: subtle-fade-in 0.6s ease-out forwards;
 }
 .animate-subtle-slide-up {
-  animation: subtle-slide-up 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; /* Smoother easing */
+  animation: subtle-slide-up 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 .animate-subtle-scale-in {
    animation: subtle-scale-in 0.5s ease-out forwards;
@@ -219,12 +227,23 @@
 }
 .animate-rotate-in {
    animation: rotate-in 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-   transform-style: preserve-3d; /* Ensure child elements adhere to 3D space */
+   transform-style: preserve-3d;
 }
 .animate-rotate-out {
     animation: rotate-out 0.6s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
     transform-style: preserve-3d;
 }
+.animate-background-pan {
+  animation: background-pan 10s linear infinite;
+  background: linear-gradient(to right,
+      hsl(var(--primary) / 0.1),
+      hsl(var(--secondary) / 0.1),
+      hsl(var(--accent) / 0.1),
+      hsl(var(--primary) / 0.1)
+    );
+  background-size: 200% auto;
+}
+
 
 /* Utility for perspective */
 .perspective-1000 {

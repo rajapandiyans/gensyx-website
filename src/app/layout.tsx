@@ -1,9 +1,7 @@
-
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { SidebarProvider, Sidebar, SidebarInset } from '@/components/ui/sidebar';
-import { AppSidebar } from '@/components/app-sidebar';
+import { Header } from '@/components/header'; // Import the new Header
 import { Toaster } from '@/components/ui/toaster';
 
 const geistSans = Geist({
@@ -29,23 +27,13 @@ export default function RootLayout({
   return (
     // Apply dark theme by default and suppress hydration warnings related to theme/class changes
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <SidebarProvider
-          defaultOpen={false}
-          variant="floating"
-          collapsible="icon"
-          side="left" // Explicitly pass props to Provider
-        >
-          <Sidebar> {/* Sidebar component now gets variant/collapsible/side from context */}
-            <AppSidebar />
-          </Sidebar>
-          <SidebarInset> {/* Use SidebarInset for main content area */}
-            {children}
-          </SidebarInset>
-        </SidebarProvider>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}>
+        <Header /> {/* Use the Header component */}
+        <main className="pt-16"> {/* Add padding top to account for sticky header */}
+          {children}
+        </main>
         <Toaster />
       </body>
     </html>
   );
 }
-

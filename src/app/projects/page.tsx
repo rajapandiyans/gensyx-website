@@ -1,49 +1,47 @@
-
-
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Layers } from 'lucide-react'; // Added Layers icon
+import { ExternalLink } from 'lucide-react';
 
 // Updated project data (ensure consistency with user request)
 const projects = [
  {
     id: 1,
-    title: "GPT3 Integration", // Slightly more descriptive title
+    title: "GPT3 Integration",
     description: "Let’s Build Something amazing with GPT-3 – Harness AI for creative and business solutions.",
-    imageUrl: "/images/gpt3.png", // Using uploaded image
+    imageUrl: "/images/gpt3.png",
     link: "https://gpt3-gensyx.vercel.app/#wgpt3",
-    aiHint: "ai interface abstract technology", // Added keyword
+    aiHint: "ai interface abstract technology",
   },
   {
     id: 2,
     title: "Travela Booking Platform",
     description: "Your perfect travel companion - Discover curated destinations and seamless trip planning for unforgettable journeys.",
-    imageUrl: "/images/travela.png", // Using uploaded image
+    imageUrl: "/images/travela.png",
     link: "https://tourism-gensyx.vercel.app/",
-    aiHint: "travel website destination booking", // Added keyword
+    aiHint: "travel website destination booking",
   },
   {
     id: 3,
     title: "Caterserv Event Planning",
     description: "Book CaterServ For Your Dream Event – Simplify planning with all-in-one vendor bookings.",
-    imageUrl: "/images/caterserv.png", // Using uploaded image
+    imageUrl: "/images/caterserv.png",
     link: "https://caterserv-gensyx.vercel.app/",
-     aiHint: "catering event food planning", // Added keyword
+     aiHint: "catering event food planning",
   },
   {
     id: 4,
     title: "Modern E-Commerce Store",
     description: "Simplify shopping with seamless UX, secure payments, and AI-driven recommendations.",
-    imageUrl: "/images/ecommerce.png", // Using uploaded image
+    imageUrl: "/images/ecommerce.png",
     link: "https://e-commerce-gensyx.vercel.app/index.html",
-    aiHint: "online shopping interface e-commerce", // Added keyword
+    aiHint: "online shopping interface e-commerce",
   },
 ];
 
 export default function ProjectsPage() {
   return (
-    <div className="container mx-auto px-4 py-16 md:py-20 lg:py-24 perspective-1000"> {/* Add perspective */}
+    <div className="container mx-auto px-4 py-16 md:py-20 lg:py-24">
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-4 animate-fade-in-down text-primary">
           Showcasing Our Work
@@ -57,7 +55,7 @@ export default function ProjectsPage() {
         {projects.map((project, index) => (
           <Card
              key={project.id}
-             className="card-base card-hover group overflow-hidden animate-subtle-slide-up flex flex-col transform-style-3d transition-transform duration-500" // Apply 3D styles
+             className="card-base group overflow-hidden animate-subtle-slide-up flex flex-col bg-card border border-border/30 hover:border-primary/50 transition-colors duration-300" // Removed card-hover and 3D styles, added explicit border color
              style={{ animationDelay: `${index * 0.15 + 0.2}s` }}
           >
             <CardHeader className="p-0 relative aspect-video overflow-hidden">
@@ -66,21 +64,20 @@ export default function ProjectsPage() {
                 src={project.imageUrl}
                 alt={project.title}
                 fill
-                className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105" // Slightly faster zoom
                 data-ai-hint={project.aiHint}
-                sizes="(max-width: 768px) 100vw, 50vw" // Adjusted sizes
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
-               {/* Optional: Overlay on hover */}
-               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+               {/* Optional: Darker overlay on hover */}
+               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </CardHeader>
             <CardContent className="p-6 flex-grow flex flex-col">
-              <CardTitle className="text-2xl mb-2 font-semibold">{project.title}</CardTitle>
+              <CardTitle className="text-2xl mb-2 font-semibold text-foreground">{project.title}</CardTitle> {/* Ensure text color */}
               <CardDescription className="text-muted-foreground flex-grow mb-4">{project.description}</CardDescription>
             </CardContent>
-            <CardFooter className="p-6 pt-0 mt-auto border-t border-border/50">
-               <Button variant="outline" size="sm" asChild className="w-full sm:w-auto transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300">
+            <CardFooter className="p-6 pt-0 mt-auto border-t border-border/20"> {/* Slightly lighter border */}
+               <Button variant="outline" size="sm" asChild className="w-full sm:w-auto transform hover:scale-105 transition-transform duration-300 hover:bg-primary/10 hover:text-primary border-primary/50 text-primary/90">
                  <a href={project.link} target="_blank" rel="noopener noreferrer">
-                   {/* Ensure single child wrapper */}
                    <span className="flex items-center justify-center gap-2">
                         View Project <ExternalLink className="h-4 w-4" />
                     </span>

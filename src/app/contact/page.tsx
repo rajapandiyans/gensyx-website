@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { MapPin, Mail, Phone, Send } from 'lucide-react'; // Icons for contact info and send button
+import { MapPin, Mail, Phone, Send } from 'lucide-react';
 
 // Define the form schema using Zod
 const contactFormSchema = z.object({
@@ -39,13 +39,8 @@ type ContactFormValues = z.infer<typeof contactFormSchema>;
 async function submitContactForm(data: ContactFormValues) {
   console.log("Submitting contact form data:", data);
   // Replace with actual API call to backend
-  // Example: await fetch('/api/contact', { method: 'POST', body: JSON.stringify(data) });
-
-  // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 1000));
-
-  // Simulate success/error
-  const success = Math.random() > 0.2; // 80% chance of success
+  const success = Math.random() > 0.2;
   if (!success) {
     throw new Error("Failed to send message. Please try again later.");
   }
@@ -62,7 +57,7 @@ export default function ContactPage() {
       email: "",
       message: "",
     },
-    mode: "onChange", // Validate on change
+    mode: "onChange",
   });
 
   const {formState: {isSubmitting}} = form;
@@ -75,7 +70,7 @@ export default function ContactPage() {
         description: result.message,
         variant: "default",
       });
-      form.reset(); // Reset form on success
+      form.reset();
     } catch (error) {
        const message = error instanceof Error ? error.message : "An unknown error occurred.";
       toast({
@@ -87,7 +82,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-16 md:py-20 lg:py-24 perspective-1000"> {/* Add perspective */}
+    <div className="container mx-auto px-4 py-16 md:py-20 lg:py-24">
       <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-8 animate-fade-in-down text-primary">Get in Touch</h1>
       <p className="text-center text-lg text-muted-foreground mb-16 max-w-3xl mx-auto animate-fade-in-down" style={{ animationDelay: '0.1s' }}>
         We're excited to hear about your project or answer any questions you may have. Reach out using the form below or through our contact details.
@@ -95,10 +90,10 @@ export default function ContactPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
         {/* Contact Form Card (Spanning 3 columns on large screens) */}
-        <Card className="lg:col-span-3 card-base card-hover animate-subtle-slide-up shadow-xl transform-style-3d transition-transform duration-500">
+        <Card className="lg:col-span-3 card-base animate-subtle-slide-up shadow-xl bg-card border border-border/30"> {/* Removed 3D styles */}
           <CardHeader>
-            <CardTitle className="text-2xl md:text-3xl">Send Us a Message</CardTitle>
-            <CardDescription>We'll get back to you as soon as possible.</CardDescription>
+            <CardTitle className="text-2xl md:text-3xl text-foreground">Send Us a Message</CardTitle> {/* Ensured foreground color */}
+            <CardDescription className="text-muted-foreground">We'll get back to you as soon as possible.</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -110,7 +105,7 @@ export default function ContactPage() {
                     <FormItem>
                       <FormLabel>Your Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., Jane Doe" {...field} />
+                        <Input placeholder="e.g., Jane Doe" {...field} className="bg-input border-border/50 focus:border-primary focus:ring-primary/50" /> {/* Added input styling */}
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -123,7 +118,7 @@ export default function ContactPage() {
                     <FormItem>
                       <FormLabel>Your Email</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="e.g., jane.doe@example.com" {...field} />
+                        <Input type="email" placeholder="e.g., jane.doe@example.com" {...field} className="bg-input border-border/50 focus:border-primary focus:ring-primary/50" /> {/* Added input styling */}
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -138,7 +133,7 @@ export default function ContactPage() {
                       <FormControl>
                         <Textarea
                           placeholder="Tell us how we can help..."
-                          className="resize-none min-h-[120px]"
+                          className="resize-none min-h-[120px] bg-input border-border/50 focus:border-primary focus:ring-primary/50" /* Added input styling */
                           rows={5}
                           {...field}
                         />
@@ -147,8 +142,7 @@ export default function ContactPage() {
                     </FormItem>
                   )}
                 />
-                 <Button type="submit" className="w-full mt-2 transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300" size="lg" disabled={isSubmitting}>
-                   {/* Ensure single child */}
+                 <Button type="submit" className="w-full mt-2 transform hover:scale-105 transition-transform duration-300" size="lg" disabled={isSubmitting}>
                    <span className="flex items-center justify-center gap-2">
                        <Send className="mr-1 h-5 w-5" />
                        {isSubmitting ? "Sending..." : "Send Message"}
@@ -161,35 +155,34 @@ export default function ContactPage() {
 
         {/* Contact Info & Map Card (Spanning 2 columns on large screens) */}
         <div className="lg:col-span-2 space-y-8 animate-subtle-slide-up" style={{ animationDelay: '0.2s' }}>
-           <Card className="card-base card-hover shadow-xl transform-style-3d transition-transform duration-500">
+           <Card className="card-base shadow-xl bg-card border border-border/30"> {/* Removed 3D styles */}
              <CardHeader>
-                <CardTitle className="text-2xl md:text-3xl">Contact Information</CardTitle>
-                <CardDescription>Other ways to reach us.</CardDescription>
+                <CardTitle className="text-2xl md:text-3xl text-foreground">Contact Information</CardTitle> {/* Ensured foreground color */}
+                <CardDescription className="text-muted-foreground">Other ways to reach us.</CardDescription>
              </CardHeader>
              <CardContent className="space-y-5">
-                <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1 hover:translate-z-[3px]">
+                <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1"> {/* Removed 3D translate */}
                    <Mail className="h-6 w-6 text-primary flex-shrink-0" strokeWidth={1.5} />
                    <a href="mailto:info@gensyx.com" className="text-foreground hover:text-primary text-base break-all">info@gensyx.com</a>
                  </div>
-                <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1 hover:translate-z-[3px]">
+                <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1"> {/* Removed 3D translate */}
                   <Phone className="h-6 w-6 text-primary flex-shrink-0" strokeWidth={1.5} />
-                  <span className="text-foreground text-base">(123) 456-7890</span> {/* Placeholder */}
+                  <span className="text-foreground text-base">(123) 456-7890</span>
                 </div>
-                <div className="flex items-start gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1 hover:translate-z-[3px]">
+                <div className="flex items-start gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1"> {/* Removed 3D translate */}
                   <MapPin className="h-6 w-6 text-primary flex-shrink-0 mt-1" strokeWidth={1.5} />
-                  <span className="text-foreground text-base">123 Digital Avenue, Tech City, TX 75001</span> {/* Placeholder */}
+                  <span className="text-foreground text-base">123 Digital Avenue, Tech City, TX 75001</span>
                 </div>
              </CardContent>
            </Card>
 
           {/* Placeholder for Map */}
-          <Card className="card-base card-hover shadow-xl overflow-hidden transform-style-3d transition-transform duration-500">
+          <Card className="card-base shadow-xl overflow-hidden bg-card border border-border/30"> {/* Removed 3D styles */}
              <CardHeader>
-                <CardTitle className="text-2xl md:text-3xl">Our Location</CardTitle>
+                <CardTitle className="text-2xl md:text-3xl text-foreground">Our Location</CardTitle> {/* Ensured foreground color */}
              </CardHeader>
             <CardContent>
-                <div className="aspect-video bg-gradient-to-br from-muted/30 to-muted/50 rounded-lg flex items-center justify-center text-muted-foreground border border-border transform-style-3d hover:scale-105 transition-transform duration-300">
-                   {/* Replace this div with actual Map Embed */}
+                <div className="aspect-video bg-muted/50 rounded-lg flex items-center justify-center text-muted-foreground border border-border transform hover:scale-105 transition-transform duration-300"> {/* Removed 3D style */}
                    <MapPin className="h-16 w-16 opacity-30" />
                    <span className="ml-3 text-lg font-medium opacity-70">Interactive Map Coming Soon</span>
                 </div>

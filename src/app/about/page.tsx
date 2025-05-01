@@ -1,18 +1,18 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Target, Rocket, Users, Building } from 'lucide-react'; // Icons for mission, vision, team, background
+import { Target, Rocket, Building } from 'lucide-react'; // Removed Users icon
 
 export default function AboutPage() {
   return (
-    <div className="container mx-auto px-4 py-16 md:py-20 lg:py-24 perspective-1000"> {/* Add perspective */}
+    <div className="container mx-auto px-4 py-16 md:py-20 lg:py-24">
       <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-16 animate-fade-in-down text-primary">
         About GenSyx Solutions
       </h1>
 
-      {/* Mission & Vision Cards with 3D Hover */}
+      {/* Mission & Vision Cards - Removed 3D Hover */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-16">
-        <Card className="card-base card-hover animate-subtle-slide-up transform-style-3d transition-transform duration-500">
+        <Card className="card-base animate-subtle-slide-up bg-card border border-border/30 hover:border-primary/50 transition-colors duration-300"> {/* Adjusted styles */}
           <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
+            <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl text-foreground"> {/* Ensured foreground color */}
               <Target className="text-accent h-8 w-8" strokeWidth={1.5} /> Our Mission
             </CardTitle>
           </CardHeader>
@@ -22,9 +22,9 @@ export default function AboutPage() {
             </p>
           </CardContent>
         </Card>
-        <Card className="card-base card-hover animate-subtle-slide-up transform-style-3d transition-transform duration-500" style={{ animationDelay: '0.2s' }}>
+        <Card className="card-base animate-subtle-slide-up bg-card border border-border/30 hover:border-primary/50 transition-colors duration-300" style={{ animationDelay: '0.2s' }}> {/* Adjusted styles */}
           <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl">
+            <CardTitle className="flex items-center gap-3 text-2xl md:text-3xl text-foreground"> {/* Ensured foreground color */}
               <Rocket className="text-secondary h-8 w-8" strokeWidth={1.5} /> Our Vision
             </CardTitle>
           </CardHeader>
@@ -36,13 +36,13 @@ export default function AboutPage() {
         </Card>
       </div>
 
-      {/* Company Background Card with 3D Hover */}
-      <Card className="card-base card-hover animate-subtle-scale-in transform-style-3d transition-transform duration-500" style={{ animationDelay: '0.4s' }}>
+      {/* Company Background Card - Removed 3D Hover */}
+      <Card className="card-base animate-subtle-scale-in bg-card border border-border/30" style={{ animationDelay: '0.4s' }}> {/* Adjusted styles */}
         <CardHeader>
-          <CardTitle className="flex items-center gap-3 text-3xl md:text-4xl">
+          <CardTitle className="flex items-center gap-3 text-3xl md:text-4xl text-foreground"> {/* Ensured foreground color */}
              <Building className="text-primary h-9 w-9" strokeWidth={1.5} /> Company Background
           </CardTitle>
-          <CardDescription className="text-lg md:text-xl mt-1">Pioneering Digital Excellence</CardDescription>
+          <CardDescription className="text-lg md:text-xl mt-1 text-muted-foreground">Pioneering Digital Excellence</CardDescription> {/* Ensured muted color */}
         </CardHeader>
         <CardContent className="space-y-5 text-base md:text-lg text-muted-foreground leading-relaxed">
           <p>

@@ -49,16 +49,6 @@ export default {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			},
-  			sidebar: {
-  				DEFAULT: 'hsl(var(--sidebar-background))',
-  				foreground: 'hsl(var(--sidebar-foreground))',
-  				primary: 'hsl(var(--sidebar-primary))',
-  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-  				accent: 'hsl(var(--sidebar-accent))',
-  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-  				border: 'hsl(var(--sidebar-border))',
-  				ring: 'hsl(var(--sidebar-ring))'
   			}
   		},
   		borderRadius: {
@@ -83,31 +73,36 @@ export default {
   					height: '0'
   				}
   			},
-        // Enhanced animation keyframes
+        // Simplified animations (keep or remove as needed)
          'float': {
            '0%, 100%': { transform: 'translateY(0px)' },
-           '50%': { transform: 'translateY(-15px)' },
+           '50%': { transform: 'translateY(-8px)' }, // Reduced float distance
          },
-         'rotate-in': {
-            '0%': { transform: 'rotateY(-90deg) scale(0.8)', opacity: '0' },
+         'rotate-in': { // Kept rotate-in for potential use
+            '0%': { transform: 'rotateY(-90deg) scale(0.9)', opacity: '0' },
             '100%': { transform: 'rotateY(0deg) scale(1)', opacity: '1' },
           },
-         'rotate-out': {
+         'rotate-out': { // Kept rotate-out
             '0%': { transform: 'rotateY(0deg) scale(1)', opacity: '1' },
-            '100%': { transform: 'rotateY(90deg) scale(0.8)', opacity: '0' },
+            '100%': { transform: 'rotateY(90deg) scale(0.9)', opacity: '0' },
           },
+         'background-pan': { // Added background pan animation
+           'from': { backgroundPosition: '0% center' },
+           'to': { backgroundPosition: '-200% center' },
+         },
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
-        'float': 'float 3s ease-in-out infinite', // Floating animation
-        'rotate-in': 'rotate-in 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
-        'rotate-out': 'rotate-out 0.6s cubic-bezier(0.550, 0.085, 0.680, 0.530) both',
+        'float': 'float 3s ease-in-out infinite',
+        'rotate-in': 'rotate-in 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
+        'rotate-out': 'rotate-out 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both',
+        'background-pan': 'background-pan 10s linear infinite', // Added background pan
   		}
   	}
   },
    plugins: [
        require("tailwindcss-animate"),
-       require('tailwindcss-3d'), // Add the 3D plugin
+       // Removed require('tailwindcss-3d')
    ],
 } satisfies Config;
