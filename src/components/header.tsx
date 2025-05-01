@@ -1,4 +1,3 @@
-
 'use client';
 
 import * as React from 'react';
@@ -39,14 +38,14 @@ export function Header() {
       <div className="header-container justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 mr-4 flex-shrink-0">
-          {/* Ensure the image path is correct and accessible */}
+          {/* Updated image path to the new logo */}
           <Image
-            src="/images/gensyx-logo.png" // Verify this path is correct in your `public` folder
+            src="/images/gensyx-logo.png" // Place your logo here: public/images/gensyx-logo.png
             alt="GenSyx Logo"
-            width={140} // Slightly increased width for visibility
-            height={32} // Adjusted height proportionally
+            width={140} // Adjust width as needed, keeping aspect ratio
+            height={32} // Adjust height as needed, keeping aspect ratio
             priority // Load logo faster
-            className="h-8 w-auto" // Tailwind classes for responsive height/auto width
+            className="h-8 w-auto" // Maintain height, auto width for aspect ratio
           />
         </Link>
 
@@ -90,12 +89,12 @@ export function Header() {
              <div className="flex justify-between items-center mb-8 border-b pb-4">
                <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
                  <Image
-                   src="/images/gensyx-logo.png"
+                   src="/images/gensyx-logo.png" // Use new logo path here too
                    alt="GenSyx Logo"
-                    width={120} // Adjusted width for mobile menu
-                    height={28} // Adjusted height proportionally
+                    width={120} // Adjust width for mobile
+                    height={28} // Adjust height for mobile
                    priority
-                   className="h-7 w-auto" // Tailwind classes
+                   className="h-7 w-auto" // Maintain height, auto width
                  />
                </Link>
                 <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
@@ -136,3 +135,5 @@ export function Header() {
     </header>
   );
 }
+
+    
