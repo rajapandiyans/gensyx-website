@@ -27,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // Apply dark theme by default and suppress hydration warnings related to theme/class changes
     <html lang="en" className="dark" suppressHydrationWarning>
+      {/* Next.js automatically manages the <head> tag */}
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <SidebarProvider defaultOpen={true}>
           <Sidebar>
