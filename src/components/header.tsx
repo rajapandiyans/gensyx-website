@@ -37,18 +37,20 @@ export function Header() {
     <header className="header">
       <div className="header-container justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 mr-4">
+        <Link href="/" className="flex items-center gap-2 mr-4 flex-shrink-0">
+          {/* Ensure the image path is correct and accessible */}
           <Image
-            src="/images/gensyx-logo.png" // Ensure this path is correct
+            src="/images/gensyx-logo.png" // Verify this path is correct in your `public` folder
             alt="GenSyx Logo"
-            width={120}
-            height={28}
-            priority
+            width={140} // Slightly increased width for visibility
+            height={32} // Adjusted height proportionally
+            priority // Load logo faster
+            className="h-8 w-auto" // Tailwind classes for responsive height/auto width
           />
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex header-nav gap-8">
+        <nav className="hidden md:flex header-nav gap-8 items-center">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -89,9 +91,10 @@ export function Header() {
                  <Image
                    src="/images/gensyx-logo.png"
                    alt="GenSyx Logo"
-                   width={100}
-                   height={24}
+                    width={120} // Adjusted width for mobile menu
+                    height={28} // Adjusted height proportionally
                    priority
+                   className="h-7 w-auto" // Tailwind classes
                  />
                </Link>
                 <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>

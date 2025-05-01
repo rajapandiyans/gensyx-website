@@ -60,7 +60,7 @@
 
      @keyframes float {
        0%, 100% { transform: translateY(0px); }
-       50% { transform: translateY(-15px); }
+       50% { transform: translateY(-10px); } /* Increased float distance */
      }
 
      @keyframes rotate-in {
@@ -145,7 +145,6 @@
   body {
     @apply bg-background text-foreground antialiased;
     /* Removed gradient animation, simple background */
-    /* Removed invalid perspective-[1000px] apply */
   }
 
   /* Enhanced transitions for interactive elements */
@@ -200,6 +199,17 @@
   .header-nav-link-active {
     @apply text-foreground font-medium;
   }
+
+   /* Text Shadow Utility */
+   .text-shadow-lg {
+     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Adjusted shadow */
+   }
+   .text-shadow-md {
+      text-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+   }
+    .text-shadow {
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
 }
 
 
@@ -223,15 +233,13 @@
     animation: pulse-glow 2.5s infinite ease-in-out;
 }
 .animate-float {
-    animation: float 3s ease-in-out infinite;
+    animation: float 4s ease-in-out infinite; /* Slightly slower float */
 }
 .animate-rotate-in {
    animation: rotate-in 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-   /* Removed transform-style: preserve-3d; */
 }
 .animate-rotate-out {
     animation: rotate-out 0.6s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
-    /* Removed transform-style: preserve-3d; */
 }
 .animate-background-pan {
   animation: background-pan 10s linear infinite;
@@ -245,5 +253,17 @@
 }
 
 
-/* Utility for perspective removed */
-/* .perspective-1000 { ... } removed */
+/* Utility for 3D transform style */
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+/* Perspective utility removed as it caused issues */
+/* .perspective-1000 { perspective: 1000px; } */
+
+/* Additional animation delays if needed */
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+.animation-delay-4000 {
+   animation-delay: 4s;
+}
