@@ -1,86 +1,95 @@
 import Link from 'next/link';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Code, Search, Gem, Signal, Smartphone, UserCheck } from 'lucide-react'; // Icons for services
+import { ArrowRight, Code, Search, Gem, BarChart3, Smartphone, UserCheck, Palette, Network } from 'lucide-react'; // Updated and added icons
 
-// Placeholder service data
+// Service data with updated icons and slightly refined descriptions
 const services = [
   {
     id: "website-design",
-    title: "Website Design",
+    title: "Web Design & Dev", // Shortened for card
     icon: Code,
-    description: "Crafting visually stunning and user-friendly websites tailored to your brand.",
+    description: "Building responsive, high-performance websites that captivate and convert.",
     link: "/services/website-design",
-    aiHint: "website design interface code",
+    aiHint: "website interface code responsive",
   },
   {
     id: "seo",
-    title: "SEO",
-    icon: Search,
-    description: "Optimizing your online presence to rank higher in search engine results.",
+    title: "SEO Strategy",
+    icon: Search, // Changed to Search for better SEO representation
+    description: "Boosting your visibility on search engines to attract qualified organic traffic.",
     link: "/services/seo",
-     aiHint: "search engine graph chart",
+     aiHint: "search engine optimization graph",
   },
   {
     id: "branding",
-    title: "Logo & Brand Building",
-    icon: Gem,
-    description: "Creating unique logos and cohesive brand identities that resonate.",
+    title: "Branding & Identity", // More descriptive
+    icon: Palette, // Changed to Palette for branding
+    description: "Crafting memorable logos and cohesive brand identities that stand out.",
     link: "/services/branding",
-     aiHint: "brand logo design minimal",
+     aiHint: "brand logo design identity",
   },
   {
     id: "digital-marketing",
     title: "Digital Marketing",
-    icon: Signal,
-    description: "Implementing data-driven strategies to boost your reach and engagement.",
+    icon: BarChart3, // Changed to BarChart3 for marketing data
+    description: "Data-driven strategies across online channels to reach audiences and drive leads.",
     link: "/services/digital-marketing",
-     aiHint: "digital marketing chart graph",
+     aiHint: "digital marketing analytics chart",
   },
   {
     id: "social-media",
-    title: "Social Media Management",
-    icon: Smartphone,
-    description: "Managing your social platforms to build community and drive results.",
+    title: "Social Media Mgmt", // Shortened
+    icon: Network, // Changed to Network for social connection
+    description: "Engaging content and community management to grow your online presence.",
     link: "/services/social-media",
-     aiHint: "social media icons phone",
+     aiHint: "social media connection network",
   },
   {
     id: "google-profile",
-    title: "Google Profile Management",
+    title: "Google Business Profile",
     icon: UserCheck,
-    description: "Optimizing your Google Business Profile for maximum local visibility.",
+    description: "Optimizing your Google profile for maximum local visibility and customer trust.",
     link: "/services/google-profile",
-     aiHint: "google business profile map",
+     aiHint: "google business profile optimization",
   },
 ];
 
 export default function ServicesPage() {
   return (
-    <div className="container mx-auto px-4 py-12 md:py-16 lg:py-20">
-      <h1 className="text-4xl font-bold text-center mb-12 animate-subtle-fade-in text-primary">Our Services</h1>
-      <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto animate-subtle-fade-in" style={{ animationDelay: '0.1s' }}>
-        We offer a comprehensive suite of digital services designed to elevate your brand and achieve your business goals.
-      </p>
+    <div className="container mx-auto px-4 py-16 md:py-20 lg:py-24 perspective-1000"> {/* Add perspective */}
+      <div className="text-center mb-16">
+        <h1 className="text-4xl md:text-5xl font-extrabold mb-4 animate-fade-in-down text-primary">
+          Our Digital Expertise
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-3xl mx-auto animate-fade-in-down" style={{ animationDelay: '0.1s' }}>
+          We offer a comprehensive suite of digital services tailored to elevate your brand, engage your audience, and achieve tangible business results.
+        </p>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {services.map((service, index) => (
-          <Card key={service.id} className="flex flex-col justify-between shadow-lg hover:shadow-xl transition-shadow duration-300 animate-subtle-slide-up" style={{ animationDelay: `${index * 0.1 + 0.2}s` }}>
-            <CardHeader>
-              <div className="mb-4 flex items-center justify-center h-16 w-16 rounded-full bg-primary/10 text-primary mx-auto">
-                 <service.icon size={32} />
+          <Card
+            key={service.id}
+            className="card-base card-hover group flex flex-col justify-between text-center overflow-hidden animate-subtle-slide-up transform-style-3d transition-transform duration-500" // Apply 3D styles
+            style={{ animationDelay: `${index * 0.1 + 0.2}s` }}
+          >
+            <CardHeader className="items-center pt-8 pb-4">
+              <div className="mb-5 flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-br from-primary/10 to-accent/10 text-primary transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/15 group-hover:text-accent transform group-hover:translate-z-[10px]"> {/* 3D Icon */}
+                 <service.icon size={34} strokeWidth={1.5} />
               </div>
-              <CardTitle className="text-2xl text-center">{service.title}</CardTitle>
-              <CardDescription className="text-center pt-2">{service.description}</CardDescription>
+              <CardTitle className="text-xl md:text-2xl font-semibold">{service.title}</CardTitle>
             </CardHeader>
-            <CardContent className="flex justify-center mt-auto p-6 pt-0">
-              {/* Placeholder Link - In a real app, this would link to a detailed service page */}
-              <Button variant="outline" asChild>
+            <CardContent className="px-6 pb-6 flex-grow">
+              <CardDescription className="text-muted-foreground">{service.description}</CardDescription>
+            </CardContent>
+             <CardFooter className="p-6 pt-0 mt-auto">
+              <Button variant="outline" asChild className="w-full transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300">
                 <Link href={service.link}>
-                  Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                  Learn More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                 </Link>
               </Button>
-            </CardContent>
+            </CardFooter>
           </Card>
         ))}
       </div>

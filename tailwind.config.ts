@@ -82,13 +82,32 @@ export default {
   				to: {
   					height: '0'
   				}
-  			}
+  			},
+        // Enhanced animation keyframes
+         'float': {
+           '0%, 100%': { transform: 'translateY(0px)' },
+           '50%': { transform: 'translateY(-15px)' },
+         },
+         'rotate-in': {
+            '0%': { transform: 'rotateY(-90deg) scale(0.8)', opacity: '0' },
+            '100%': { transform: 'rotateY(0deg) scale(1)', opacity: '1' },
+          },
+         'rotate-out': {
+            '0%': { transform: 'rotateY(0deg) scale(1)', opacity: '1' },
+            '100%': { transform: 'rotateY(90deg) scale(0.8)', opacity: '0' },
+          },
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+        'float': 'float 3s ease-in-out infinite', // Floating animation
+        'rotate-in': 'rotate-in 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
+        'rotate-out': 'rotate-out 0.6s cubic-bezier(0.550, 0.085, 0.680, 0.530) both',
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+   plugins: [
+       require("tailwindcss-animate"),
+       require('tailwindcss-3d'), // Add the 3D plugin
+   ],
 } satisfies Config;

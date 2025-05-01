@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { LogIn, Code } from 'lucide-react';
+import { LogIn, Lock, Mail } from 'lucide-react'; // Updated icons
 
 // Define the form schema using Zod
 const loginFormSchema = z.object({
@@ -42,12 +42,12 @@ async function handleLogin(data: LoginFormValues) {
 
   // Simulate success/error (replace with actual logic)
   if (data.password !== 'password123') { // Example incorrect password
-      throw new Error("Invalid email or password.");
+      throw new Error("Invalid email or password combination.");
   }
 
   // On successful login, redirect or update UI state (handled by auth provider usually)
   console.log("Login successful!");
-  return { success: true, message: "Login successful!" };
+  return { success: true, message: "Login successful! Redirecting..." };
 }
 
 
@@ -71,12 +71,13 @@ export default function LoginPage() {
          toast({
            title: "Login Successful",
            description: "Welcome back!",
+           variant: "default", // Use default style for success
          });
-        // TODO: Redirect user to dashboard or home page
-        // Example: router.push('/dashboard');
+        // TODO: Redirect user after a short delay
+        // setTimeout(() => router.push('/dashboard'), 1000);
        }
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Login failed. Please check your credentials.";
+      const message = error instanceof Error ? error.message : "Login failed. Please try again.";
       toast({
         title: "Login Failed",
         description: message,
@@ -86,16 +87,16 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-background via-background to-secondary/10">
-      <Card className="w-full max-w-md shadow-2xl border border-primary/10 animate-subtle-fade-in">
-         <CardHeader className="text-center">
-           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-             <Code size={28} />
+    <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-background via-primary/5 to-secondary/10 perspective-1000"> {/* Add perspective */}
+      <Card className="w-full max-w-md card-base card-hover shadow-2xl border-primary/10 animate-rotate-in transform-style-3d transition-transform duration-700"> {/* Apply rotate-in animation and 3D styles */}
+         <CardHeader className="text-center p-8">
+           <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary/10 to-accent/10 text-primary animate-pulse-glow transform hover:scale-110 hover:translate-z-[10px] transition-transform duration-300">
+             <LogIn size={32} strokeWidth={1.5} />
            </div>
-           <CardTitle className="text-3xl font-bold">Welcome Back!</CardTitle>
-           <CardDescription>Log in to your GenSyx account.</CardDescription>
+           <CardTitle className="text-3xl font-bold">Welcome Back</CardTitle>
+           <CardDescription className="text-lg text-muted-foreground mt-1">Log in to access your GenSyx account.</CardDescription>
          </CardHeader>
-         <CardContent>
+         <CardContent className="px-6 pb-6">
            <Form {...form}>
              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                <FormField
@@ -103,9 +104,9 @@ export default function LoginPage() {
                  name="email"
                  render={({ field }) => (
                    <FormItem>
-                     <FormLabel>Email</FormLabel>
+                     <FormLabel className="flex items-center gap-1.5"> <Mail size={16} /> Email Address</FormLabel>
                      <FormControl>
-                       <Input type="email" placeholder="you@example.com" {...field} />
+                       <Input type="email" placeholder="you@example.com" {...field} className="transform hover:scale-[1.02] hover:translate-z-[3px] transition-transform duration-200"/>
                      </FormControl>
                      <FormMessage />
                    </FormItem>
@@ -116,32 +117,31 @@ export default function LoginPage() {
                  name="password"
                  render={({ field }) => (
                    <FormItem>
-                     <FormLabel>Password</FormLabel>
+                     <FormLabel className="flex items-center gap-1.5"><Lock size={16} /> Password</FormLabel>
                      <FormControl>
-                       <Input type="password" placeholder="********" {...field} />
+                       <Input type="password" placeholder="••••••••" {...field} className="transform hover:scale-[1.02] hover:translate-z-[3px] transition-transform duration-200"/> {/* Use dots for placeholder */}
                      </FormControl>
                      <FormMessage />
-                     {/* Add Forgot Password link here if needed */}
-                     <div className="text-right mt-1">
-                        <Link href="/forgot-password" /* Replace with actual link */ className="text-xs text-muted-foreground hover:text-primary hover:underline">
+                     <div className="text-right mt-2">
+                        <Link href="#" /* Placeholder - Replace with actual link */ className="text-xs text-muted-foreground hover:text-primary hover:underline transition-colors transform hover:translate-z-[2px]">
                           Forgot password?
                         </Link>
                       </div>
                    </FormItem>
                  )}
                />
-               <Button type="submit" className="w-full" disabled={isSubmitting}>
-                 <LogIn className="mr-2 h-4 w-4" />
-                 {isSubmitting ? "Logging in..." : "Log In"}
+                <Button type="submit" className="w-full mt-2 transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300" size="lg" disabled={isSubmitting}>
+                 <LogIn className="mr-2 h-5 w-5" />
+                 {isSubmitting ? "Logging In..." : "Log In"}
                </Button>
              </form>
            </Form>
          </CardContent>
-         <CardFooter className="flex flex-col items-center text-center pt-4">
+         <CardFooter className="flex flex-col items-center text-center p-6 pt-4 border-t">
             <p className="text-sm text-muted-foreground">
               Don't have an account?{' '}
-              <Link href="/signup" className="font-medium text-primary hover:underline">
-                Sign Up
+              <Link href="/signup" className="font-medium text-primary hover:underline transition-colors transform hover:translate-z-[2px]">
+                Sign up here
               </Link>
             </p>
          </CardFooter>

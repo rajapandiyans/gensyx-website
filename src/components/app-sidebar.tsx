@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image'; // Import next/image
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   SidebarContent,
@@ -11,35 +11,45 @@ import {
   SidebarMenuButton,
   SidebarFooter,
   SidebarTrigger,
+  useSidebar, // Import useSidebar hook
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
-import { Home, Info, BriefcaseBusiness, Handshake, Mail, LogIn, UserPlus } from 'lucide-react';
+import { Home, Info, BriefcaseBusiness, Handshake, Mail, LogIn, UserPlus, Settings, PanelLeftOpen, PanelLeftClose } from 'lucide-react';
 
-// Paths where the main navigation should be hidden
+// Paths where the main navigation should be hidden or adjusted
 const AUTH_PATHS = ['/login', '/signup'];
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const { state, toggleSidebar } = useSidebar(); // Get sidebar state and toggle function
   const isAuthPage = AUTH_PATHS.includes(pathname);
 
-  const isActive = (path: string) => pathname === path;
+  const isActive = (path: string) => pathname === path || (path === '/services' && pathname.startsWith('/services/')); // Highlight services parent link
 
   return (
     <>
-      <SidebarHeader className="flex items-center justify-between p-4 border-b border-sidebar-border">
-         {/* Use the uploaded logo */}
-         <Link href="/" className="flex items-center gap-2">
+      <SidebarHeader className="flex items-center justify-between p-3 border-b border-sidebar-border/50">
+         <Link href="/" className="flex items-center gap-2 overflow-hidden" aria-label="Go to Homepage">
             <Image
-              src="/images/gensyx-logo.png" // Corrected path relative to the public folder
+              src="/images/gensyx-logo.png"
               alt="GenSyx Logo"
-              width={130}
-              height={30}
-              priority // Load logo quickly
+              width={state === 'expanded' ? 120 : 32} // Adjust size based on state
+              height={state === 'expanded' ? 28 : 32} // Adjust size based on state
+              priority
+              className={`transition-all duration-300 ease-in-out ${state === 'collapsed' ? 'rounded-full' : ''}`} // Smooth transition and round when collapsed
             />
+             {state === 'expanded' && <span className="font-semibold text-lg whitespace-nowrap">GenSyx</span>}
           </Link>
-        <SidebarTrigger className="md:hidden" />
+        {/* Trigger is now part of the header in floating mode */}
+        {/* <SidebarTrigger className="md:hidden" /> */}
+        {/* Button to toggle sidebar manually */}
+         <Button variant="ghost" size="icon" onClick={toggleSidebar} className="hidden md:flex h-8 w-8 text-muted-foreground hover:text-foreground">
+           {state === 'expanded' ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
+           <span className="sr-only">Toggle Sidebar</span>
+         </Button>
       </SidebarHeader>
-      <SidebarContent className="flex-1 overflow-y-auto p-4">
+
+      <SidebarContent className="flex-1 overflow-y-auto p-2">
         {/* Conditionally render the main menu */}
         {!isAuthPage && (
             <SidebarMenu>
@@ -47,7 +57,7 @@ export function AppSidebar() {
                 <SidebarMenuButton
                   asChild
                   isActive={isActive('/')}
-                  tooltip="Home"
+                  tooltip={{ children: "Home", side: "right", align: "center", sideOffset: 10 }}
                 >
                   <Link href="/">
                     <Home />
@@ -59,11 +69,11 @@ export function AppSidebar() {
                 <SidebarMenuButton
                   asChild
                   isActive={isActive('/about')}
-                  tooltip="About"
+                   tooltip={{ children: "About Us", side: "right", align: "center", sideOffset: 10 }}
                 >
                   <Link href="/about">
                     <Info />
-                    <span>About</span>
+                    <span>About Us</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -71,7 +81,7 @@ export function AppSidebar() {
                 <SidebarMenuButton
                   asChild
                   isActive={isActive('/projects')}
-                  tooltip="Projects"
+                   tooltip={{ children: "Our Projects", side: "right", align: "center", sideOffset: 10 }}
                 >
                   <Link href="/projects">
                     <BriefcaseBusiness />
@@ -83,7 +93,7 @@ export function AppSidebar() {
                 <SidebarMenuButton
                   asChild
                   isActive={isActive('/services')}
-                  tooltip="Services"
+                   tooltip={{ children: "Services Offered", side: "right", align: "center", sideOffset: 10 }}
                 >
                   <Link href="/services">
                     <Handshake />
@@ -95,7 +105,7 @@ export function AppSidebar() {
                 <SidebarMenuButton
                   asChild
                   isActive={isActive('/contact')}
-                  tooltip="Contact Us"
+                   tooltip={{ children: "Contact Us", side: "right", align: "center", sideOffset: 10 }}
                 >
                   <Link href="/contact">
                     <Mail />
@@ -105,23 +115,41 @@ export function AppSidebar() {
               </SidebarMenuItem>
             </SidebarMenu>
         )}
+        {/* Placeholder for no menu on auth pages */}
+        {isAuthPage && state === 'expanded' && (
+          <div className="p-4 text-sm text-muted-foreground text-center">
+            Navigation is hidden on authentication pages.
+          </div>
+        )}
       </SidebarContent>
-       {/* Always show footer with auth buttons, adjust based on auth state later */}
+
+       {/* Footer: Adjust based on auth state and sidebar state */}
        {!isAuthPage && (
-           <SidebarFooter className="p-4 border-t border-sidebar-border">
-            {/* TODO: Implement actual auth state logic here to show/hide buttons */}
-            <div className="flex flex-col gap-2">
-               <Button variant="outline" size="sm" asChild>
-                 <Link href="/login">
-                   <LogIn className="mr-2 h-4 w-4" /> Login
-                 </Link>
-               </Button>
-               <Button variant="default" size="sm" asChild>
-                 <Link href="/signup">
-                  <UserPlus className="mr-2 h-4 w-4" /> Sign Up
-                </Link>
-              </Button>
-            </div>
+           <SidebarFooter className="p-2 border-t border-sidebar-border/50 mt-auto">
+            {/* TODO: Implement actual auth state logic */}
+            {state === 'expanded' ? (
+              <div className="flex flex-col gap-2">
+                 <Button variant="ghost" size="sm" asChild>
+                   <Link href="/login">
+                     <LogIn className="mr-2" /> Login
+                   </Link>
+                 </Button>
+                 <Button variant="default" size="sm" asChild>
+                   <Link href="/signup">
+                    <UserPlus className="mr-2" /> Sign Up
+                  </Link>
+                </Button>
+              </div>
+            ) : (
+               <div className="flex flex-col gap-2 items-center">
+                  <SidebarMenuButton asChild tooltip={{ children: "Login", side: "right", align: "center", sideOffset: 10 }}>
+                     <Link href="/login"><LogIn /></Link>
+                  </SidebarMenuButton>
+                  <SidebarMenuButton asChild tooltip={{ children: "Sign Up", side: "right", align: "center", sideOffset: 10 }}>
+                    <Link href="/signup"><UserPlus /></Link>
+                  </SidebarMenuButton>
+               </div>
+            )}
            </SidebarFooter>
        )}
     </>

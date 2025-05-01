@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { UserPlus, Code } from 'lucide-react';
+import { UserPlus, User, Mail, Lock } from 'lucide-react'; // Updated icons
 import { sendVerificationEmail } from '@/services/email'; // Import the email service
 
 // Define the form schema using Zod
@@ -28,16 +28,9 @@ const signupFormSchema = z.object({
     message: "Please enter a valid email address.",
   }),
   password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
+    message: "Password must be at least 8 characters long.",
   }),
-  // Optional: Add password confirmation if needed
-  // confirmPassword: z.string().min(8),
-})
-// Optional: Refine schema to check if passwords match
-// .refine((data) => data.password === data.confirmPassword, {
-//   message: "Passwords don't match",
-//   path: ["confirmPassword"], // path of error
-// });
+});
 
 type SignupFormValues = z.infer<typeof signupFormSchema>;
 
@@ -45,36 +38,30 @@ type SignupFormValues = z.infer<typeof signupFormSchema>;
 async function handleSignup(data: SignupFormValues) {
   console.log("Attempting signup with:", data);
 
-  // **Important:** In a real backend, hash the password before storing!
-  // Example (using bcrypt - needs installation: npm install bcrypt @types/bcrypt):
+  // **Important:** Hash password in a real backend!
   // const hashedPassword = await bcrypt.hash(data.password, 10);
   // const userData = { name: data.name, email: data.email, password: hashedPassword };
-
-  // Replace with actual API call to backend to create user
-  // Example: const response = await fetch('/api/auth/signup', { method: 'POST', body: JSON.stringify(userData) });
-  // Handle potential errors like duplicate email
+  // await fetch('/api/auth/signup', { method: 'POST', body: JSON.stringify(userData) });
 
   // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 1500));
 
-  // Simulate success/error (replace with actual logic)
+  // Simulate success/error
   const success = Math.random() > 0.1; // 90% chance of success
   if (!success) {
-    throw new Error("Signup failed. An account with this email might already exist.");
+    throw new Error("Signup failed. This email might already be registered.");
   }
 
-  // Send verification email on successful signup
+  // Send verification email
   try {
      await sendVerificationEmail(data.email);
      console.log("Verification email sent to:", data.email);
   } catch (emailError) {
       console.error("Failed to send verification email:", emailError);
-      // Optionally inform the user, but the account might still be created
+      // Don't block signup, but log the error
   }
 
-
-  // Return success message
-  return { success: true, message: "Account created successfully! Please check your email to verify your account." };
+  return { success: true, message: "Account created! Check your email to verify." };
 }
 
 
@@ -86,7 +73,6 @@ export default function SignupPage() {
       name: "",
       email: "",
       password: "",
-      // confirmPassword: "",
     },
     mode: "onChange",
   });
@@ -98,16 +84,18 @@ export default function SignupPage() {
        const result = await handleSignup(data);
        if (result.success) {
          toast({
-           title: "Account Created!",
+           title: "Account Created Successfully!",
            description: result.message,
+           variant: "default",
          });
-         // TODO: Optionally redirect to a "check your email" page or login page
-         form.reset(); // Reset form on success
+         form.reset(); // Reset form
+         // TODO: Optionally redirect after a delay
+         // setTimeout(() => router.push('/login'), 2000);
        }
      } catch (error) {
         const message = error instanceof Error ? error.message : "Signup failed. Please try again.";
         toast({
-          title: "Signup Failed",
+          title: "Signup Error",
           description: message,
           variant: "destructive",
         });
@@ -115,16 +103,16 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-background via-background to-primary/10">
-      <Card className="w-full max-w-md shadow-2xl border border-primary/10 animate-subtle-fade-in">
-         <CardHeader className="text-center">
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-             <Code size={28} />
+    <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-background via-primary/5 to-secondary/10 perspective-1000"> {/* Add perspective */}
+      <Card className="w-full max-w-md card-base card-hover shadow-2xl border-primary/10 animate-rotate-in transform-style-3d transition-transform duration-700"> {/* Apply rotate-in animation and 3D styles */}
+         <CardHeader className="text-center p-8">
+            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary/10 to-accent/10 text-primary animate-pulse-glow transform hover:scale-110 hover:translate-z-[10px] transition-transform duration-300">
+             <UserPlus size={32} strokeWidth={1.5} />
            </div>
-           <CardTitle className="text-3xl font-bold">Create Account</CardTitle>
-           <CardDescription>Join GenSyx and start your digital journey.</CardDescription>
+           <CardTitle className="text-3xl font-bold">Create Your Account</CardTitle>
+           <CardDescription className="text-lg text-muted-foreground mt-1">Join GenSyx and start your digital journey.</CardDescription>
          </CardHeader>
-         <CardContent>
+         <CardContent className="px-6 pb-6">
            <Form {...form}>
              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                <FormField
@@ -132,9 +120,9 @@ export default function SignupPage() {
                  name="name"
                  render={({ field }) => (
                    <FormItem>
-                     <FormLabel>Full Name</FormLabel>
+                     <FormLabel className="flex items-center gap-1.5"><User size={16}/> Full Name</FormLabel>
                      <FormControl>
-                       <Input placeholder="Your Full Name" {...field} />
+                       <Input placeholder="e.g., John Smith" {...field} className="transform hover:scale-[1.02] hover:translate-z-[3px] transition-transform duration-200"/>
                      </FormControl>
                      <FormMessage />
                    </FormItem>
@@ -145,9 +133,9 @@ export default function SignupPage() {
                  name="email"
                  render={({ field }) => (
                    <FormItem>
-                     <FormLabel>Email</FormLabel>
+                     <FormLabel className="flex items-center gap-1.5"><Mail size={16}/> Email Address</FormLabel>
                      <FormControl>
-                       <Input type="email" placeholder="you@example.com" {...field} />
+                       <Input type="email" placeholder="you@example.com" {...field} className="transform hover:scale-[1.02] hover:translate-z-[3px] transition-transform duration-200"/>
                      </FormControl>
                      <FormMessage />
                    </FormItem>
@@ -158,40 +146,26 @@ export default function SignupPage() {
                  name="password"
                  render={({ field }) => (
                    <FormItem>
-                     <FormLabel>Password</FormLabel>
+                     <FormLabel className="flex items-center gap-1.5"><Lock size={16}/> Password</FormLabel>
                      <FormControl>
-                       <Input type="password" placeholder="Choose a strong password" {...field} />
+                       <Input type="password" placeholder="Choose a strong password (min 8 chars)" {...field} className="transform hover:scale-[1.02] hover:translate-z-[3px] transition-transform duration-200"/>
                      </FormControl>
                      <FormMessage />
                    </FormItem>
                  )}
                />
-               {/* Optional Confirm Password Field */}
-               {/* <FormField
-                 control={form.control}
-                 name="confirmPassword"
-                 render={({ field }) => (
-                   <FormItem>
-                     <FormLabel>Confirm Password</FormLabel>
-                     <FormControl>
-                       <Input type="password" placeholder="Confirm your password" {...field} />
-                     </FormControl>
-                     <FormMessage />
-                   </FormItem>
-                 )}
-               /> */}
-               <Button type="submit" className="w-full" disabled={isSubmitting}>
-                 <UserPlus className="mr-2 h-4 w-4" />
-                 {isSubmitting ? "Creating Account..." : "Sign Up"}
+                <Button type="submit" className="w-full mt-2 transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300" size="lg" disabled={isSubmitting}>
+                 <UserPlus className="mr-2 h-5 w-5" />
+                 {isSubmitting ? "Creating Account..." : "Sign Up Now"}
                </Button>
              </form>
            </Form>
          </CardContent>
-          <CardFooter className="flex flex-col items-center text-center pt-4">
+          <CardFooter className="flex flex-col items-center text-center p-6 pt-4 border-t">
              <p className="text-sm text-muted-foreground">
                Already have an account?{' '}
-               <Link href="/login" className="font-medium text-primary hover:underline">
-                 Log In
+               <Link href="/login" className="font-medium text-primary hover:underline transition-colors transform hover:translate-z-[2px]">
+                 Log in instead
                </Link>
              </p>
           </CardFooter>

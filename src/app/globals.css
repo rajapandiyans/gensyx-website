@@ -2,11 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
+/* Define keyframes for animations */
 @layer base {
+  @keyframes subtle-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes subtle-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes subtle-slide-up {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+   @keyframes subtle-scale-in {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+   @keyframes subtle-fade-in-down {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes subtle-fade-in-up {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+     @keyframes pulse-glow {
+      0%, 100% {
+        opacity: 0.7;
+        box-shadow: 0 0 5px hsl(var(--primary) / 0.5), 0 0 10px hsl(var(--primary) / 0.4);
+      }
+      50% {
+        opacity: 1;
+        box-shadow: 0 0 10px hsl(var(--primary) / 0.7), 0 0 20px hsl(var(--primary) / 0.6);
+      }
+    }
+
+     @keyframes float {
+       0%, 100% { transform: translateY(0px); }
+       50% { transform: translateY(-15px); }
+     }
+
+     @keyframes rotate-in {
+        0% { transform: rotateY(-90deg) scale(0.8); opacity: 0; }
+        100% { transform: rotateY(0deg) scale(1); opacity: 1; }
+      }
+
+     @keyframes rotate-out {
+        0% { transform: rotateY(0deg) scale(1); opacity: 1; }
+        100% { transform: rotateY(90deg) scale(0.8); opacity: 0; }
+      }
+
   :root {
     --background: 0 0% 100%; /* White */
     --foreground: 210 29% 24%; /* Dark Slate */
@@ -32,7 +98,7 @@ body {
     --chart-3: 210 29% 40%; /* Medium Slate */
     --chart-4: 182 80% 60%; /* Bright Blue */
     --chart-5: 111 80% 40%; /* Darker Green */
-    --radius: 0.5rem;
+    --radius: 0.75rem; /* Slightly larger radius */
     --sidebar-background: 0 0% 98%; /* Near White */
     --sidebar-foreground: 210 29% 24%; /* Dark Slate */
     --sidebar-primary: 210 29% 24%; /* Dark Slate */
@@ -43,105 +109,124 @@ body {
     --sidebar-ring: 111 100% 54%; /* Neon Green */
   }
   .dark {
-    --background: 210 29% 10%; /* Very Dark Slate */
-    --foreground: 0 0% 98%; /* Near White */
-    --card: 210 29% 14%; /* Darker Slate */
-    --card-foreground: 0 0% 98%; /* Near White */
-    --popover: 210 29% 10%; /* Very Dark Slate */
-    --popover-foreground: 0 0% 98%; /* Near White */
-    --primary: 111 100% 54%; /* Neon Green - Primary Button Background */
-    --primary-foreground: 210 29% 10%; /* Very Dark Slate - Primary Button Text */
-    --secondary: 182 100% 74%; /* Electric Blue */
-    --secondary-foreground: 210 29% 10%; /* Very Dark Slate */
-    --muted: 210 29% 14%; /* Darker Slate */
-    --muted-foreground: 0 0% 63.9%; /* Gray */
+    --background: 220 20% 5%; /* Darker blue-ish background */
+    --foreground: 210 40% 98%; /* Lighter foreground */
+    --card: 216 15% 12%; /* Slightly lighter dark card */
+    --card-foreground: 210 40% 98%; /* Lighter card text */
+    --popover: 220 20% 5%; /* Darker popover */
+    --popover-foreground: 210 40% 98%; /* Lighter popover text */
+    --primary: 111 100% 60%; /* Slightly brighter Neon Green */
+    --primary-foreground: 210 30% 10%; /* Darker primary button text */
+    --secondary: 182 100% 80%; /* Slightly brighter Electric Blue */
+    --secondary-foreground: 210 30% 10%; /* Darker secondary text */
+    --muted: 216 15% 18%; /* Slightly lighter muted background */
+    --muted-foreground: 210 40% 65%; /* Lighter muted text */
     --accent: 182 100% 74%; /* Electric Blue - Accent for hover states etc. */
-    --accent-foreground: 210 29% 10%; /* Very Dark Slate */
-    --destructive: 0 62.8% 30.6%; /* Dark Red */
+    --accent-foreground: 210 30% 10%; /* Darker accent text */
+    --destructive: 0 70% 55%; /* Slightly adjusted Red */
     --destructive-foreground: 0 0% 98%; /* Near White */
-    --border: 210 29% 24%; /* Dark Slate */
-    --input: 210 29% 24%; /* Dark Slate */
+    --border: 216 15% 25%; /* Slightly lighter border */
+    --input: 216 15% 25%; /* Slightly lighter input background */
     --ring: 111 100% 54%; /* Neon Green */
     --chart-1: 182 100% 74%; /* Electric Blue */
     --chart-2: 111 100% 54%; /* Neon Green */
     --chart-3: 210 29% 40%; /* Medium Slate */
     --chart-4: 182 80% 60%; /* Bright Blue */
     --chart-5: 111 80% 40%; /* Darker Green */
-    --sidebar-background: 210 29% 14%; /* Darker Slate */
-    --sidebar-foreground: 0 0% 98%; /* Near White */
-    --sidebar-primary: 111 100% 54%; /* Neon Green */
-    --sidebar-primary-foreground: 210 29% 10%; /* Very Dark Slate */
-    --sidebar-accent: 210 29% 24%; /* Dark Slate */
-    --sidebar-accent-foreground: 0 0% 98%; /* Near White */
-    --sidebar-border: 210 29% 24%; /* Dark Slate */
+    --sidebar-background: 216 15% 12%; /* Match card background */
+    --sidebar-foreground: 210 40% 98%; /* Lighter sidebar text */
+    --sidebar-primary: 111 100% 60%; /* Match primary color */
+    --sidebar-primary-foreground: 210 30% 10%; /* Match primary foreground */
+    --sidebar-accent: 216 15% 25%; /* Match border/input */
+    --sidebar-accent-foreground: 210 40% 98%; /* Lighter sidebar accent text */
+    --sidebar-border: 216 15% 25%; /* Match border */
     --sidebar-ring: 111 100% 54%; /* Neon Green */
   }
 }
 
+/* Apply base styles and animations */
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border transition-colors duration-300 ease-in-out; /* Smoother transitions for color changes */
   }
   body {
-    @apply bg-background text-foreground;
-    /* Add subtle transition for color changes */
-    @apply transition-colors duration-300;
+    @apply bg-background text-foreground antialiased;
+    @apply bg-gradient-to-br from-background via-primary/5 to-secondary/5; /* Subtle gradient background */
+    background-size: 200% 200%;
+    animation: subtle-gradient 15s ease infinite; /* Apply background animation */
+    @apply perspective-[1000px]; /* Add perspective for 3D effects */
   }
 
-  /* Add subtle transitions to common interactive elements */
+  /* Enhanced transitions for interactive elements */
   button, a, input, textarea, select {
-    @apply transition-all duration-200 ease-in-out;
+    @apply transition-all duration-300 ease-in-out;
   }
   button:hover, a:hover {
-    @apply brightness-110;
+    @apply brightness-110 /* Slightly brighter */ transform scale-[1.03] translate-z-[5px]; /* Subtle scale and 3D lift */
   }
+   button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+       @apply ring-2 ring-ring ring-offset-2 ring-offset-background;
+   }
+
   button:active, a:active {
-    @apply scale-[0.98] brightness-95;
+    @apply scale-[0.97] brightness-90 transform translate-z-[-2px]; /* More noticeable active state with 3D effect */
   }
 
-  /* Basic animation for page transitions (can be expanded) */
-  .page-enter {
-    opacity: 0;
-    transform: translateY(10px);
+  /* Specific styling for links to use accent color */
+  a {
+    @apply text-accent hover:text-accent/80 hover:underline;
   }
-  .page-enter-active {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 300ms, transform 300ms;
+
+  h1, h2, h3, h4, h5, h6 {
+      @apply font-semibold tracking-tight; /* Consistent heading style */
   }
-  .page-exit {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .page-exit-active {
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 300ms, transform 300ms;
-  }
+
+  /* Default Card styling adjustment with 3D */
+  .card-base {
+       @apply rounded-xl border bg-card text-card-foreground shadow-lg; /* Use larger radius, stronger shadow */
+       @apply transition-all duration-500 ease-in-out; /* Slower transition for 3D */
+       @apply transform-style-3d; /* Enable 3D transforms */
+   }
+   .card-hover {
+      /* Add a subtle 3D rotation on hover */
+       @apply hover:shadow-xl hover:rotate-y-[-5deg] hover:rotate-x-[3deg] hover:scale-[1.03] hover:translate-z-[15px];
+       /* Adjust rotation and translation for desired effect */
+   }
 
 }
 
-/* Example subtle animation class */
-@keyframes subtle-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
+/* Reusable animation classes */
 .animate-subtle-fade-in {
-  animation: subtle-fade-in 0.5s ease-out forwards;
+  animation: subtle-fade-in 0.6s ease-out forwards;
 }
-
-/* Example subtle slide-up animation class */
-@keyframes subtle-slide-up {
-  from { transform: translateY(10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
 .animate-subtle-slide-up {
-  animation: subtle-slide-up 0.5s ease-out forwards;
+  animation: subtle-slide-up 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; /* Smoother easing */
+}
+.animate-subtle-scale-in {
+   animation: subtle-scale-in 0.5s ease-out forwards;
+}
+.animate-fade-in-down {
+  animation: subtle-fade-in-down 0.5s ease-out forwards;
+}
+.animate-fade-in-up {
+  animation: subtle-fade-in-up 0.5s ease-out forwards;
+}
+.animate-pulse-glow {
+    animation: pulse-glow 2.5s infinite ease-in-out;
+}
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+.animate-rotate-in {
+   animation: rotate-in 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+   transform-style: preserve-3d; /* Ensure child elements adhere to 3D space */
+}
+.animate-rotate-out {
+    animation: rotate-out 0.6s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+    transform-style: preserve-3d;
 }
 
-/* Specific styling for links to use accent color */
-a {
-  @apply text-accent hover:underline;
+/* Utility for perspective */
+.perspective-1000 {
+  perspective: 1000px;
 }
