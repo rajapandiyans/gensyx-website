@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Rocket, Code, Target, Eye, Zap, CheckCircle, Award, Users } from "lucide-react";
+import { Rocket, Code, Target, Eye, Zap, CheckCircle, Award, Users, Search, Palette, ExternalLink, ArrowRight } from "lucide-react"; // Added missing icons
 import Image from "next/image";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"; // Added CardFooter
 
 // Sample data (replace with actual data if needed)
 const featuredProjects = [
@@ -35,14 +35,14 @@ const featuredServices = [
   {
     id: "seo",
     title: "SEO Strategy",
-    icon: Search,
+    icon: Search, // Corrected icon import
     description: "Boosting visibility on search engines for organic traffic.",
     link: "/services/seo",
   },
    {
     id: "branding",
     title: "Branding & Identity",
-    icon: Palette,
+    icon: Palette, // Corrected icon import
     description: "Crafting memorable logos and cohesive brand identities.",
     link: "/services/branding",
   },
@@ -54,8 +54,8 @@ export default function Home() {
       {/* Hero Section with Background Image */}
       <section
         className="relative flex flex-col items-center justify-center min-h-[calc(80vh)] md:min-h-[calc(90vh)] text-center px-4 md:px-8 py-20 md:py-32 bg-cover bg-center bg-no-repeat text-white"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/homepagebg/1920/1080')" }}
-        data-ai-hint="modern technology abstract background"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/homepagefresh/1920/1080')" }} // Updated image seed
+        data-ai-hint="modern technology abstract background fresh unique"
       >
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black/80 z-0"></div>
@@ -147,7 +147,7 @@ export default function Home() {
                >
                  <div className="relative w-full md:w-1/3 h-48 md:h-full overflow-hidden flex-shrink-0">
                     <Image
-                       src={project.imageUrl}
+                       src={`https://picsum.photos/seed/project${project.id}/400/300`} // Use Picsum for placeholders
                        alt={project.title}
                        fill
                        className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
@@ -211,10 +211,67 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Testimonials Section - Added */}
+      <section className="py-16 md:py-24 bg-muted/40">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-primary">What Our Clients Say</h2>
+          <p className="text-center text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">
+            Hear from businesses we've helped succeed in the digital world.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => ( // Placeholder loop for 3 testimonials
+               <Card
+                 key={`testimonial-${i}`}
+                 className="card-base animate-subtle-slide-up border-border/30 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1"
+                 style={{ animationDelay: `${i * 0.1}s` }}
+               >
+                 <CardContent className="pt-6">
+                   <blockquote className="border-l-4 border-primary pl-4 italic text-muted-foreground">
+                     "Working with GenSyx was a game-changer for our online presence. Their expertise and dedication are unmatched."
+                   </blockquote>
+                 </CardContent>
+                 <CardFooter className="pt-4 pb-6 flex items-center gap-3">
+                   <Avatar>
+                     <AvatarImage src={`https://i.pravatar.cc/40?u=testimonial${i}`} alt={`Client ${i}`} />
+                     <AvatarFallback>{`C${i}`}</AvatarFallback>
+                   </Avatar>
+                   <div>
+                     <p className="font-semibold text-foreground">Client Name {i}</p>
+                     <p className="text-sm text-muted-foreground">Company Position</p>
+                   </div>
+                 </CardFooter>
+               </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action Section - Added */}
+       <section className="py-20 md:py-28 bg-gradient-to-r from-primary/90 to-secondary/90 text-primary-foreground">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 animate-fade-in-down text-shadow">
+            Ready to Start Your Digital Transformation?
+          </h2>
+          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            Let's discuss your project and how GenSyx can help you achieve your online goals.
+          </p>
+          <Button
+            size="lg"
+            variant="secondary" // Use secondary variant for contrast on gradient
+            asChild
+            className="animate-fade-in-up shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 bg-white hover:bg-gray-100 text-primary px-10 py-3 text-lg font-semibold"
+            style={{ animationDelay: '0.2s' }}
+          >
+            <Link href="/contact">
+               Request a Free Consultation
+            </Link>
+          </Button>
+        </div>
+      </section>
+
     </div>
   );
 }
 
-
-// Add missing imports
-import { ArrowRight, ExternalLink, Search, Palette } from "lucide-react";
+// Add imports for newly used components
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
