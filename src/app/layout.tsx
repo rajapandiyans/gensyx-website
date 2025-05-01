@@ -30,8 +30,13 @@ export default function RootLayout({
     // Apply dark theme by default and suppress hydration warnings related to theme/class changes
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <SidebarProvider defaultOpen={false}> {/* Keep sidebar closed by default for a cleaner initial look */}
-          <Sidebar variant="floating" collapsible="icon"> {/* Use floating variant with icon collapse */}
+        <SidebarProvider
+          defaultOpen={false}
+          variant="floating"
+          collapsible="icon"
+          side="left" // Explicitly pass props to Provider
+        >
+          <Sidebar> {/* Sidebar component now gets variant/collapsible/side from context */}
             <AppSidebar />
           </Sidebar>
           <SidebarInset> {/* Use SidebarInset for main content area */}
@@ -43,3 +48,4 @@ export default function RootLayout({
     </html>
   );
 }
+

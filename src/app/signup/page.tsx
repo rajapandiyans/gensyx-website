@@ -66,7 +66,7 @@ async function handleSignup(data: SignupFormValues) {
 
 
 export default function SignupPage() {
-  const { toast } = useToast();
+  const { toast } } from useToast();
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupFormSchema),
     defaultValues: {
@@ -155,8 +155,11 @@ export default function SignupPage() {
                  )}
                />
                 <Button type="submit" className="w-full mt-2 transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300" size="lg" disabled={isSubmitting}>
-                 <UserPlus className="mr-2 h-5 w-5" />
-                 {isSubmitting ? "Creating Account..." : "Sign Up Now"}
+                  {/* Ensure single child */}
+                  <span className="flex items-center justify-center gap-2">
+                    <UserPlus className="mr-2 h-5 w-5" />
+                    {isSubmitting ? "Creating Account..." : "Sign Up Now"}
+                  </span>
                </Button>
              </form>
            </Form>
@@ -165,7 +168,8 @@ export default function SignupPage() {
              <p className="text-sm text-muted-foreground">
                Already have an account?{' '}
                <Link href="/login" className="font-medium text-primary hover:underline transition-colors transform hover:translate-z-[2px]">
-                 Log in instead
+                 {/* Ensure single child */}
+                 <span>Log in instead</span>
                </Link>
              </p>
           </CardFooter>

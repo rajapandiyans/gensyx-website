@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -86,7 +87,10 @@ export default function ServicesPage() {
              <CardFooter className="p-6 pt-0 mt-auto">
               <Button variant="outline" asChild className="w-full transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300">
                 <Link href={service.link}>
-                  Learn More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                  {/* Ensure single child wrapper */}
+                  <span className="flex items-center justify-center gap-2">
+                    Learn More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                  </span>
                 </Link>
               </Button>
             </CardFooter>

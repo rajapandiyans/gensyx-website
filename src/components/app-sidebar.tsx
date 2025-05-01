@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -11,11 +10,10 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarFooter,
-  SidebarTrigger,
   useSidebar, // Import useSidebar hook
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
-import { Home, Info, BriefcaseBusiness, Handshake, Mail, LogIn, UserPlus, Settings, PanelLeftOpen, PanelLeftClose } from 'lucide-react';
+import { Home, Info, BriefcaseBusiness, Handshake, Mail, LogIn, UserPlus, PanelLeftOpen, PanelLeftClose } from 'lucide-react';
 
 // Paths where the main navigation should be hidden or adjusted
 const AUTH_PATHS = ['/login', '/signup'];
@@ -146,25 +144,33 @@ export function AppSidebar() {
             {state === 'expanded' ? (
               <div className="flex flex-col gap-2">
                  <Button variant="ghost" size="sm" asChild>
-                   <Link href="/login" className="flex items-center justify-start gap-2">
-                     <LogIn /> Login
+                   <Link href="/login">
+                    {/* Ensure single child */}
+                    <span className="flex items-center justify-start gap-2">
+                       <LogIn /> Login
+                    </span>
                    </Link>
                  </Button>
                  <Button variant="default" size="sm" asChild>
-                   <Link href="/signup" className="flex items-center justify-start gap-2">
-                    <UserPlus /> Sign Up
+                   <Link href="/signup">
+                    {/* Ensure single child */}
+                    <span className="flex items-center justify-start gap-2">
+                      <UserPlus /> Sign Up
+                    </span>
                   </Link>
                 </Button>
               </div>
             ) : (
                <div className="flex flex-col gap-2 items-center">
                   <SidebarMenuButton asChild tooltip={{ children: "Login", side: "right", align: "center", sideOffset: 10 }}>
-                     <Link href="/login" className="flex items-center justify-center p-0"> {/* Ensure link fills button */}
+                     <Link href="/login">
+                       {/* Ensure single child */}
                        <LogIn />
                      </Link>
                   </SidebarMenuButton>
                   <SidebarMenuButton asChild tooltip={{ children: "Sign Up", side: "right", align: "center", sideOffset: 10 }}>
-                    <Link href="/signup" className="flex items-center justify-center p-0"> {/* Ensure link fills button */}
+                    <Link href="/signup">
+                      {/* Ensure single child */}
                       <UserPlus />
                     </Link>
                   </SidebarMenuButton>

@@ -121,7 +121,10 @@ export default function ServiceDetailPage() {
          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-destructive">Service Not Found</h1>
          <p className="text-lg text-muted-foreground mb-8">Oops! The service you're looking for doesn't seem to exist.</p>
          <Button onClick={() => router.back()} variant="outline" className="transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300">
-           <ArrowLeft className="mr-2 h-4 w-4" /> Go Back
+           {/* Ensure single child */}
+            <span className="flex items-center justify-center gap-2">
+              <ArrowLeft className="mr-2 h-4 w-4" /> Go Back
+            </span>
          </Button>
        </div>
      );
@@ -132,7 +135,10 @@ export default function ServiceDetailPage() {
   return (
     <div className="container mx-auto px-4 py-12 md:py-16 lg:py-20 perspective-1000"> {/* Add perspective */}
        <Button onClick={() => router.back()} variant="ghost" className="mb-8 group animate-fade-in-down transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300">
-         <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1" /> Back to Services
+         {/* Ensure single child */}
+         <span className="flex items-center justify-center gap-2">
+          <ArrowLeft className="mr-2 h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1" /> Back to Services
+         </span>
        </Button>
 
       <Card className="card-base card-hover shadow-xl overflow-hidden animate-subtle-scale-in transform-style-3d transition-transform duration-500"> {/* Apply 3D styles */}
@@ -184,7 +190,10 @@ export default function ServiceDetailPage() {
             <p className="text-muted-foreground mb-6 max-w-xl mx-auto">Let's discuss how our {service.title.toLowerCase()} service can help you achieve your goals.</p>
             <Button size="lg" asChild className="shadow-lg hover:shadow-xl transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300">
               <Link href="/contact">
+                {/* Ensure single child wrapper */}
+                <span className="flex items-center justify-center gap-2">
                  <Mail className="mr-2 h-5 w-5" /> Request a Consultation
+                </span>
               </Link>
             </Button>
           </div>

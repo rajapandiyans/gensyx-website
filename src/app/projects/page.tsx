@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -77,8 +78,11 @@ export default function ProjectsPage() {
             </CardContent>
             <CardFooter className="p-6 pt-0 mt-auto border-t border-border/50">
                <Button variant="outline" size="sm" asChild className="w-full sm:w-auto transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300">
-                 <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2">
-                   View Project <ExternalLink className="h-4 w-4" />
+                 <a href={project.link} target="_blank" rel="noopener noreferrer">
+                   {/* Ensure single child wrapper */}
+                   <span className="flex items-center justify-center gap-2">
+                        View Project <ExternalLink className="h-4 w-4" />
+                    </span>
                  </a>
                </Button>
             </CardFooter>

@@ -28,16 +28,20 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <Button asChild size="lg" className="shadow-md hover:shadow-lg transition-all duration-300 animate-subtle-scale-in transform hover:scale-105 hover:translate-z-[5px]" style={{ animationDelay: '0.4s' }}>
               <Link href="/services">
-                 {/* Removed span, icon and text are direct children of Link */}
-                 <Rocket className="mr-2" /> {/* Added margin back */}
-                 Discover Our Services
+                 {/* Ensure single child wrapper */}
+                 <span className="flex items-center justify-center gap-2">
+                   <Rocket className="mr-2 h-5 w-5" />
+                   Discover Our Services
+                 </span>
               </Link>
             </Button>
             <Button variant="outline" size="lg" asChild className="shadow-md hover:shadow-lg transition-all duration-300 animate-subtle-scale-in transform hover:scale-105 hover:translate-z-[5px]" style={{ animationDelay: '0.5s' }}>
               <Link href="/contact">
-                 {/* Removed span, icon and text are direct children of Link */}
-                 <Code className="mr-2" /> {/* Added margin back */}
-                 Let's Build Together
+                 {/* Ensure single child wrapper */}
+                 <span className="flex items-center justify-center gap-2">
+                   <Code className="mr-2 h-5 w-5" />
+                   Let's Build Together
+                 </span>
               </Link>
             </Button>
           </div>

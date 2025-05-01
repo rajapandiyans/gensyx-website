@@ -54,7 +54,7 @@ async function submitContactForm(data: ContactFormValues) {
 
 
 export default function ContactPage() {
-  const { toast } = useToast();
+  const { toast } } from useToast();
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -148,8 +148,11 @@ export default function ContactPage() {
                   )}
                 />
                  <Button type="submit" className="w-full mt-2 transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300" size="lg" disabled={isSubmitting}>
-                   <Send className="mr-2 h-5 w-5" />
-                   {isSubmitting ? "Sending..." : "Send Message"}
+                   {/* Ensure single child */}
+                   <span className="flex items-center justify-center gap-2">
+                       <Send className="mr-2 h-5 w-5" />
+                       {isSubmitting ? "Sending..." : "Send Message"}
+                    </span>
                  </Button>
               </form>
             </Form>

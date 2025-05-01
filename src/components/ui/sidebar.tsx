@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -34,6 +35,9 @@ type SidebarContext = {
   setOpenMobile: (open: boolean) => void
   isMobile: boolean
   toggleSidebar: () => void
+  variant?: "sidebar" | "floating" | "inset"; // Add variant to context
+  collapsible?: "offcanvas" | "icon" | "none"; // Add collapsible to context
+  side?: "left" | "right"; // Add side to context
 }
 
 const SidebarContext = React.createContext<SidebarContext | null>(null)
@@ -53,6 +57,10 @@ const SidebarProvider = React.forwardRef<
     defaultOpen?: boolean
     open?: boolean
     onOpenChange?: (open: boolean) => void
+    // Pass variant, collapsible, side through provider props
+    variant?: "sidebar" | "floating" | "inset"
+    collapsible?: "offcanvas" | "icon" | "none"
+    side?: "left" | "right"
   }
 >(
   (
@@ -60,6 +68,9 @@ const SidebarProvider = React.forwardRef<
       defaultOpen = true,
       open: openProp,
       onOpenChange: setOpenProp,
+      variant = "sidebar", // Default variant
+      collapsible = "icon", // Default collapsible
+      side = "left", // Default side
       className,
       style,
       children,
@@ -138,8 +149,11 @@ const SidebarProvider = React.forwardRef<
         openMobile,
         setOpenMobile,
         toggleSidebar,
+        variant, // Provide variant in context
+        collapsible, // Provide collapsible in context
+        side, // Provide side in context
       }),
-      [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
+      [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar, variant, collapsible, side]
     )
 
     return (
@@ -173,24 +187,17 @@ SidebarProvider.displayName = "SidebarProvider"
 
 const Sidebar = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<"div"> & {
-    side?: "left" | "right"
-    variant?: "sidebar" | "floating" | "inset"
-    collapsible?: "offcanvas" | "icon" | "none"
-  }
+  Omit<React.ComponentProps<"div">, 'side'> // Omit side from props as it's now from context
 >(
   (
     {
-      side = "left",
-      variant = "sidebar",
-      collapsible = "icon", // Default to icon collapse
       className,
       children,
       ...props
     },
     ref
   ) => {
-    const { isMobile, state, openMobile, setOpenMobile, toggleSidebar } = useSidebar()
+    const { isMobile, state, openMobile, setOpenMobile, toggleSidebar, variant, collapsible, side } = useSidebar();
 
     // Always render the trigger for mobile
      const mobileTrigger = (
@@ -348,7 +355,7 @@ const SidebarInset = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"main">
 >(({ className, ...props }, ref) => {
-   const { state, variant } = useSidebar(); // Access variant from context if needed (requires adding variant to context)
+   const { state, variant } = useSidebar(); // Access variant from context
 
   return (
     <main
@@ -584,8 +591,8 @@ const sidebarMenuButtonVariants = cva(
 
 // SidebarMenuButton - The actual button/link component
 const SidebarMenuButton = React.forwardRef<
-  HTMLButtonElement, // Changed to HTMLButtonElement assuming default is button
-  React.ComponentProps<"button"> & { // Adjusted props for button element
+  HTMLButtonElement | HTMLAnchorElement, // Can be button or anchor
+  (React.ComponentProps<"button"> | React.ComponentProps<"a">) & { // Union of props
     asChild?: boolean
     isActive?: boolean
     tooltip?: string | React.ComponentProps<typeof TooltipContent>
@@ -604,23 +611,33 @@ const SidebarMenuButton = React.forwardRef<
     },
     ref
   ) => {
-    const Comp = asChild ? Slot : "button";
+    const Comp = asChild ? Slot : "button"; // Default to button if not asChild
     const { state, isMobile } = useSidebar();
 
+    // Determine if the component should be rendered as an anchor tag
+    // This assumes if `href` prop is present, it's intended as a link.
+    const isLink = typeof props === 'object' && props !== null && 'href' in props;
+    const Element = asChild ? Slot : (isLink ? 'a' : 'button');
+
+
+    // Create the button/link element directly using Element
     const buttonElement = (
-      <Comp
-        ref={ref}
+      <Element
+        ref={ref as any} // Use 'any' for ref due to union type complexity
         data-sidebar="menu-button"
         data-size={size}
         data-active={isActive}
         className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
-        {...props}
+        {...props} // Spread the remaining props
       >
-          {children} {/* Render children passed to the button */}
-      </Comp>
+        {children} {/* Render children passed to the button */}
+      </Element>
     );
 
-    if (!tooltip) {
+    // Tooltip logic: Show only when collapsed and not on mobile
+    const showTooltip = state === 'collapsed' && !isMobile && tooltip;
+
+    if (!showTooltip) {
       return buttonElement;
     }
 
@@ -631,24 +648,18 @@ const SidebarMenuButton = React.forwardRef<
       tooltipContentProps = tooltip;
     }
 
-     // Tooltip logic: Show only when collapsed and not on mobile
-    const showTooltip = state === 'collapsed' && !isMobile;
-
     return (
-       showTooltip ? (
-           <Tooltip>
-             <TooltipTrigger asChild>{buttonElement}</TooltipTrigger>
-             <TooltipContent
-               side="right"
-               align="center"
-               sideOffset={10} // Adjust offset
-               className="bg-background text-foreground border-border shadow-lg" // Style tooltip
-               {...tooltipContentProps}
-             />
-           </Tooltip>
-       ) : (
-            buttonElement // Render button without tooltip if not collapsed or on mobile
-       )
+      <Tooltip>
+         {/* Remove asChild here as the buttonElement is already the trigger */}
+        <TooltipTrigger>{buttonElement}</TooltipTrigger>
+        <TooltipContent
+          side="right"
+          align="center"
+          sideOffset={10} // Adjust offset
+          className="bg-background text-foreground border-border shadow-lg" // Style tooltip
+          {...tooltipContentProps}
+        />
+      </Tooltip>
     );
   }
 );
@@ -766,19 +777,20 @@ SidebarMenuSubItem.displayName = "SidebarMenuSubItem"
 
 // SidebarMenuSubButton - Button/link component for sub-menu items
 const SidebarMenuSubButton = React.forwardRef<
-   HTMLButtonElement, // Assuming button, adjust if it's a link <a>
-   React.ComponentProps<"button"> & {
+   HTMLButtonElement | HTMLAnchorElement, // Allow button or anchor
+   (React.ComponentProps<"button"> | React.ComponentProps<"a">) & { // Union of props
     asChild?: boolean
     size?: "sm" | "md" // Keep sizes if needed
     isActive?: boolean
   }
 >(({ asChild = false, size = "md", isActive, className, ...props }, ref) => {
-  const Comp = asChild ? Slot : "button"
+   const isLink = typeof props === 'object' && props !== null && 'href' in props;
+   const Comp = asChild ? Slot : (isLink ? 'a' : 'button');
    const { state } = useSidebar()
 
   return (
     <Comp
-      ref={ref}
+      ref={ref as any} // Use 'any' for ref due to union type complexity
       data-sidebar="menu-sub-button"
       data-size={size}
       data-active={isActive}
@@ -790,7 +802,7 @@ const SidebarMenuSubButton = React.forwardRef<
         state === 'collapsed' ? "opacity-0 pointer-events-none" : "opacity-100", // Hide when collapsed
         className
       )}
-      {...props}
+      {...props} // Spread the remaining props
     />
   )
 })
@@ -824,3 +836,5 @@ export {
   SidebarTrigger,
   useSidebar,
 }
+
+

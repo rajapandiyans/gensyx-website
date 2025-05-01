@@ -52,7 +52,7 @@ async function handleLogin(data: LoginFormValues) {
 
 
 export default function LoginPage() {
-  const { toast } = useToast();
+  const { toast } } from useToast();
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -124,15 +124,19 @@ export default function LoginPage() {
                      <FormMessage />
                      <div className="text-right mt-2">
                         <Link href="#" /* Placeholder - Replace with actual link */ className="text-xs text-muted-foreground hover:text-primary hover:underline transition-colors transform hover:translate-z-[2px]">
-                          Forgot password?
+                          {/* Ensure single child */}
+                          <span>Forgot password?</span>
                         </Link>
                       </div>
                    </FormItem>
                  )}
                />
                 <Button type="submit" className="w-full mt-2 transform hover:scale-105 hover:translate-z-[5px] transition-transform duration-300" size="lg" disabled={isSubmitting}>
-                 <LogIn className="mr-2 h-5 w-5" />
-                 {isSubmitting ? "Logging In..." : "Log In"}
+                 {/* Ensure single child */}
+                 <span className="flex items-center justify-center gap-2">
+                     <LogIn className="mr-2 h-5 w-5" />
+                     {isSubmitting ? "Logging In..." : "Log In"}
+                 </span>
                </Button>
              </form>
            </Form>
@@ -141,7 +145,8 @@ export default function LoginPage() {
             <p className="text-sm text-muted-foreground">
               Don't have an account?{' '}
               <Link href="/signup" className="font-medium text-primary hover:underline transition-colors transform hover:translate-z-[2px]">
-                Sign up here
+                {/* Ensure single child */}
+                <span>Sign up here</span>
               </Link>
             </p>
          </CardFooter>
