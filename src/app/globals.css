@@ -289,6 +289,14 @@
   .chatbot-input-area {
     @apply p-4 border-t border-border flex items-center gap-2;
   }
+
+   /* Add responsive size for Zap icon if needed */
+  .md\:size-64 {
+    @media (min-width: 768px) {
+      width: 16rem; /* 64 * 4px */
+      height: 16rem;
+    }
+  }
 }
 
 

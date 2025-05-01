@@ -101,10 +101,13 @@ export default function Home() {
 
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center">
-          <Zap size={64} className="text-primary mb-6 animate-pulse-glow" strokeWidth={1.5}/>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 animate-fade-in-down text-shadow-lg">
-             <span className="text-primary">GenSyx</span> Solutions
-          </h1>
+          {/* Heading Group with Icon */}
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 mb-6 animate-fade-in-down">
+            <Zap size={48} className="text-primary animate-pulse-glow order-1 md:order-none md:size-16" strokeWidth={1.5}/> {/* Apply responsive size via className */}
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-shadow-lg order-2 md:order-none">
+              <span className="text-primary">GenSyx</span> Solutions
+            </h1>
+          </div>
            <p className="text-lg md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto mb-10 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
              Empowering Your Digital Future with Innovative Web & Marketing Strategies.
            </p>
