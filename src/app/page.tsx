@@ -1,52 +1,51 @@
-
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Rocket, Code, Target, Eye, Zap, CheckCircle, Award, Users, Search, Palette, ExternalLink, ArrowRight } from "lucide-react";
+import { Rocket, Code, Target, Eye, Zap, CheckCircle, Award, Users, Search, Palette, ExternalLink, ArrowRight, BarChart3, Network, UserCheck } from "lucide-react";
 import Image from "next/image";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"; // Ensure Avatar components are imported
 
-// Sample data (replace with actual data if needed)
+// Sample data for featured projects with placeholder images
 const featuredProjects = [
  {
     id: 1,
     title: "GPT3 Integration",
     description: "Harnessing AI for creative and business solutions.",
-    imageUrl: "/images/gpt3.png", // Make sure this image exists or use picsum
-    link: "/projects", // Link to projects page or specific project
+    imageUrl: `https://picsum.photos/seed/projectThumb1/400/300`, // Placeholder
+    link: "https://gpt3-gensyx.vercel.app/#wgpt3", // Use provided link
     aiHint: "ai interface abstract technology blue",
   },
   {
     id: 2,
     title: "Travela Booking Platform",
     description: "Your perfect travel companion for seamless trip planning.",
-    imageUrl: "/images/travela.png", // Make sure this image exists or use picsum
-    link: "/projects",
+    imageUrl: `https://picsum.photos/seed/projectThumb2/400/300`, // Placeholder
+    link: "https://tourism-gensyx.vercel.app/", // Use provided link
     aiHint: "travel booking website map passport",
   },
-  // Added the other two projects
    {
     id: 3,
     title: "Caterserv Event Planning",
     description: "Simplify event planning with all-in-one vendor bookings.",
-    imageUrl: "/images/caterserv.png", // Placeholder
-    link: "/projects",
+    imageUrl: `https://picsum.photos/seed/projectThumb3/400/300`, // Placeholder
+    link: "https://caterserv-gensyx.vercel.app/", // Use provided link
     aiHint: "event planning catering food service",
   },
   {
     id: 4,
     title: "Modern E-Commerce Store",
     description: "Seamless UX, secure payments, and AI-driven recommendations.",
-    imageUrl: "/images/ecommerce.png", // Placeholder
-    link: "/projects",
+    imageUrl: `https://picsum.photos/seed/projectThumb4/400/300`, // Placeholder
+    link: "https://e-commerce-gensyx.vercel.app/index.html", // Use provided link
     aiHint: "online store e-commerce shopping cart",
   },
 ];
 
+// Updated featured services data to include all services with correct icons and links
 const featuredServices = [
   {
     id: "website-design",
-    title: "Web Design & Development",
+    title: "Web Design & Dev", // Shortened for consistency
     icon: Code,
     description: "Building responsive, high-performance websites that captivate.",
     link: "/services/website-design",
@@ -65,6 +64,27 @@ const featuredServices = [
     description: "Crafting memorable logos and cohesive brand identities.",
     link: "/services/branding",
   },
+   {
+    id: "digital-marketing",
+    title: "Digital Marketing",
+    icon: BarChart3, // Added
+    description: "Data-driven strategies to reach audiences and drive leads.",
+    link: "/services/digital-marketing",
+  },
+   {
+    id: "social-media",
+    title: "Social Media Mgmt",
+    icon: Network, // Added
+    description: "Engaging content and community management for growth.",
+    link: "/services/social-media",
+  },
+    {
+    id: "google-profile",
+    title: "Google Business", // Shortened
+    icon: UserCheck, // Added
+    description: "Optimizing your Google profile for local visibility.",
+    link: "/services/google-profile",
+  },
 ];
 
 export default function Home() {
@@ -73,8 +93,8 @@ export default function Home() {
       {/* Hero Section with Background Image */}
       <section
         className="relative flex flex-col items-center justify-center min-h-[calc(80vh)] md:min-h-[calc(90vh)] text-center px-4 md:px-8 py-20 md:py-32 bg-cover bg-center bg-no-repeat text-white isolate"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/heroVibrantTech/1920/1080')" }}
-        data-ai-hint="vibrant abstract technology futuristic cyber purple blue"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/heroVibrantTechUnique/1920/1080')" }} // New unique seed
+        data-ai-hint="vibrant abstract technology futuristic cyber purple blue unique fresh" // Updated hint
       >
         {/* Overlay */}
         <div className="bg-hero-overlay"></div>
@@ -112,38 +132,41 @@ export default function Home() {
        {/* Services Overview Section */}
       <section
         className="relative py-16 md:py-24 bg-cover bg-center isolate"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/servicesPattern/1920/1080')" }}
-        data-ai-hint="subtle geometric pattern digital network blue white"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/servicesPatternFresh/1920/1080')" }} // New unique seed
+        data-ai-hint="subtle geometric pattern digital network blue white fresh clean" // Updated hint
       >
-        <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay */}
+        <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay with blur */}
         <div className="relative container mx-auto px-4 z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-primary">What We Do</h2>
           <p className="text-center text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">
             Offering a suite of services designed to build, grow, and enhance your online presence.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredServices.map((service, index) => (
-               <Card
-                 key={service.id}
-                 className="card-base group overflow-hidden animate-subtle-slide-up text-center border-border/30 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-2 bg-card/80 backdrop-blur-md" // Added card background transparency
-                 style={{ animationDelay: `${index * 0.1}s` }}
-               >
-                 <CardHeader className="items-center pb-4">
-                    <div className="mb-4 flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-br from-primary/10 to-accent/10 text-primary transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/20">
-                       <service.icon size={32} strokeWidth={1.5} />
-                    </div>
-                    <CardTitle className="text-xl font-semibold">{service.title}</CardTitle>
-                 </CardHeader>
-                 <CardContent>
-                    <CardDescription>{service.description}</CardDescription>
-                 </CardContent>
-                  <CardFooter className="justify-center pb-6">
-                    <Button variant="link" size="sm" asChild className="text-primary group-hover:underline">
-                       <Link href={service.link}>Learn More <ArrowRight className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" /></Link>
-                    </Button>
-                 </CardFooter>
-              </Card>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"> {/* Adjusted grid for better responsiveness */}
+            {featuredServices.map((service, index) => {
+              const ServiceIcon = service.icon; // Get the icon component
+              return (
+              <Card
+                key={service.id}
+                className="card-base group overflow-hidden animate-subtle-slide-up text-center border-border/30 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-2 bg-card/80 backdrop-blur-md" // Added card background transparency
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <CardHeader className="items-center pb-4">
+                   <div className="mb-4 flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-br from-primary/10 to-accent/10 text-primary transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/20">
+                      <ServiceIcon size={32} strokeWidth={1.5} /> {/* Render the icon */}
+                   </div>
+                   <CardTitle className="text-xl font-semibold">{service.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                   <CardDescription>{service.description}</CardDescription>
+                </CardContent>
+                 <CardFooter className="justify-center pb-6">
+                   <Button variant="link" size="sm" asChild className="text-primary group-hover:underline">
+                      <Link href={service.link}>Learn More <ArrowRight className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" /></Link>
+                   </Button>
+                </CardFooter>
+             </Card>
+             );
+            })}
           </div>
            <div className="text-center mt-12">
               <Button asChild size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10 hover:text-primary">
@@ -158,10 +181,10 @@ export default function Home() {
       {/* Featured Projects Section */}
        <section
          className="relative py-16 md:py-24 bg-cover bg-center isolate"
-         style={{ backgroundImage: "url('https://picsum.photos/seed/projectGrid/1920/1080')" }}
-         data-ai-hint="modern workspace design project portfolio dark grey"
+         style={{ backgroundImage: "url('https://picsum.photos/seed/projectGridFresh/1920/1080')" }} // New unique seed
+         data-ai-hint="modern workspace design project portfolio dark grey fresh unique" // Updated hint
        >
-         <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay */}
+         <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay with blur */}
          <div className="relative container mx-auto px-4 z-10">
            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-primary">Featured Projects</h2>
            <p className="text-center text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">
@@ -176,7 +199,7 @@ export default function Home() {
                >
                  <div className="relative w-full md:w-1/3 h-48 md:h-full overflow-hidden flex-shrink-0">
                     <Image
-                       src={`https://picsum.photos/seed/projectThumb${project.id}/400/300`} // Use Picsum for placeholders
+                       src={project.imageUrl} // Use updated placeholder URL
                        alt={project.title}
                        fill
                        className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
@@ -190,11 +213,11 @@ export default function Home() {
                       <CardDescription className="mb-4">{project.description}</CardDescription>
                    </div>
                     <Button variant="outline" size="sm" asChild className="mt-auto w-full sm:w-auto self-start border-primary/50 text-primary/90 hover:bg-primary/10 hover:text-primary">
-                       <Link href={project.link} target="_blank" rel="noopener noreferrer">
+                       <a href={project.link} target="_blank" rel="noopener noreferrer"> {/* Use <a> for external links */}
                           <span className="flex items-center justify-center gap-2">
                              View Project <ExternalLink className="h-4 w-4" />
                           </span>
-                       </Link>
+                       </a>
                     </Button>
                  </div>
                </Card>
@@ -213,10 +236,10 @@ export default function Home() {
        {/* Why Choose Us Section */}
        <section
          className="relative py-16 md:py-24 bg-cover bg-center isolate"
-         style={{ backgroundImage: "url('https://picsum.photos/seed/whyChooseTexture/1920/1080')" }}
-         data-ai-hint="abstract light texture professional partnership subtle"
+         style={{ backgroundImage: "url('https://picsum.photos/seed/whyChooseTextureFresh/1920/1080')" }} // New unique seed
+         data-ai-hint="abstract light texture professional partnership subtle fresh clean" // Updated hint
        >
-          <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay */}
+          <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay with blur */}
         <div className="relative container mx-auto px-4 z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">Why Partner with GenSyx?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
@@ -248,10 +271,10 @@ export default function Home() {
       {/* Testimonials Section - Added */}
       <section
         className="relative py-16 md:py-24 bg-cover bg-center isolate"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/testimonialWave/1920/1080')" }}
-        data-ai-hint="soft wave pattern background customer reviews light blue"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/testimonialWaveFresh/1920/1080')" }} // New unique seed
+        data-ai-hint="soft wave pattern background customer reviews light blue fresh clean" // Updated hint
       >
-        <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay */}
+        <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay with blur */}
         <div className="relative container mx-auto px-4 z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-primary">What Our Clients Say</h2>
           <p className="text-center text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">
@@ -308,15 +331,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer Section - Added */}
+      {/* Footer Section - Updated Copyright */}
       <footer className="py-6 bg-card border-t border-border/20">
         <div className="container mx-auto text-center text-muted-foreground text-sm">
-          &copy; {new Date().getFullYear() + 1} GenSyx Solutions. All rights reserved. {/* Updated year */}
+          &copy; 2025 GenSyx Solutions. All rights reserved. {/* Updated year */}
         </div>
       </footer>
 
     </div>
   );
 }
-
-    

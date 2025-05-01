@@ -43,7 +43,7 @@ const serviceDetailsData: { [key: string]: any } = {
      aiHints: ["seo analytics dashboard graph", "keyword research analysis chart"],
   },
    "branding": {
-    title: "Logo Design & Brand Identity",
+    title: "Branding & Identity", // Updated title to match services page more closely
     icon: Palette,
     description: "Your brand is more than just a logo. We help you craft a compelling brand identity that reflects your values, resonates with your target audience, and sets you apart from the competition.",
     features: [
@@ -56,7 +56,7 @@ const serviceDetailsData: { [key: string]: any } = {
       "Visual Identity Application Across Platforms",
     ],
      visuals: ["https://picsum.photos/seed/brand1/800/450", "https://picsum.photos/seed/brand2/800/450"],
-     aiHints: ["logo design concepts variations", "brand style guide mockup presentation"],
+     aiHints: ["brand logo design identity", "brand style guide mockup presentation"], // Updated hint
   },
    "digital-marketing": {
      title: "Digital Marketing Strategy",
@@ -72,7 +72,7 @@ const serviceDetailsData: { [key: string]: any } = {
        "Integrated Multi-Channel Strategy",
      ],
       visuals: ["https://picsum.photos/seed/digitalm1/800/450", "https://picsum.photos/seed/digitalm2/800/450"],
-      aiHints: ["digital marketing funnel chart analytics", "ppc campaign dashboard performance"],
+      aiHints: ["digital marketing analytics chart", "ppc campaign dashboard performance"], // Updated hint
    },
    "social-media": {
      title: "Social Media Management",
@@ -88,7 +88,7 @@ const serviceDetailsData: { [key: string]: any } = {
        "Brand Reputation Management",
      ],
       visuals: ["https://picsum.photos/seed/social1/800/450", "https://picsum.photos/seed/social2/800/450"],
-      aiHints: ["social media content calendar strategy", "instagram profile engagement mockup"],
+      aiHints: ["social media connection network", "instagram profile engagement mockup"], // Updated hint
    },
    "google-profile": {
      title: "Google Business Profile Optimization",
@@ -104,7 +104,7 @@ const serviceDetailsData: { [key: string]: any } = {
        "Detailed Performance Insights & Reporting",
      ],
       visuals: ["https://picsum.photos/seed/gbp1/800/450", "https://picsum.photos/seed/gbp2/800/450"],
-      aiHints: ["google maps local business listing", "business online review management stars"],
+      aiHints: ["google business profile optimization", "business online review management stars"], // Updated hint
    },
 };
 
@@ -128,20 +128,30 @@ export default function ServiceDetailPage() {
      );
   }
 
-  const ServiceIcon = service.icon;
+  const ServiceIcon = service.icon; // Get the specific icon component
 
   return (
-    <div className="container mx-auto px-4 py-12 md:py-16 lg:py-20">
-       <Button onClick={() => router.back()} variant="ghost" className="mb-8 group animate-fade-in-down transform hover:scale-105 transition-transform duration-300 text-muted-foreground hover:text-foreground">
+    <div className="relative isolate overflow-hidden bg-background py-12 md:py-16 lg:py-20">
+       {/* Background Image and Overlay */}
+       <div
+        className="absolute inset-0 -z-10 h-full w-full bg-cover bg-center bg-fixed"
+        style={{ backgroundImage: `url('https://picsum.photos/seed/serviceDetail${serviceId}/1920/1080')` }} // Dynamic background
+        data-ai-hint={`service ${service.title} abstract background`} // Dynamic hint
+       ></div>
+       <div className="bg-overlay"></div> {/* Use shared overlay class */}
+
+
+      <div className="container mx-auto px-4 relative z-10"> {/* Content container */}
+        <Button onClick={() => router.back()} variant="ghost" className="mb-8 group animate-fade-in-down transform hover:scale-105 transition-transform duration-300 text-muted-foreground hover:text-foreground">
          <span className="flex items-center justify-center gap-2">
           <ArrowLeft className="mr-1 h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1" /> Back to Services
          </span>
        </Button>
 
-      <Card className="card-base shadow-xl overflow-hidden animate-subtle-scale-in bg-card border border-border/30"> {/* Removed 3D styles */}
+      <Card className="card-base shadow-xl overflow-hidden animate-subtle-scale-in bg-card/80 backdrop-blur-md border border-border/30"> {/* Card transparency */}
         <CardHeader className="text-center p-8 md:p-12 border-b border-border/20 bg-gradient-to-br from-card to-primary/5">
             <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 text-primary animate-pulse-glow transform hover:scale-110 transition-transform duration-300">
-              <ServiceIcon size={40} strokeWidth={1.5} />
+              <ServiceIcon size={40} strokeWidth={1.5} /> {/* Render the correct icon */}
             </div>
             <CardTitle className="text-3xl md:text-4xl font-extrabold text-primary">{service.title}</CardTitle>
             <CardDescription className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto pt-3 leading-relaxed">{service.description}</CardDescription>
@@ -154,7 +164,7 @@ export default function ServiceDetailPage() {
               <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-foreground">What's Included</h3>
               <ul className="space-y-4">
                 {service.features.map((feature: string, index: number) => (
-                  <li key={index} className="flex items-start gap-3 transform hover:translate-x-1 transition-transform duration-200"> {/* Removed 3D translate */}
+                  <li key={index} className="flex items-start gap-3 transform hover:translate-x-1 transition-transform duration-200"> {/* Simplified hover */}
                     <CheckCircle className="h-6 w-6 text-accent flex-shrink-0 mt-0.5" strokeWidth={2} />
                     <span className="text-base text-muted-foreground">{feature}</span>
                   </li>
@@ -195,6 +205,7 @@ export default function ServiceDetailPage() {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

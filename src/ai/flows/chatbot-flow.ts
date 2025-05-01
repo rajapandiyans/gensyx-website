@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview Chatbot AI flow for GenSyx Solutions.
@@ -44,8 +43,10 @@ Context about GenSyx Solutions:
 - **Vision:** To be a leading digital services provider, recognized for our creativity, technical excellence, and commitment to client success. We envision a future where businesses of all sizes can leverage the power of digital technology to achieve their full potential.
 - **Services:** Web Design & Development, SEO Strategy, Branding & Identity, Digital Marketing Strategy, Social Media Management, Google Business Profile Optimization.
 - **Featured Projects:** GPT3 Integration (AI solutions), Travela Booking Platform (travel planning), Caterserv Event Planning (vendor booking), Modern E-Commerce Store (online retail). Project links are available on the website.
-- **Contact:** info@gensyx.com, (123) 456-7890, 123 Digital Avenue, Tech City, TX 75001.
+- **Contact:** gensyx6@gmail.com, 9361104465, Coimbatore, India.
 - **About:** Founded on innovation and client-centricity. Grown into a comprehensive digital services agency focused on adapting to the digital landscape and delivering exceptional digital experiences through strong client partnerships. Expertise spans web development, SEO, branding, digital marketing, social media, etc.
+- **Social Media:** GitHub (https://github.com/Gensyx-Solutions), X/Twitter (https://x.com/GensyxSolutions), LinkedIn (https://www.linkedin.com/company/gensyx-solutions/)
+
 
 User Query: {{{query}}}
 
@@ -73,5 +74,3 @@ const chatbotFlow = ai.defineFlow<
     return output;
   }
 );
-
-    

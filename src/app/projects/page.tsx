@@ -1,16 +1,15 @@
-
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from 'lucide-react';
 
-// Updated project data (ensure consistency with user request)
+// Updated project data with placeholder image logic derived from links/titles
 const projects = [
  {
     id: 1,
     title: "GPT3 Integration",
     description: "Let’s Build Something amazing with GPT-3 – Harness AI for creative and business solutions.",
-    imageUrl: "/images/gpt3.png",
+    imageUrl: `https://picsum.photos/seed/projPageThumb1/600/400`, // Placeholder
     link: "https://gpt3-gensyx.vercel.app/#wgpt3",
     aiHint: "ai interface abstract technology dark blue",
   },
@@ -18,7 +17,7 @@ const projects = [
     id: 2,
     title: "Travela Booking Platform",
     description: "Your perfect travel companion - Discover curated destinations and seamless trip planning for unforgettable journeys.",
-    imageUrl: "/images/travela.png",
+    imageUrl: `https://picsum.photos/seed/projPageThumb2/600/400`, // Placeholder
     link: "https://tourism-gensyx.vercel.app/",
     aiHint: "travel website destination map mountains",
   },
@@ -26,7 +25,7 @@ const projects = [
     id: 3,
     title: "Caterserv Event Planning",
     description: "Book CaterServ For Your Dream Event – Simplify planning with all-in-one vendor bookings.",
-    imageUrl: "/images/caterserv.png",
+    imageUrl: `https://picsum.photos/seed/projPageThumb3/600/400`, // Placeholder
     link: "https://caterserv-gensyx.vercel.app/",
      aiHint: "event table setting catering elegant food",
   },
@@ -34,7 +33,7 @@ const projects = [
     id: 4,
     title: "Modern E-Commerce Store",
     description: "Simplify shopping with seamless UX, secure payments, and AI-driven recommendations.",
-    imageUrl: "/images/ecommerce.png",
+    imageUrl: `https://picsum.photos/seed/projPageThumb4/600/400`, // Placeholder
     link: "https://e-commerce-gensyx.vercel.app/index.html",
     aiHint: "online shopping clothing store fashion",
   },
@@ -71,8 +70,7 @@ export default function ProjectsPage() {
               <CardHeader className="p-0 relative aspect-video overflow-hidden">
                 {/* Image with subtle zoom on hover */}
                 <Image
-                  // Use picsum for placeholder, assuming project.imageUrl might be missing
-                  src={`https://picsum.photos/seed/projPageThumb${project.id}/600/400`}
+                  src={project.imageUrl} // Use the defined imageUrl
                   alt={project.title}
                   fill
                   className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
@@ -102,5 +100,3 @@ export default function ProjectsPage() {
     </div>
   );
 }
-
-    

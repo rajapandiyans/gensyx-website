@@ -1,13 +1,12 @@
-
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Code, Search, Gem, BarChart3, Smartphone, UserCheck, Palette, Network } from 'lucide-react';
+import { ArrowRight, Code, Search, Palette, BarChart3, Network, UserCheck } from 'lucide-react'; // Updated imports
 
-// Service data with updated icons and slightly refined descriptions
+// Service data with icons included and correct IDs for linking
 const services = [
   {
-    id: "website-design",
+    id: "website-design", // Matches the key in serviceDetailsData
     title: "Web Design & Dev",
     icon: Code,
     description: "Building responsive, high-performance websites that captivate and convert.",
@@ -15,7 +14,7 @@ const services = [
     aiHint: "website interface code responsive",
   },
   {
-    id: "seo",
+    id: "seo", // Matches the key in serviceDetailsData
     title: "SEO Strategy",
     icon: Search,
     description: "Boosting your visibility on search engines to attract qualified organic traffic.",
@@ -23,7 +22,7 @@ const services = [
      aiHint: "search engine optimization graph",
   },
   {
-    id: "branding",
+    id: "branding", // Matches the key in serviceDetailsData
     title: "Branding & Identity",
     icon: Palette,
     description: "Crafting memorable logos and cohesive brand identities that stand out.",
@@ -31,7 +30,7 @@ const services = [
      aiHint: "brand logo design identity",
   },
   {
-    id: "digital-marketing",
+    id: "digital-marketing", // Matches the key in serviceDetailsData
     title: "Digital Marketing",
     icon: BarChart3,
     description: "Data-driven strategies across online channels to reach audiences and drive leads.",
@@ -39,7 +38,7 @@ const services = [
      aiHint: "digital marketing analytics chart",
   },
   {
-    id: "social-media",
+    id: "social-media", // Matches the key in serviceDetailsData
     title: "Social Media Mgmt",
     icon: Network,
     description: "Engaging content and community management to grow your online presence.",
@@ -47,7 +46,7 @@ const services = [
      aiHint: "social media connection network",
   },
   {
-    id: "google-profile",
+    id: "google-profile", // Matches the key in serviceDetailsData
     title: "Google Business Profile",
     icon: UserCheck,
     description: "Optimizing your Google profile for maximum local visibility and customer trust.",
@@ -78,7 +77,9 @@ export default function ServicesPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
+          {services.map((service, index) => {
+            const ServiceIcon = service.icon; // Get the icon component
+            return (
             <Card
               key={service.id}
               className="card-base group flex flex-col justify-between text-center overflow-hidden animate-subtle-slide-up bg-card/80 backdrop-blur-md border border-border/30 hover:border-primary/50 transition-colors duration-300" // Card transparency
@@ -86,7 +87,7 @@ export default function ServicesPage() {
             >
               <CardHeader className="items-center pt-8 pb-4">
                 <div className="mb-5 flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-br from-primary/10 to-accent/10 text-primary transition-all duration-300 group-hover:scale-110 group-hover:bg-primary/20 group-hover:text-primary">
-                   <service.icon size={34} strokeWidth={1.5} />
+                   <ServiceIcon size={34} strokeWidth={1.5} /> {/* Render the icon component */}
                 </div>
                 <CardTitle className="text-xl md:text-2xl font-semibold text-foreground">{service.title}</CardTitle>
               </CardHeader>
@@ -95,7 +96,7 @@ export default function ServicesPage() {
               </CardContent>
                <CardFooter className="p-6 pt-0 mt-auto border-t border-border/20">
                 <Button variant="outline" asChild className="w-full transform hover:scale-105 transition-transform duration-300 hover:bg-primary/10 hover:text-primary border-primary/50 text-primary/90">
-                  <Link href={service.link}>
+                  <Link href={service.link}> {/* Link uses the defined path */}
                     <span className="flex items-center justify-center gap-2">
                       Learn More <ArrowRight className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                     </span>
@@ -103,11 +104,10 @@ export default function ServicesPage() {
                 </Button>
               </CardFooter>
             </Card>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
   );
 }
-
-    

@@ -1,4 +1,3 @@
-
 'use client';
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,7 +16,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { MapPin, Mail, Phone, Send } from 'lucide-react';
+import { MapPin, Mail, Phone, Send, Github, Twitter, Linkedin } from 'lucide-react';
+import Link from "next/link";
+
 
 // Define the form schema using Zod
 const contactFormSchema = z.object({
@@ -41,6 +42,7 @@ async function submitContactForm(data: ContactFormValues) {
   console.log("Submitting contact form data:", data);
   // Replace with actual API call to backend
   await new Promise(resolve => setTimeout(resolve, 1000));
+  // Simulate success/failure
   const success = Math.random() > 0.2;
   if (!success) {
     throw new Error("Failed to send message. Please try again later.");
@@ -58,10 +60,10 @@ export default function ContactPage() {
       email: "",
       message: "",
     },
-    mode: "onChange",
+    mode: "onChange", // Validate on change for better UX
   });
 
-  const {formState: {isSubmitting}} = form;
+  const { formState: { isSubmitting } } = form;
 
   async function onSubmit(data: ContactFormValues) {
     try {
@@ -69,15 +71,15 @@ export default function ContactPage() {
       toast({
         title: "Message Sent!",
         description: result.message,
-        variant: "default",
+        variant: "default", // Use default variant for success
       });
-      form.reset();
+      form.reset(); // Reset form after successful submission
     } catch (error) {
-       const message = error instanceof Error ? error.message : "An unknown error occurred.";
+      const message = error instanceof Error ? error.message : "An unknown error occurred.";
       toast({
         title: "Submission Error",
         description: message,
-        variant: "destructive",
+        variant: "destructive", // Use destructive variant for errors
       });
     }
   }
@@ -116,11 +118,12 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Your Name</FormLabel>
                         <FormControl>
-                           <Input
-                             placeholder="e.g., Jane Doe"
-                             className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" // Input transparency
-                             {...field} // Spread field props here
-                           />
+                          {/* Ensure Input directly receives field props */}
+                          <Input
+                            placeholder="e.g., Jane Doe"
+                            className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" // Input transparency
+                            {...field} // Spread field props here
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -133,12 +136,13 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Your Email</FormLabel>
                         <FormControl>
-                           <Input
-                             type="email"
-                             placeholder="e.g., jane.doe@example.com"
-                             className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" // Input transparency
-                             {...field} // Spread field props here
-                           />
+                          {/* Ensure Input directly receives field props */}
+                          <Input
+                            type="email"
+                            placeholder="e.g., jane.doe@example.com"
+                            className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" // Input transparency
+                            {...field} // Spread field props here
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -151,7 +155,8 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Your Message</FormLabel>
                         <FormControl>
-                           <Textarea
+                          {/* Ensure Textarea directly receives field props */}
+                          <Textarea
                             placeholder="Tell us how we can help..."
                             className="resize-none min-h-[120px] bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" // Textarea transparency
                             rows={5}
@@ -162,56 +167,63 @@ export default function ContactPage() {
                       </FormItem>
                     )}
                   />
-                   <Button type="submit" className="w-full mt-2 transform hover:scale-105 transition-transform duration-300" size="lg" disabled={isSubmitting}>
-                     <span className="flex items-center justify-center gap-2">
-                         <Send className="mr-1 h-5 w-5" />
-                         {isSubmitting ? "Sending..." : "Send Message"}
-                      </span>
-                   </Button>
+                  <Button type="submit" className="w-full mt-2 transform hover:scale-105 transition-transform duration-300" size="lg" disabled={isSubmitting}>
+                    <span className="flex items-center justify-center gap-2">
+                      <Send className="mr-1 h-5 w-5" />
+                      {isSubmitting ? "Sending..." : "Send Message"}
+                    </span>
+                  </Button>
                 </form>
               </Form>
             </CardContent>
           </Card>
 
-          {/* Contact Info & Map Card (Spanning 2 columns on large screens) */}
+          {/* Contact Info & Socials Card (Spanning 2 columns on large screens) */}
           <div className="lg:col-span-2 space-y-8 animate-subtle-slide-up" style={{ animationDelay: '0.2s' }}>
-             <Card className="card-base shadow-xl bg-card/80 backdrop-blur-md border border-border/30"> {/* Card transparency */}
-               <CardHeader>
-                  <CardTitle className="text-2xl md:text-3xl text-foreground">Contact Information</CardTitle>
-                  <CardDescription className="text-muted-foreground">Other ways to reach us.</CardDescription>
-               </CardHeader>
-               <CardContent className="space-y-5">
-                  <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
-                     <Mail className="h-6 w-6 text-primary flex-shrink-0" strokeWidth={1.5} />
-                     <a href="mailto:info@gensyx.com" className="text-foreground hover:text-primary text-base break-all">info@gensyx.com</a>
-                   </div>
-                  <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
-                    <Phone className="h-6 w-6 text-primary flex-shrink-0" strokeWidth={1.5} />
-                    <span className="text-foreground text-base">(123) 456-7890</span>
-                  </div>
-                  <div className="flex items-start gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
-                    <MapPin className="h-6 w-6 text-primary flex-shrink-0 mt-1" strokeWidth={1.5} />
-                    <span className="text-foreground text-base">123 Digital Avenue, Tech City, TX 75001</span>
-                  </div>
-               </CardContent>
-             </Card>
-
-            {/* Placeholder for Map */}
-            <Card className="card-base shadow-xl overflow-hidden bg-card/80 backdrop-blur-md border border-border/30"> {/* Card transparency */}
-               <CardHeader>
-                  <CardTitle className="text-2xl md:text-3xl text-foreground">Our Location</CardTitle>
-               </CardHeader>
-              <CardContent>
-                  <div className="aspect-video bg-muted/50 rounded-lg flex items-center justify-center text-muted-foreground border border-border transform hover:scale-105 transition-transform duration-300">
-                     <MapPin className="h-16 w-16 opacity-30" />
-                     <span className="ml-3 text-lg font-medium opacity-70">Interactive Map Coming Soon</span>
-                  </div>
+            <Card className="card-base shadow-xl bg-card/80 backdrop-blur-md border border-border/30"> {/* Card transparency */}
+              <CardHeader>
+                <CardTitle className="text-2xl md:text-3xl text-foreground">Contact Information</CardTitle>
+                <CardDescription className="text-muted-foreground">Other ways to reach us.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-5">
+                <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
+                  <Mail className="h-6 w-6 text-primary flex-shrink-0" strokeWidth={1.5} />
+                  <a href="mailto:gensyx6@gmail.com" className="text-foreground hover:text-primary text-base break-all">gensyx6@gmail.com</a>
+                </div>
+                <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
+                  <Phone className="h-6 w-6 text-primary flex-shrink-0" strokeWidth={1.5} />
+                  <span className="text-foreground text-base">9361104465</span>
+                </div>
+                <div className="flex items-start gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
+                  <MapPin className="h-6 w-6 text-primary flex-shrink-0 mt-1" strokeWidth={1.5} />
+                  <span className="text-foreground text-base">Coimbatore, India</span>
+                </div>
               </CardContent>
             </Card>
+
+             {/* Social Media Links Card */}
+             <Card className="card-base shadow-xl bg-card/80 backdrop-blur-md border border-border/30">
+               <CardHeader>
+                  <CardTitle className="text-2xl md:text-3xl text-foreground">Connect With Us</CardTitle>
+               </CardHeader>
+               <CardContent className="flex justify-around items-center space-x-4 pt-2 pb-4">
+                 <Link href="https://github.com/Gensyx-Solutions" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
+                    <Github size={28} />
+                   <span className="sr-only">GitHub</span>
+                 </Link>
+                 <Link href="https://x.com/GensyxSolutions" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
+                    <Twitter size={28} />
+                   <span className="sr-only">X (Twitter)</span>
+                 </Link>
+                 <Link href="https://www.linkedin.com/company/gensyx-solutions/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
+                    <Linkedin size={28} />
+                   <span className="sr-only">LinkedIn</span>
+                 </Link>
+               </CardContent>
+             </Card>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
