@@ -27,13 +27,13 @@ export function AppSidebar() {
   return (
     <>
       <SidebarHeader className="flex items-center justify-between p-4 border-b border-sidebar-border">
-         {/* Replace placeholder with actual logo */}
+         {/* Use the uploaded logo */}
          <Link href="/" className="flex items-center gap-2">
             <Image
-              src="/images/gensyx-logo.png" // Path to the logo in the public folder
+              src="/images/gensyx-logo.png" // Corrected path relative to the public folder
               alt="GenSyx Logo"
-              width={130} // Adjust width as needed
-              height={30} // Adjust height as needed
+              width={130}
+              height={30}
               priority // Load logo quickly
             />
           </Link>
