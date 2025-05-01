@@ -1,3 +1,4 @@
+
 'use client';
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { MapPin, Mail, Phone, Send, Github, Twitter, Linkedin } from 'lucide-react';
+import { MapPin, Mail, Phone, Send, Github, Twitter, Linkedin, Instagram } from 'lucide-react'; // Added Instagram
 import Link from "next/link";
 
 
@@ -118,11 +119,10 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Your Name</FormLabel>
                         <FormControl>
-                          {/* Ensure Input directly receives field props */}
                           <Input
                             placeholder="e.g., Jane Doe"
                             className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" // Input transparency
-                            {...field} // Spread field props here
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
@@ -136,12 +136,11 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Your Email</FormLabel>
                         <FormControl>
-                          {/* Ensure Input directly receives field props */}
                           <Input
                             type="email"
                             placeholder="e.g., jane.doe@example.com"
                             className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" // Input transparency
-                            {...field} // Spread field props here
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
@@ -155,12 +154,11 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Your Message</FormLabel>
                         <FormControl>
-                          {/* Ensure Textarea directly receives field props */}
                           <Textarea
                             placeholder="Tell us how we can help..."
                             className="resize-none min-h-[120px] bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" // Textarea transparency
                             rows={5}
-                            {...field} // Spread field props here
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
@@ -211,13 +209,17 @@ export default function ContactPage() {
                     <Github size={28} />
                    <span className="sr-only">GitHub</span>
                  </Link>
-                 <Link href="https://x.com/GensyxSolutions" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
+                 <Link href="https://x.com/i/flow/login?redirect_after_login=%2FGensyxSolutions" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
                     <Twitter size={28} />
                    <span className="sr-only">X (Twitter)</span>
                  </Link>
                  <Link href="https://www.linkedin.com/company/gensyx-solutions/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
                     <Linkedin size={28} />
                    <span className="sr-only">LinkedIn</span>
+                 </Link>
+                 <Link href="https://www.instagram.com/gensyx_solutions?igsh=OTduZ3RibWI2Nm5m" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
+                    <Instagram size={28} />
+                   <span className="sr-only">Instagram</span>
                  </Link>
                </CardContent>
              </Card>
@@ -227,3 +229,5 @@ export default function ContactPage() {
     </div>
   );
 }
+
+    
