@@ -1,46 +1,41 @@
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from 'lucide-react';
 
-// Placeholder project data
+// Updated project data
 const projects = [
-  {
+ {
     id: 1,
-    title: "E-commerce Platform Overhaul",
-    description: "Revamped user interface and backend for increased performance and sales conversion.",
-    imageUrl: "https://picsum.photos/seed/project1/600/400",
-    tags: ["Web Development", "UI/UX", "E-commerce"],
-    link: "#", // Replace with actual link
-    aiHint: "online store website",
+    title: "GPT3",
+    description: "Let’s Build Something amazing with GPT-3 – Harness AI for creative and business solutions.", // Using 'description' key for consistency
+    imageUrl: "https://picsum.photos/seed/gpt3/600/400", // Placeholder image
+    link: "https://gpt3-gensyx.vercel.app/#wgpt3",
+    aiHint: "ai interface abstract",
   },
   {
     id: 2,
-    title: "Startup Branding & Website",
-    description: "Developed a complete brand identity and built a modern marketing website from scratch.",
-    imageUrl: "https://picsum.photos/seed/project2/600/400",
-    tags: ["Branding", "Logo Design", "Web Design"],
-    link: "#",
-     aiHint: "modern startup website",
+    title: "Travela",
+    description: "Your perfect travel companion - Discover curated destinations and seamless trip planning for unforgettable journeys.",
+    imageUrl: "https://picsum.photos/seed/travela/600/400", // Placeholder image
+    link: "https://tourism-gensyx.vercel.app/",
+    aiHint: "travel website destination",
   },
   {
     id: 3,
-    title: "SEO Campaign for Local Business",
-    description: "Implemented a targeted SEO strategy resulting in a 200% increase in organic traffic.",
-    imageUrl: "https://picsum.photos/seed/project3/600/400",
-    tags: ["SEO", "Digital Marketing", "Local SEO"],
-    link: "#",
-     aiHint: "search engine optimization graph",
+    title: "Caterserv",
+    description: "Book CaterServ For Your Dream Event – Simplify planning with all-in-one vendor bookings.",
+    imageUrl: "https://picsum.photos/seed/caterserv/600/400", // Placeholder image
+    link: "https://caterserv-gensyx.vercel.app/",
+     aiHint: "catering event food",
   },
-    {
+  {
     id: 4,
-    title: "Social Media Growth Strategy",
-    description: "Managed social media platforms, significantly boosting engagement and follower count.",
-    imageUrl: "https://picsum.photos/seed/project4/600/400",
-    tags: ["Social Media", "Digital Marketing", "Content Creation"],
-    link: "#",
-     aiHint: "social media icons interface",
+    title: "ECommerce",
+    description: "Simplify shopping with seamless UX, secure payments, and AI-driven recommendations.",
+    imageUrl: "https://picsum.photos/seed/ecommerce/600/400", // Placeholder image
+    link: "https://e-commerce-gensyx.vercel.app/index.html",
+    aiHint: "online shopping interface",
   },
 ];
 
@@ -54,28 +49,24 @@ export default function ProjectsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
         {projects.map((project, index) => (
-          <Card key={project.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 animate-subtle-slide-up" style={{ animationDelay: `${index * 0.1 + 0.2}s` }}>
-            <CardHeader className="p-0">
+          <Card key={project.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 animate-subtle-slide-up flex flex-col" style={{ animationDelay: `${index * 0.1 + 0.2}s` }}>
+            <CardHeader className="p-0 relative aspect-video"> {/* Maintain aspect ratio */}
               <Image
                 src={project.imageUrl}
                 alt={project.title}
-                width={600}
-                height={400}
-                className="w-full h-48 object-cover"
+                fill // Use fill to cover the container
+                className="object-cover" // Ensure image covers the area
                 data-ai-hint={project.aiHint}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Optimize image loading
               />
             </CardHeader>
-            <CardContent className="p-6">
+            <CardContent className="p-6 flex-grow"> {/* Allow content to grow */}
               <CardTitle className="text-2xl mb-2">{project.title}</CardTitle>
               <CardDescription className="mb-4 text-muted-foreground">{project.description}</CardDescription>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary">{tag}</Badge>
-                ))}
-              </div>
+              {/* Tags removed as they are not in the new data */}
             </CardContent>
-            <CardFooter className="p-6 pt-0">
-               <Button variant="outline" size="sm" asChild disabled={project.link === '#'}>
+            <CardFooter className="p-6 pt-0 mt-auto"> {/* Push footer to bottom */}
+               <Button variant="outline" size="sm" asChild>
                  <a href={project.link} target="_blank" rel="noopener noreferrer">
                    View Project <ExternalLink className="ml-2 h-4 w-4" />
                  </a>
