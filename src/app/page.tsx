@@ -11,9 +11,9 @@ const featuredProjects = [
     id: 1,
     title: "GPT3 Integration",
     description: "Harnessing AI for creative and business solutions.",
-    imageUrl: `https://picsum.photos/seed/projectThumb1/400/300`, // Placeholder
+    imageUrl: "/images/gpt3-integration.png", // Updated image path
     link: "https://gpt3-gensyx.vercel.app/#wgpt3", // Use provided link
-    aiHint: "ai interface abstract technology blue",
+    // Removed aiHint as it's a specific image now
   },
   {
     id: 2,
@@ -199,11 +199,11 @@ export default function Home() {
                >
                  <div className="relative w-full md:w-1/3 h-48 md:h-full overflow-hidden flex-shrink-0">
                     <Image
-                       src={project.imageUrl} // Use updated placeholder URL
+                       src={project.imageUrl} // Use updated placeholder URL or specific image
                        alt={project.title}
                        fill
                        className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-                       data-ai-hint={project.aiHint}
+                       {...(project.aiHint ? { 'data-ai-hint': project.aiHint } : {})} // Conditionally add aiHint
                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Responsive sizes
                     />
                  </div>

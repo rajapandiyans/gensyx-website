@@ -9,9 +9,9 @@ const projects = [
     id: 1,
     title: "GPT3 Integration",
     description: "Let’s Build Something amazing with GPT-3 – Harness AI for creative and business solutions.",
-    imageUrl: `https://picsum.photos/seed/projPageThumb1/600/400`, // Placeholder
+    imageUrl: "/images/gpt3-integration.png", // Updated image path
     link: "https://gpt3-gensyx.vercel.app/#wgpt3",
-    aiHint: "ai interface abstract technology dark blue",
+    // Removed aiHint
   },
   {
     id: 2,
@@ -74,7 +74,7 @@ export default function ProjectsPage() {
                   alt={project.title}
                   fill
                   className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-                  data-ai-hint={project.aiHint}
+                   {...(project.aiHint ? { 'data-ai-hint': project.aiHint } : {})} // Conditionally add aiHint
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
                  {/* Optional: Darker overlay on hover */}
