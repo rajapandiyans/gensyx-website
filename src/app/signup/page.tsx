@@ -110,7 +110,11 @@ export default function SignupPage() {
                    <FormItem>
                      <FormLabel className="flex items-center gap-1.5 text-muted-foreground"><User size={16}/> Full Name</FormLabel>
                      <FormControl>
-                       <Input placeholder="e.g., John Smith" {...field} className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"/>
+                       <Input
+                         placeholder="e.g., John Smith"
+                         className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"
+                         {...field} // Spread field props here
+                       />
                      </FormControl>
                      <FormMessage />
                    </FormItem>
@@ -123,7 +127,12 @@ export default function SignupPage() {
                    <FormItem>
                      <FormLabel className="flex items-center gap-1.5 text-muted-foreground"><Mail size={16}/> Email Address</FormLabel>
                      <FormControl>
-                       <Input type="email" placeholder="you@example.com" {...field} className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"/>
+                       <Input
+                         type="email"
+                         placeholder="you@example.com"
+                         className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"
+                         {...field} // Spread field props here
+                       />
                      </FormControl>
                      <FormMessage />
                    </FormItem>
@@ -136,7 +145,12 @@ export default function SignupPage() {
                    <FormItem>
                      <FormLabel className="flex items-center gap-1.5 text-muted-foreground"><Lock size={16}/> Password</FormLabel>
                      <FormControl>
-                       <Input type="password" placeholder="Choose a strong password (min 8 chars)" {...field} className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"/>
+                       <Input
+                         type="password"
+                         placeholder="Choose a strong password (min 8 chars)"
+                         className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"
+                         {...field} // Spread field props here
+                       />
                      </FormControl>
                      <FormMessage />
                    </FormItem>
@@ -163,3 +177,4 @@ export default function SignupPage() {
     </div>
   );
 }
+

@@ -116,7 +116,11 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Your Name</FormLabel>
                         <FormControl>
-                           <Input placeholder="e.g., Jane Doe" {...field} className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" /> {/* Input transparency */}
+                           <Input
+                             placeholder="e.g., Jane Doe"
+                             className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" // Input transparency
+                             {...field} // Spread field props here
+                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -129,7 +133,12 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Your Email</FormLabel>
                         <FormControl>
-                           <Input type="email" placeholder="e.g., jane.doe@example.com" {...field} className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" /> {/* Input transparency */}
+                           <Input
+                             type="email"
+                             placeholder="e.g., jane.doe@example.com"
+                             className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" // Input transparency
+                             {...field} // Spread field props here
+                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -146,7 +155,7 @@ export default function ContactPage() {
                             placeholder="Tell us how we can help..."
                             className="resize-none min-h-[120px] bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" // Textarea transparency
                             rows={5}
-                            {...field}
+                            {...field} // Spread field props here
                           />
                         </FormControl>
                         <FormMessage />
@@ -205,3 +214,4 @@ export default function ContactPage() {
     </div>
   );
 }
+

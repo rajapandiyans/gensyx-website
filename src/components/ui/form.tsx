@@ -1,4 +1,3 @@
-"use client"
 
 import * as React from "react"
 import * as LabelPrimitive from "@radix-ui/react-label"
@@ -103,6 +102,9 @@ const FormLabel = React.forwardRef<
 })
 FormLabel.displayName = "FormLabel"
 
+// Note: Ensure the child passed to FormControl is a single React element.
+// Spreading {...field} directly onto a complex component inside might cause issues if that component renders multiple root elements or fragments.
+// If issues persist, consider passing props explicitly: <Input value={field.value} onChange={field.onChange} ... />
 const FormControl = React.forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot>
