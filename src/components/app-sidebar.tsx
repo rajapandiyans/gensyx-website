@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -60,8 +61,11 @@ export function AppSidebar() {
                   tooltip={{ children: "Home", side: "right", align: "center", sideOffset: 10 }}
                 >
                   <Link href="/">
-                    <Home />
-                    <span>Home</span>
+                     {/* Wrap icon and text in a single span */}
+                     <span className="flex items-center gap-2.5">
+                       <Home />
+                       <span>Home</span>
+                     </span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -72,8 +76,11 @@ export function AppSidebar() {
                    tooltip={{ children: "About Us", side: "right", align: "center", sideOffset: 10 }}
                 >
                   <Link href="/about">
-                    <Info />
-                    <span>About Us</span>
+                    {/* Wrap icon and text in a single span */}
+                    <span className="flex items-center gap-2.5">
+                       <Info />
+                       <span>About Us</span>
+                    </span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -84,8 +91,11 @@ export function AppSidebar() {
                    tooltip={{ children: "Our Projects", side: "right", align: "center", sideOffset: 10 }}
                 >
                   <Link href="/projects">
-                    <BriefcaseBusiness />
-                    <span>Projects</span>
+                     {/* Wrap icon and text in a single span */}
+                     <span className="flex items-center gap-2.5">
+                       <BriefcaseBusiness />
+                       <span>Projects</span>
+                     </span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -96,8 +106,11 @@ export function AppSidebar() {
                    tooltip={{ children: "Services Offered", side: "right", align: "center", sideOffset: 10 }}
                 >
                   <Link href="/services">
-                    <Handshake />
-                    <span>Services</span>
+                     {/* Wrap icon and text in a single span */}
+                     <span className="flex items-center gap-2.5">
+                       <Handshake />
+                       <span>Services</span>
+                     </span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -108,8 +121,11 @@ export function AppSidebar() {
                    tooltip={{ children: "Contact Us", side: "right", align: "center", sideOffset: 10 }}
                 >
                   <Link href="/contact">
-                    <Mail />
-                    <span>Contact Us</span>
+                    {/* Wrap icon and text in a single span */}
+                    <span className="flex items-center gap-2.5">
+                       <Mail />
+                       <span>Contact Us</span>
+                    </span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -130,23 +146,27 @@ export function AppSidebar() {
             {state === 'expanded' ? (
               <div className="flex flex-col gap-2">
                  <Button variant="ghost" size="sm" asChild>
-                   <Link href="/login">
-                     <LogIn className="mr-2" /> Login
+                   <Link href="/login" className="flex items-center justify-start gap-2">
+                     <LogIn /> Login
                    </Link>
                  </Button>
                  <Button variant="default" size="sm" asChild>
-                   <Link href="/signup">
-                    <UserPlus className="mr-2" /> Sign Up
+                   <Link href="/signup" className="flex items-center justify-start gap-2">
+                    <UserPlus /> Sign Up
                   </Link>
                 </Button>
               </div>
             ) : (
                <div className="flex flex-col gap-2 items-center">
                   <SidebarMenuButton asChild tooltip={{ children: "Login", side: "right", align: "center", sideOffset: 10 }}>
-                     <Link href="/login"><LogIn /></Link>
+                     <Link href="/login" className="flex items-center justify-center p-0"> {/* Ensure link fills button */}
+                       <LogIn />
+                     </Link>
                   </SidebarMenuButton>
                   <SidebarMenuButton asChild tooltip={{ children: "Sign Up", side: "right", align: "center", sideOffset: 10 }}>
-                    <Link href="/signup"><UserPlus /></Link>
+                    <Link href="/signup" className="flex items-center justify-center p-0"> {/* Ensure link fills button */}
+                      <UserPlus />
+                    </Link>
                   </SidebarMenuButton>
                </div>
             )}

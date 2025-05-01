@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -27,20 +28,16 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <Button asChild size="lg" className="shadow-md hover:shadow-lg transition-all duration-300 animate-subtle-scale-in transform hover:scale-105 hover:translate-z-[5px]" style={{ animationDelay: '0.4s' }}>
               <Link href="/services">
-                 {/* Wrap icon and text in a single span */}
-                 <span className="flex items-center justify-center gap-2">
-                    <Rocket className="mr-0" /> {/* Adjust margin if needed inside span */}
-                    Discover Our Services
-                 </span>
+                 {/* Removed span, icon and text are direct children of Link */}
+                 <Rocket className="mr-2" /> {/* Added margin back */}
+                 Discover Our Services
               </Link>
             </Button>
             <Button variant="outline" size="lg" asChild className="shadow-md hover:shadow-lg transition-all duration-300 animate-subtle-scale-in transform hover:scale-105 hover:translate-z-[5px]" style={{ animationDelay: '0.5s' }}>
               <Link href="/contact">
-                 {/* Wrap icon and text in a single span */}
-                 <span className="flex items-center justify-center gap-2">
-                    <Code className="mr-0" /> {/* Adjust margin if needed inside span */}
-                    Let's Build Together
-                 </span>
+                 {/* Removed span, icon and text are direct children of Link */}
+                 <Code className="mr-2" /> {/* Added margin back */}
+                 Let's Build Together
               </Link>
             </Button>
           </div>
