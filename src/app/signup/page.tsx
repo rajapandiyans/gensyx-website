@@ -18,7 +18,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { UserPlus, User, Mail, Lock } from 'lucide-react';
-import { sendVerificationEmail } from '@/services/email';
+// Removed import for deleted email service
+// import { sendVerificationEmail } from '@/services/email';
 
 // Define the form schema using Zod
 const signupFormSchema = z.object({
@@ -43,14 +44,16 @@ async function handleSignup(data: SignupFormValues) {
   if (!success) {
     throw new Error("Signup failed. This email might already be registered.");
   }
-  try {
-     await sendVerificationEmail(data.email);
-     console.log("Verification email sent to:", data.email);
-  } catch (emailError) {
-      console.error("Failed to send verification email:", emailError);
-      // Optionally, inform the user that the verification email failed, but the account was created
-  }
-  return { success: true, message: "Account created! Check your email to verify." };
+  // Removed call to sendVerificationEmail as the service is removed
+  // try {
+  //    await sendVerificationEmail(data.email);
+  //    console.log("Verification email sent to:", data.email);
+  // } catch (emailError) {
+  //     console.error("Failed to send verification email:", emailError);
+  //     // Optionally, inform the user that the verification email failed, but the account was created
+  // }
+  console.log("Simulating account creation for:", data.email); // Log simulation
+  return { success: true, message: "Account created! Welcome." }; // Adjusted success message
 }
 
 
@@ -177,4 +180,3 @@ export default function SignupPage() {
     </div>
   );
 }
-

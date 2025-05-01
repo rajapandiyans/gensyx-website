@@ -4,6 +4,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import emailjs from 'emailjs-com';
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,8 +20,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import { MapPin, Mail, Phone, Send, Github, Twitter, Linkedin, Instagram } from 'lucide-react';
 import Link from "next/link";
-import { db } from "@/lib/firebase/firebase"; // Import Firestore instance
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+// Removed Firebase imports as they are no longer needed for this form
+// import { db } from "@/lib/firebase/firebase";
+// import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 // Define the form schema using Zod
 const contactFormSchema = z.object({
@@ -39,31 +41,7 @@ const contactFormSchema = z.object({
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
-// --- Server Action to Handle Form Submission ---
-async function submitContactFormAction(data: ContactFormValues) {
-  'use server'; // Mark this as a Server Action
-
-  console.log("Submitting contact form data to Firestore:", data);
-
-  try {
-    // Add a new document with a generated ID to the "contacts" collection
-    const docRef = await addDoc(collection(db, "contactSubmissions"), {
-      name: data.name,
-      email: data.email,
-      message: data.message,
-      submittedAt: serverTimestamp(), // Add a server timestamp
-    });
-    console.log("Document written with ID: ", docRef.id);
-    return { success: true, message: "Your message has been sent successfully!" };
-  } catch (e) {
-    console.error("Error adding document: ", e);
-    // Return a more specific error if possible, otherwise a generic one
-    const errorMessage = e instanceof Error ? e.message : "Failed to save message.";
-    return { success: false, message: `Error: ${errorMessage}` };
-  }
-}
-// --- End Server Action ---
-
+// --- Removed Firestore Server Action ---
 
 export default function ContactPage() {
   const { toast } = useToast();
@@ -79,35 +57,52 @@ export default function ContactPage() {
 
   const { formState: { isSubmitting } } = form;
 
-  async function onSubmit(data: ContactFormValues) {
-    try {
-       // Call the Server Action directly
-      const result = await submitContactFormAction(data);
+  // Fetch EmailJS credentials from environment variables
+  const emailJsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+  const emailJsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+  const emailJsPublicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
-      if (result.success) {
-         toast({
+  async function onSubmit(data: ContactFormValues) {
+
+    if (!emailJsServiceId || !emailJsTemplateId || !emailJsPublicKey) {
+        console.error("EmailJS environment variables are not configured.");
+        toast({
+          title: "Configuration Error",
+          description: "Unable to send message. Please contact support.",
+          variant: "destructive",
+        });
+        return;
+    }
+
+    const templateParams = {
+      from_name: data.name,
+      from_email: data.email,
+      message: data.message,
+    };
+
+    try {
+        const response = await emailjs.send(
+            emailJsServiceId,
+            emailJsTemplateId,
+            templateParams,
+            emailJsPublicKey
+        );
+
+        console.log('EmailJS SUCCESS!', response.status, response.text);
+        toast({
             title: "Message Sent!",
-            description: result.message,
+            description: "Your message has been sent successfully!",
             variant: "default",
-         });
-         form.reset(); // Reset form after successful submission
-       } else {
-         // Handle submission failure reported by the Server Action
-         toast({
+        });
+        form.reset(); // Reset form after successful submission
+
+    } catch (error: any) {
+        console.error('EmailJS FAILED...', error);
+        toast({
             title: "Submission Error",
-            description: result.message,
+            description: `Failed to send message: ${error?.text || 'Please try again later.'}`,
             variant: "destructive",
-         });
-      }
-    } catch (error) {
-      // Catch unexpected errors during Server Action invocation (less likely now)
-      console.error("Unexpected form submission error:", error);
-      const message = error instanceof Error ? error.message : "An unknown error occurred.";
-      toast({
-        title: "Submission Error",
-        description: message,
-        variant: "destructive",
-      });
+        });
     }
   }
 
@@ -137,7 +132,7 @@ export default function ContactPage() {
             </CardHeader>
             <CardContent>
               <Form {...form}>
-                {/* Form now directly calls the onSubmit handler which invokes the Server Action */}
+                {/* Form now directly calls the onSubmit handler which uses EmailJS */}
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
@@ -259,4 +254,3 @@ export default function ContactPage() {
     </div>
   );
 }
-
