@@ -12,7 +12,7 @@ const projects = [
     description: "Let’s Build Something amazing with GPT-3 – Harness AI for creative and business solutions.",
     imageUrl: "/images/gpt3.png",
     link: "https://gpt3-gensyx.vercel.app/#wgpt3",
-    aiHint: "ai interface abstract technology",
+    aiHint: "ai interface abstract technology dark blue",
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const projects = [
     description: "Your perfect travel companion - Discover curated destinations and seamless trip planning for unforgettable journeys.",
     imageUrl: "/images/travela.png",
     link: "https://tourism-gensyx.vercel.app/",
-    aiHint: "travel website destination booking",
+    aiHint: "travel website destination map mountains",
   },
   {
     id: 3,
@@ -28,7 +28,7 @@ const projects = [
     description: "Book CaterServ For Your Dream Event – Simplify planning with all-in-one vendor bookings.",
     imageUrl: "/images/caterserv.png",
     link: "https://caterserv-gensyx.vercel.app/",
-     aiHint: "catering event food planning",
+     aiHint: "event table setting catering elegant food",
   },
   {
     id: 4,
@@ -36,7 +36,7 @@ const projects = [
     description: "Simplify shopping with seamless UX, secure payments, and AI-driven recommendations.",
     imageUrl: "/images/ecommerce.png",
     link: "https://e-commerce-gensyx.vercel.app/index.html",
-    aiHint: "online shopping interface e-commerce",
+    aiHint: "online shopping clothing store fashion",
   },
 ];
 
@@ -46,10 +46,10 @@ export default function ProjectsPage() {
       {/* Background Image and Overlay */}
        <div
         className="absolute inset-0 -z-10 h-full w-full bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/projectsPageBg/1920/1080')" }}
-        data-ai-hint="project showcase portfolio grid website examples abstract"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/projectShowcaseGrid/1920/1080')" }}
+        data-ai-hint="modern architecture grid blueprint design technical"
        ></div>
-       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/80 via-background/90 to-background/95"></div>
+       <div className="bg-overlay"></div> {/* Use shared overlay class */}
 
       <div className="container mx-auto px-4 relative z-10"> {/* Content container */}
         <div className="text-center mb-16">
@@ -72,7 +72,7 @@ export default function ProjectsPage() {
                 {/* Image with subtle zoom on hover */}
                 <Image
                   // Use picsum for placeholder, assuming project.imageUrl might be missing
-                  src={`https://picsum.photos/seed/projPage${project.id}/600/400`}
+                  src={`https://picsum.photos/seed/projPageThumb${project.id}/600/400`}
                   alt={project.title}
                   fill
                   className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
@@ -102,3 +102,5 @@ export default function ProjectsPage() {
     </div>
   );
 }
+
+    

@@ -87,10 +87,10 @@ export default function ContactPage() {
        {/* Background Image and Overlay */}
        <div
         className="absolute inset-0 -z-10 h-full w-full bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/contactUsBg/1920/1080')" }}
-        data-ai-hint="contact communication map globe network connection"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/contactMapNetwork/1920/1080')" }}
+        data-ai-hint="abstract network connection lines map global communication blue"
        ></div>
-       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/80 via-background/90 to-background/95"></div>
+       <div className="bg-overlay"></div> {/* Use shared overlay class */}
 
 
       <div className="container mx-auto px-4 relative z-10"> {/* Content container */}
@@ -116,7 +116,7 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Your Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="e.g., Jane Doe" {...field} className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" /> {/* Input transparency */}
+                           <Input placeholder="e.g., Jane Doe" {...field} className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50" /> {/* Input transparency */}
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -205,3 +205,5 @@ export default function ContactPage() {
     </div>
   );
 }
+
+    

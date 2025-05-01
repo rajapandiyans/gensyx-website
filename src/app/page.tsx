@@ -14,7 +14,7 @@ const featuredProjects = [
     description: "Harnessing AI for creative and business solutions.",
     imageUrl: "/images/gpt3.png", // Make sure this image exists or use picsum
     link: "/projects", // Link to projects page or specific project
-    aiHint: "ai interface abstract technology",
+    aiHint: "ai interface abstract technology blue",
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const featuredProjects = [
     description: "Your perfect travel companion for seamless trip planning.",
     imageUrl: "/images/travela.png", // Make sure this image exists or use picsum
     link: "/projects",
-    aiHint: "travel website destination booking",
+    aiHint: "travel booking website map passport",
   },
   // Added the other two projects
    {
@@ -31,7 +31,7 @@ const featuredProjects = [
     description: "Simplify event planning with all-in-one vendor bookings.",
     imageUrl: "/images/caterserv.png", // Placeholder
     link: "/projects",
-    aiHint: "catering event food planning",
+    aiHint: "event planning catering food service",
   },
   {
     id: 4,
@@ -39,7 +39,7 @@ const featuredProjects = [
     description: "Seamless UX, secure payments, and AI-driven recommendations.",
     imageUrl: "/images/ecommerce.png", // Placeholder
     link: "/projects",
-    aiHint: "online shopping interface e-commerce",
+    aiHint: "online store e-commerce shopping cart",
   },
 ];
 
@@ -72,12 +72,12 @@ export default function Home() {
     <div className="flex flex-col min-h-[calc(100vh-4rem)]">
       {/* Hero Section with Background Image */}
       <section
-        className="relative flex flex-col items-center justify-center min-h-[calc(80vh)] md:min-h-[calc(90vh)] text-center px-4 md:px-8 py-20 md:py-32 bg-cover bg-center bg-no-repeat text-white"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/homepageHeroUnique/1920/1080')" }} // Updated seed for unique image
-        data-ai-hint="modern technology abstract background fresh unique creative"
+        className="relative flex flex-col items-center justify-center min-h-[calc(80vh)] md:min-h-[calc(90vh)] text-center px-4 md:px-8 py-20 md:py-32 bg-cover bg-center bg-no-repeat text-white isolate"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/heroVibrantTech/1920/1080')" }}
+        data-ai-hint="vibrant abstract technology futuristic cyber purple blue"
       >
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black/80 z-0"></div>
+        <div className="bg-hero-overlay"></div>
 
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center">
@@ -111,11 +111,11 @@ export default function Home() {
 
        {/* Services Overview Section */}
       <section
-        className="relative py-16 md:py-24 bg-cover bg-center"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/servicesBg/1920/1080')" }}
-        data-ai-hint="digital services tech pattern subtle geometric"
+        className="relative py-16 md:py-24 bg-cover bg-center isolate"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/servicesPattern/1920/1080')" }}
+        data-ai-hint="subtle geometric pattern digital network blue white"
       >
-        <div className="absolute inset-0 bg-background/90 backdrop-blur-sm z-0"></div> {/* Overlay */}
+        <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay */}
         <div className="relative container mx-auto px-4 z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-primary">What We Do</h2>
           <p className="text-center text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">
@@ -157,11 +157,11 @@ export default function Home() {
 
       {/* Featured Projects Section */}
        <section
-         className="relative py-16 md:py-24 bg-cover bg-center"
-         style={{ backgroundImage: "url('https://picsum.photos/seed/projectsBg/1920/1080')" }}
-         data-ai-hint="portfolio showcase technology project grid"
+         className="relative py-16 md:py-24 bg-cover bg-center isolate"
+         style={{ backgroundImage: "url('https://picsum.photos/seed/projectGrid/1920/1080')" }}
+         data-ai-hint="modern workspace design project portfolio dark grey"
        >
-         <div className="absolute inset-0 bg-muted/90 backdrop-blur-sm z-0"></div> {/* Overlay */}
+         <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay */}
          <div className="relative container mx-auto px-4 z-10">
            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-primary">Featured Projects</h2>
            <p className="text-center text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">
@@ -176,7 +176,7 @@ export default function Home() {
                >
                  <div className="relative w-full md:w-1/3 h-48 md:h-full overflow-hidden flex-shrink-0">
                     <Image
-                       src={`https://picsum.photos/seed/project${project.id}/400/300`} // Use Picsum for placeholders
+                       src={`https://picsum.photos/seed/projectThumb${project.id}/400/300`} // Use Picsum for placeholders
                        alt={project.title}
                        fill
                        className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
@@ -212,11 +212,11 @@ export default function Home() {
 
        {/* Why Choose Us Section */}
        <section
-         className="relative py-16 md:py-24 bg-cover bg-center"
-         style={{ backgroundImage: "url('https://picsum.photos/seed/whyUsBg/1920/1080')" }}
-         data-ai-hint="business partnership trust handshake abstract"
+         className="relative py-16 md:py-24 bg-cover bg-center isolate"
+         style={{ backgroundImage: "url('https://picsum.photos/seed/whyChooseTexture/1920/1080')" }}
+         data-ai-hint="abstract light texture professional partnership subtle"
        >
-         <div className="absolute inset-0 bg-background/95 backdrop-blur-sm z-0"></div> {/* Overlay */}
+          <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay */}
         <div className="relative container mx-auto px-4 z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">Why Partner with GenSyx?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
@@ -247,11 +247,11 @@ export default function Home() {
 
       {/* Testimonials Section - Added */}
       <section
-        className="relative py-16 md:py-24 bg-cover bg-center"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/testimonialsBg/1920/1080')" }}
-        data-ai-hint="client reviews feedback stars social proof"
+        className="relative py-16 md:py-24 bg-cover bg-center isolate"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/testimonialWave/1920/1080')" }}
+        data-ai-hint="soft wave pattern background customer reviews light blue"
       >
-        <div className="absolute inset-0 bg-muted/90 backdrop-blur-sm z-0"></div> {/* Overlay */}
+        <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay */}
         <div className="relative container mx-auto px-4 z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-primary">What Our Clients Say</h2>
           <p className="text-center text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">
@@ -311,10 +311,12 @@ export default function Home() {
       {/* Footer Section - Added */}
       <footer className="py-6 bg-card border-t border-border/20">
         <div className="container mx-auto text-center text-muted-foreground text-sm">
-          &copy; {new Date().getFullYear()} GenSyx Solutions. All rights reserved.
+          &copy; {new Date().getFullYear() + 1} GenSyx Solutions. All rights reserved. {/* Updated year */}
         </div>
       </footer>
 
     </div>
   );
 }
+
+    

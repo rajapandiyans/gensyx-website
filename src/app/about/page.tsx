@@ -8,10 +8,10 @@ export default function AboutPage() {
        {/* Background Image and Overlay */}
        <div
         className="absolute inset-0 -z-10 h-full w-full bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/aboutUsBg/1920/1080')" }}
-        data-ai-hint="corporate office building modern architecture team collaboration abstract"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/aboutTeamCollab/1920/1080')" }}
+        data-ai-hint="modern office team collaboration meeting discussion bright"
        ></div>
-       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/80 via-background/90 to-background/95"></div>
+       <div className="bg-overlay"></div> {/* Use shared overlay class */}
 
       <div className="container mx-auto px-4 relative z-10"> {/* Container for content */}
         <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-16 animate-fade-in-down text-primary">
@@ -70,3 +70,5 @@ export default function AboutPage() {
     </div>
   );
 }
+
+    

@@ -62,10 +62,10 @@ export default function ServicesPage() {
       {/* Background Image and Overlay */}
        <div
         className="absolute inset-0 -z-10 h-full w-full bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/servicesPageBg/1920/1080')" }}
-        data-ai-hint="digital services icons technology network connection abstract"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/servicesAbstractTech/1920/1080')" }}
+        data-ai-hint="abstract technology background digital services connection nodes blue purple"
        ></div>
-       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/80 via-background/90 to-background/95"></div>
+        <div className="bg-overlay"></div> {/* Use shared overlay class */}
 
       <div className="container mx-auto px-4 relative z-10"> {/* Content container */}
         <div className="text-center mb-16">
@@ -109,3 +109,5 @@ export default function ServicesPage() {
     </div>
   );
 }
+
+    
