@@ -47,6 +47,7 @@ async function handleSignup(data: SignupFormValues) {
      console.log("Verification email sent to:", data.email);
   } catch (emailError) {
       console.error("Failed to send verification email:", emailError);
+      // Optionally, inform the user that the verification email failed, but the account was created
   }
   return { success: true, message: "Account created! Check your email to verify." };
 }
