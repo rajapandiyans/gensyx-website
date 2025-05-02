@@ -28,7 +28,7 @@ let prompt: any; // Define prompt variable outside try-catch
 try {
    prompt = ai.definePrompt({
     name: 'chatbotPrompt',
-    model: 'googleai/gemini-1.5-flash', // Updated model name
+    model: 'googleai/gemini-1.5-flash', // Use a known stable model
     input: {
       schema: ChatbotInputSchema,
     },
@@ -104,9 +104,13 @@ try {
       } catch (error: any) {
         // Log the specific error during prompt execution
         console.error("Error executing chatbot prompt for query:", input.query, "Error:", error.message, "Stack:", error.stack);
-        // Check if it's an API key issue
-         if (error.message && (error.message.includes('API key not valid') || error.message.includes('API_KEY_INVALID'))) {
+        // Check if it's an API key issue - More robust check
+         if (error.message && (error.message.includes('API key') || error.message.includes('API_KEY') || error.message.includes('permission denied') || error.status === 'UNAUTHENTICATED')) {
            throw new Error(`Chatbot flow failed: Invalid API Key. Please check your GOOGLE_GENAI_API_KEY.`);
+         }
+         // Handle model not found errors
+         if (error.message && error.message.includes('not found')) {
+             throw new Error(`Chatbot flow failed: The specified AI model was not found. Please check the model name.`);
          }
         // Rethrow a more specific error, preserving original message if possible
          throw new Error(`Chatbot flow failed during prompt execution: ${error.message || 'Unknown error.'}`);
