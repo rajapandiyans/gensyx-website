@@ -5,9 +5,9 @@ import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Send, Bot, X, Loader2, AlertCircle } from 'lucide-react'; // Added AlertCircle
+import { Send, Bot, X, Loader2, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { getChatbotResponse } from '@/ai/flows/chatbot-flow'; // Import the flow
+import { getChatbotResponse } from '@/ai/flows/chatbot-flow';
 
 interface Message {
   id: string;
@@ -49,16 +49,14 @@ export function Chatbot() {
   React.useEffect(() => {
     if (isOpen && !initialGreetingSet) {
       const greeting = getTimeBasedGreeting();
-      setMessages([{ id: 'init-greet', text: `${greeting} How can I help you with GenSyx Solutions today?`, sender: 'assistant' }]);
-      setInitialGreetingSet(true); // Ensure greeting is set only once per session/open
+      setMessages([{ id: 'init-greet', text: `${greeting} How can I help you with GenSyx Solutions today? Ask me about our services, projects, or contact info!`, sender: 'assistant' }]);
+      setInitialGreetingSet(true);
     }
-     // If chatbot is closed, reset the greeting flag for next open
+     // Reset greeting flag if closed
      if (!isOpen) {
         setInitialGreetingSet(false);
-        // Optionally clear messages on close: setMessages([]);
      }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen, initialGreetingSet]); // Add initialGreetingSet to dependencies
+  }, [isOpen, initialGreetingSet]);
 
 
   const handleSendMessage = async (e: React.FormEvent) => {
@@ -71,14 +69,16 @@ export function Chatbot() {
       sender: 'user',
     };
     setMessages((prev) => [...prev, userMessage]);
-    const currentInput = input; // Capture input before clearing
+    const currentInput = input;
     setInput('');
     setIsLoading(true);
 
+    let errorMessageText = "Sorry, I encountered an issue processing your request. Please try again later."; // Default error
+
     try {
-      // console.log("Sending query to AI:", currentInput); // Log before sending
+      // console.log("Sending query to AI:", currentInput);
       const assistantResponse = await getChatbotResponse({ query: currentInput });
-      // console.log("Received AI response:", assistantResponse); // Log response
+      // console.log("Received AI response:", assistantResponse);
       const assistantMessage: Message = {
         id: `assistant-${Date.now()}`,
         text: assistantResponse.reply,
@@ -86,10 +86,26 @@ export function Chatbot() {
       };
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error: any) {
-      console.error("Chatbot error fetching response:", error);
-       // Log the full error for debugging
-       console.error("Full error object:", error);
-      const errorMessageText = `Sorry, I encountered an issue processing your request. Please try again later. ${error.message ? `(Details: ${error.message})` : ''}`;
+       console.error("Chatbot error fetching response:", error);
+       console.error("Full error object:", error); // Log the full error structure
+
+        // Check for specific error messages coming from the backend flow
+        const errorMsg = error.message || '';
+        if (errorMsg.includes("API Key Error") || errorMsg.includes("Missing API Key")) {
+            errorMessageText = "Sorry, the chatbot is currently unavailable due to a configuration issue (API Key). Please contact support.";
+        } else if (errorMsg.includes("AI Service Unconfigured")) {
+             errorMessageText = "Sorry, the AI assistant is not configured correctly. Please contact the administrator.";
+        } else if (errorMsg.includes("model was not found")) {
+             errorMessageText = "Sorry, there's an issue with the AI model configuration. Please contact support.";
+        } else if (errorMsg.includes("quota exceeded")) {
+            errorMessageText = "Sorry, the request limit has been reached. Please try again later.";
+        }
+        // Fallback for other errors, including the specific message if available
+        else if (errorMsg) {
+           errorMessageText = `Sorry, an error occurred: ${errorMsg}`;
+        }
+
+
       const errorMessage: Message = {
         id: `error-${Date.now()}`,
         text: errorMessageText,
@@ -136,13 +152,13 @@ export function Chatbot() {
                   'chatbot-message-error': message.sender === 'error',
                 })}
               >
-                 {message.sender === 'error' && <AlertCircle className="h-5 w-5 text-destructive mr-2 flex-shrink-0" />}
+                 {message.sender === 'error' && <AlertCircle className="h-5 w-5 text-destructive mr-2 flex-shrink-0 mt-0.5" />}
                  <div className="message-bubble">{message.text}</div>
               </div>
             ))}
             {isLoading && (
-              <div className="flex justify-start pl-2 py-2" role="status" aria-label="Loading response">
-                <Loader2 className="h-5 w-5 text-muted-foreground animate-spin" />
+              <div className="flex justify-start items-center pl-2 py-2 text-muted-foreground" role="status" aria-label="Loading response">
+                <Loader2 className="h-5 w-5 mr-2 animate-spin" /> Typing...
               </div>
             )}
             <div ref={messagesEndRef} />
@@ -156,7 +172,7 @@ export function Chatbot() {
               aria-label="Your message"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="flex-grow"
+              className="flex-grow bg-input/70 border-border/50 focus:border-primary"
               disabled={isLoading}
             />
             <Button type="submit" size="icon" aria-label="Send message" disabled={isLoading || !input.trim()}>
@@ -168,4 +184,3 @@ export function Chatbot() {
     </>
   );
 }
-
