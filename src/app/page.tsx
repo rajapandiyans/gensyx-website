@@ -2,42 +2,38 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Rocket, Code, Target, Eye, Zap, CheckCircle, Award, Users, Search, Palette, ExternalLink, ArrowRight, BarChart3, Network, UserCheck } from "lucide-react";
 import Image from "next/image";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"; // Import CardFooter
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"; // Ensure Avatar components are imported
 
-// Sample data for featured projects with placeholder images
+// Updated featured projects to use custom image paths (assuming images are placed in public/images)
 const featuredProjects = [
  {
     id: 1,
     title: "GPT3 Integration",
     description: "Harnessing AI for creative and business solutions.",
-    imageUrl: "/images/gpt3-integration.png", // Updated image path
-    link: "https://gpt3-gensyx.vercel.app/#wgpt3", // Use provided link
-    // Removed aiHint as it's a specific image now
+    imageUrl: "/images/gpt3-integration.png", // Custom image path
+    link: "https://gpt3-gensyx.vercel.app/#wgpt3",
   },
   {
     id: 2,
     title: "Travela Booking Platform",
     description: "Your perfect travel companion for seamless trip planning.",
-    imageUrl: `https://picsum.photos/seed/projectThumb2/400/300`, // Placeholder
-    link: "https://tourism-gensyx.vercel.app/", // Use provided link
-    aiHint: "travel booking website map passport",
+    imageUrl: "/images/travela-platform.png", // Custom image path
+    link: "https://tourism-gensyx.vercel.app/",
   },
    {
     id: 3,
     title: "Caterserv Event Planning",
     description: "Simplify event planning with all-in-one vendor bookings.",
-    imageUrl: `https://picsum.photos/seed/projectThumb3/400/300`, // Placeholder
-    link: "https://caterserv-gensyx.vercel.app/", // Use provided link
-    aiHint: "event planning catering food service",
+    imageUrl: "/images/caterserv-planning.png", // Custom image path
+    link: "https://caterserv-gensyx.vercel.app/",
   },
   {
     id: 4,
     title: "Modern E-Commerce Store",
     description: "Seamless UX, secure payments, and AI-driven recommendations.",
-    imageUrl: `https://picsum.photos/seed/projectThumb4/400/300`, // Placeholder
-    link: "https://e-commerce-gensyx.vercel.app/index.html", // Use provided link
-    aiHint: "online store e-commerce shopping cart",
+    imageUrl: "/images/ecommerce-store.png", // Custom image path
+    link: "https://e-commerce-gensyx.vercel.app/index.html",
   },
 ];
 
@@ -93,8 +89,8 @@ export default function Home() {
       {/* Hero Section with Background Image */}
       <section
         className="relative flex flex-col items-center justify-center min-h-[calc(80vh)] md:min-h-[calc(90vh)] text-center px-4 md:px-8 py-20 md:py-32 bg-cover bg-center bg-no-repeat text-white isolate"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/heroVibrantTechUnique/1920/1080')" }} // New unique seed
-        data-ai-hint="vibrant abstract technology futuristic cyber purple blue unique fresh" // Updated hint
+        style={{ backgroundImage: "url('https://picsum.photos/seed/heroVibrantTechUnique/1920/1080')" }}
+        data-ai-hint="vibrant abstract technology futuristic cyber purple blue unique fresh"
       >
         {/* Overlay */}
         <div className="bg-hero-overlay"></div>
@@ -135,8 +131,8 @@ export default function Home() {
        {/* Services Overview Section */}
       <section
         className="relative py-16 md:py-24 bg-cover bg-center isolate"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/servicesPatternFresh/1920/1080')" }} // New unique seed
-        data-ai-hint="subtle geometric pattern digital network blue white fresh clean" // Updated hint
+        style={{ backgroundImage: "url('https://picsum.photos/seed/servicesPatternFresh/1920/1080')" }}
+        data-ai-hint="subtle geometric pattern digital network blue white fresh clean"
       >
         <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay with blur */}
         <div className="relative container mx-auto px-4 z-10">
@@ -150,7 +146,7 @@ export default function Home() {
               return (
               <Card
                 key={service.id}
-                className="card-base group overflow-hidden animate-subtle-slide-up text-center border-border/30 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-2 bg-card/80 backdrop-blur-md" // Added card background transparency
+                className="card-base group overflow-hidden animate-subtle-slide-up text-center border-border/30 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-2 bg-card/80 backdrop-blur-md"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <CardHeader className="items-center pb-4">
@@ -184,8 +180,8 @@ export default function Home() {
       {/* Featured Projects Section */}
        <section
          className="relative py-16 md:py-24 bg-cover bg-center isolate"
-         style={{ backgroundImage: "url('https://picsum.photos/seed/projectGridFresh/1920/1080')" }} // New unique seed
-         data-ai-hint="modern workspace design project portfolio dark grey fresh unique" // Updated hint
+         style={{ backgroundImage: "url('https://picsum.photos/seed/projectGridFresh/1920/1080')" }}
+         data-ai-hint="modern workspace design project portfolio dark grey fresh unique"
        >
          <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay with blur */}
          <div className="relative container mx-auto px-4 z-10">
@@ -197,16 +193,15 @@ export default function Home() {
              {featuredProjects.map((project, index) => (
                <Card
                  key={project.id}
-                 className="card-base group overflow-hidden animate-subtle-scale-in flex flex-col md:flex-row items-center border-border/30 hover:shadow-xl transition-all duration-300 bg-card/80 backdrop-blur-md" // Card transparency
+                 className="card-base group overflow-hidden animate-subtle-scale-in flex flex-col md:flex-row items-center border-border/30 hover:shadow-xl transition-all duration-300 bg-card/80 backdrop-blur-md"
                  style={{ animationDelay: `${index * 0.15}s` }}
                >
                  <div className="relative w-full md:w-1/3 h-48 md:h-full overflow-hidden flex-shrink-0">
                     <Image
-                       src={project.imageUrl} // Use updated placeholder URL or specific image
+                       src={project.imageUrl} // Use updated custom image path
                        alt={project.title}
                        fill
                        className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-                       {...(project.aiHint ? { 'data-ai-hint': project.aiHint } : {})} // Conditionally add aiHint
                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Responsive sizes
                     />
                  </div>
@@ -239,8 +234,8 @@ export default function Home() {
        {/* Why Choose Us Section */}
        <section
          className="relative py-16 md:py-24 bg-cover bg-center isolate"
-         style={{ backgroundImage: "url('https://picsum.photos/seed/whyChooseTextureFresh/1920/1080')" }} // New unique seed
-         data-ai-hint="abstract light texture professional partnership subtle fresh clean" // Updated hint
+         style={{ backgroundImage: "url('https://picsum.photos/seed/whyChooseTextureFresh/1920/1080')" }}
+         data-ai-hint="abstract light texture professional partnership subtle fresh clean"
        >
           <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay with blur */}
         <div className="relative container mx-auto px-4 z-10">
@@ -274,8 +269,8 @@ export default function Home() {
       {/* Testimonials Section - Added */}
       <section
         className="relative py-16 md:py-24 bg-cover bg-center isolate"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/testimonialWaveFresh/1920/1080')" }} // New unique seed
-        data-ai-hint="soft wave pattern background customer reviews light blue fresh clean" // Updated hint
+        style={{ backgroundImage: "url('https://picsum.photos/seed/testimonialWaveFresh/1920/1080')" }}
+        data-ai-hint="soft wave pattern background customer reviews light blue fresh clean"
       >
         <div className="bg-overlay backdrop-blur-sm"></div> {/* Overlay with blur */}
         <div className="relative container mx-auto px-4 z-10">
@@ -287,7 +282,7 @@ export default function Home() {
             {[1, 2, 3].map((i) => ( // Placeholder loop for 3 testimonials
                <Card
                  key={`testimonial-${i}`}
-                 className="card-base animate-subtle-slide-up border-border/30 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1 bg-card/80 backdrop-blur-md" // Card transparency
+                 className="card-base animate-subtle-slide-up border-border/30 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1 bg-card/80 backdrop-blur-md"
                  style={{ animationDelay: `${i * 0.1}s` }}
                >
                  <CardContent className="pt-6">
@@ -344,3 +339,5 @@ export default function Home() {
     </div>
   );
 }
+
+    

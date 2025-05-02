@@ -3,39 +3,35 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from 'lucide-react';
 
-// Updated project data with placeholder image logic derived from links/titles
+// Updated project data with custom image paths (assuming images are in public/images)
 const projects = [
  {
     id: 1,
     title: "GPT3 Integration",
     description: "Let’s Build Something amazing with GPT-3 – Harness AI for creative and business solutions.",
-    imageUrl: "/images/gpt3-integration.png", // Updated image path
+    imageUrl: "/images/gpt3-integration.png", // Custom image path
     link: "https://gpt3-gensyx.vercel.app/#wgpt3",
-    // Removed aiHint
   },
   {
     id: 2,
     title: "Travela Booking Platform",
     description: "Your perfect travel companion - Discover curated destinations and seamless trip planning for unforgettable journeys.",
-    imageUrl: `https://picsum.photos/seed/projPageThumb2/600/400`, // Placeholder
+    imageUrl: "/images/travela-platform.png", // Custom image path
     link: "https://tourism-gensyx.vercel.app/",
-    aiHint: "travel website destination map mountains",
   },
   {
     id: 3,
     title: "Caterserv Event Planning",
     description: "Book CaterServ For Your Dream Event – Simplify planning with all-in-one vendor bookings.",
-    imageUrl: `https://picsum.photos/seed/projPageThumb3/600/400`, // Placeholder
+    imageUrl: "/images/caterserv-planning.png", // Custom image path
     link: "https://caterserv-gensyx.vercel.app/",
-     aiHint: "event table setting catering elegant food",
   },
   {
     id: 4,
     title: "Modern E-Commerce Store",
     description: "Simplify shopping with seamless UX, secure payments, and AI-driven recommendations.",
-    imageUrl: `https://picsum.photos/seed/projPageThumb4/600/400`, // Placeholder
+    imageUrl: "/images/ecommerce-store.png", // Custom image path
     link: "https://e-commerce-gensyx.vercel.app/index.html",
-    aiHint: "online shopping clothing store fashion",
   },
 ];
 
@@ -45,8 +41,8 @@ export default function ProjectsPage() {
       {/* Background Image and Overlay */}
        <div
         className="absolute inset-0 -z-10 h-full w-full bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/technologyCircuitCode/1920/1080')" }} // Updated seed for technology theme
-        data-ai-hint="technology circuit board code software development abstract tech" // Updated AI hint
+        style={{ backgroundImage: "url('https://picsum.photos/seed/technologyCircuitCode/1920/1080')" }}
+        data-ai-hint="technology circuit board code software development abstract tech"
        ></div>
        <div className="bg-overlay"></div> {/* Use shared overlay class */}
 
@@ -64,17 +60,16 @@ export default function ProjectsPage() {
           {projects.map((project, index) => (
             <Card
                key={project.id}
-               className="card-base group overflow-hidden animate-subtle-slide-up flex flex-col bg-card/80 backdrop-blur-md border border-border/30 hover:border-primary/50 transition-colors duration-300" // Card transparency
+               className="card-base group overflow-hidden animate-subtle-slide-up flex flex-col bg-card/80 backdrop-blur-md border border-border/30 hover:border-primary/50 transition-colors duration-300"
                style={{ animationDelay: `${index * 0.15 + 0.2}s` }}
             >
               <CardHeader className="p-0 relative aspect-video overflow-hidden">
                 {/* Image with subtle zoom on hover */}
                 <Image
-                  src={project.imageUrl} // Use the defined imageUrl
+                  src={project.imageUrl} // Use the updated custom image path
                   alt={project.title}
                   fill
                   className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-                   {...(project.aiHint ? { 'data-ai-hint': project.aiHint } : {})} // Conditionally add aiHint
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
                  {/* Optional: Darker overlay on hover */}
@@ -100,3 +95,5 @@ export default function ProjectsPage() {
     </div>
   );
 }
+
+    

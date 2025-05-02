@@ -8,7 +8,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 
-// Service data with icons included directly
+// Service data with icons and custom image paths (assuming images are in public/images)
 const serviceDetailsData: { [key: string]: any } = {
   "website-design": {
     title: "Website Design & Development",
@@ -23,8 +23,7 @@ const serviceDetailsData: { [key: string]: any } = {
       "SEO-Friendly Foundations for Visibility",
       "Ongoing Maintenance & Support Options",
     ],
-    visuals: ["https://picsum.photos/seed/webdev1/800/450", "https://picsum.photos/seed/webdev2/800/450"],
-    aiHints: ["website design prototype interface", "responsive website mockup devices"],
+    visuals: ["/images/webdev-1.png", "/images/webdev-2.png"], // Custom image paths
   },
   "seo": {
     title: "Search Engine Optimization (SEO)",
@@ -39,11 +38,10 @@ const serviceDetailsData: { [key: string]: any } = {
       "Performance Tracking & Analytics Reporting",
       "Algorithm Update Monitoring & Adaptation",
     ],
-     visuals: ["https://picsum.photos/seed/seo1/800/450", "https://picsum.photos/seed/seo2/800/450"],
-     aiHints: ["seo analytics dashboard graph", "keyword research analysis chart"],
+     visuals: ["/images/seo-1.png", "/images/seo-2.png"], // Custom image paths
   },
    "branding": {
-    title: "Branding & Identity", // Updated title to match services page more closely
+    title: "Branding & Identity",
     icon: Palette,
     description: "Your brand is more than just a logo. We help you craft a compelling brand identity that reflects your values, resonates with your target audience, and sets you apart from the competition.",
     features: [
@@ -55,8 +53,7 @@ const serviceDetailsData: { [key: string]: any } = {
       "Brand Strategy & Positioning",
       "Visual Identity Application Across Platforms",
     ],
-     visuals: ["https://picsum.photos/seed/brand1/800/450", "https://picsum.photos/seed/brand2/800/450"],
-     aiHints: ["brand logo design identity", "brand style guide mockup presentation"], // Updated hint
+     visuals: ["/images/branding-1.png", "/images/branding-2.png"], // Custom image paths
   },
    "digital-marketing": {
      title: "Digital Marketing Strategy",
@@ -71,8 +68,7 @@ const serviceDetailsData: { [key: string]: any } = {
        "Marketing Analytics & ROI Reporting",
        "Integrated Multi-Channel Strategy",
      ],
-      visuals: ["https://picsum.photos/seed/digitalm1/800/450", "https://picsum.photos/seed/digitalm2/800/450"],
-      aiHints: ["digital marketing analytics chart", "ppc campaign dashboard performance"], // Updated hint
+      visuals: ["/images/digital-marketing-1.png", "/images/digital-marketing-2.png"], // Custom image paths
    },
    "social-media": {
      title: "Social Media Management",
@@ -87,8 +83,7 @@ const serviceDetailsData: { [key: string]: any } = {
        "Performance Analytics & Growth Reporting",
        "Brand Reputation Management",
      ],
-      visuals: ["https://picsum.photos/seed/social1/800/450", "https://picsum.photos/seed/social2/800/450"],
-      aiHints: ["social media connection network", "instagram profile engagement mockup"], // Updated hint
+      visuals: ["/images/social-media-1.png", "/images/social-media-2.png"], // Custom image paths
    },
    "google-profile": {
      title: "Google Business Profile Optimization",
@@ -103,8 +98,7 @@ const serviceDetailsData: { [key: string]: any } = {
        "Local SEO Integration & Citation Building",
        "Detailed Performance Insights & Reporting",
      ],
-      visuals: ["https://picsum.photos/seed/gbp1/800/450", "https://picsum.photos/seed/gbp2/800/450"],
-      aiHints: ["google business profile optimization", "business online review management stars"], // Updated hint
+      visuals: ["/images/gbp-1.png", "/images/gbp-2.png"], // Custom image paths
    },
 };
 
@@ -135,8 +129,8 @@ export default function ServiceDetailPage() {
        {/* Background Image and Overlay */}
        <div
         className="absolute inset-0 -z-10 h-full w-full bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: `url('https://picsum.photos/seed/serviceDetail${serviceId}/1920/1080')` }} // Dynamic background
-        data-ai-hint={`service ${service.title} abstract background`} // Dynamic hint
+        style={{ backgroundImage: `url('https://picsum.photos/seed/serviceDetail${serviceId}/1920/1080')` }}
+        data-ai-hint={`service ${service.title} abstract background`}
        ></div>
        <div className="bg-overlay"></div> {/* Use shared overlay class */}
 
@@ -178,11 +172,10 @@ export default function ServiceDetailPage() {
                {service.visuals.map((url: string, index: number) => (
                    <div key={index} className="rounded-lg overflow-hidden shadow-md border border-border/30 group relative aspect-video transform hover:scale-[1.03] transition-transform duration-300"> {/* Simplified hover */}
                        <Image
-                          src={url}
+                          src={url} // Use custom image path
                           alt={`${service.title} Visual Example ${index + 1}`}
                           fill
                           className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-                          data-ai-hint={service.aiHints[index]}
                           sizes="(max-width: 1024px) 100vw, 50vw"
                        />
                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div> {/* Slightly darker overlay */}
@@ -209,3 +202,5 @@ export default function ServiceDetailPage() {
     </div>
   );
 }
+
+    
