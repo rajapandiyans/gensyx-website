@@ -23,6 +23,9 @@ const ChatbotOutputSchema = z.object({
 });
 export type ChatbotOutput = z.infer<typeof ChatbotOutputSchema>;
 
+// Specific error message for configuration issues
+const API_KEY_ERROR_MESSAGE = "Chatbot flow failed: Invalid API Key. Please check your GOOGLE_GENAI_API_KEY.";
+
 // Define the Genkit prompt - Using a stable Gemini model
 let prompt: any; // Define prompt variable outside try-catch
 try {
@@ -91,8 +94,8 @@ try {
       if (!isAiConfigured()) {
           const configErrorMsg = "Chatbot flow cannot execute because AI is not configured. This usually means the GOOGLE_GENAI_API_KEY environment variable is missing or invalid. Check server startup logs.";
           console.error(configErrorMsg);
-          // Throw a specific error indicating the configuration issue - this is caught by the frontend
-          throw new Error("Chatbot flow failed: Invalid API Key. Please check your GOOGLE_GENAI_API_KEY.");
+          // Throw the specific error indicating the configuration issue - this is caught by the frontend
+          throw new Error(API_KEY_ERROR_MESSAGE);
       }
 
       // If checks pass, attempt to execute the prompt
@@ -129,7 +132,7 @@ try {
            const apiKeyErrorMsg = "API Key Error detected during chatbot flow execution. The GOOGLE_GENAI_API_KEY provided is likely invalid or lacks permissions.";
            console.error(apiKeyErrorMsg);
            // Throw the specific error message caught by the frontend
-           throw new Error(`Chatbot flow failed: Invalid API Key. Please check your GOOGLE_GENAI_API_KEY.`);
+           throw new Error(API_KEY_ERROR_MESSAGE);
         }
 
         // Handle model not found errors
@@ -174,7 +177,7 @@ export async function getChatbotResponse(input: ChatbotInput): Promise<ChatbotOu
         const configErrorMsg = "Attempted to call chatbot response, but AI is not configured. This usually means the GOOGLE_GENAI_API_KEY environment variable is missing or invalid. Check server startup logs.";
         console.error(configErrorMsg);
         // Throw the specific error caught by the frontend
-        throw new Error("Chatbot flow failed: Invalid API Key. Please check your GOOGLE_GENAI_API_KEY.");
+        throw new Error(API_KEY_ERROR_MESSAGE);
    }
 
   console.log("Calling chatbotFlow with input:", JSON.stringify(input));
@@ -185,8 +188,13 @@ export async function getChatbotResponse(input: ChatbotInput): Promise<ChatbotOu
   } catch (error: any) {
     // Log the error from *calling* the flow itself
     console.error("Error invoking chatbotFlow:", error.message, "Stack:", error.stack);
-    // Rethrow the error to the caller (e.g., the React component)
-    // Ensure the specific error message (like the API Key error) is propagated
+
+    // **Crucial:** Ensure the specific API Key error message is propagated if it was the cause
+    if (error.message === API_KEY_ERROR_MESSAGE) {
+        throw error; // Rethrow the specific API Key error
+    }
+
+    // Otherwise, wrap the original error message
     throw new Error(`Failed to get chatbot response from flow: ${error.message || 'Unknown error during flow execution'}`);
   }
 }

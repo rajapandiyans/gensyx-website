@@ -91,22 +91,23 @@ export function Chatbot() {
 
         // Extract the core message from the potentially nested error
        const errorMsg = error.message || '';
-       const coreErrorMsg = errorMsg.replace("Failed to get chatbot response from flow: ", ""); // Remove prefix if present
 
-        // **Crucial Check:** Directly look for the specific API key error message thrown by the backend flow
-        if (coreErrorMsg.includes("Invalid API Key. Please check your GOOGLE_GENAI_API_KEY")) {
-             errorMessageText = "Sorry, the chatbot is currently unavailable due to a configuration issue (API Key). Please contact support.";
-        } else if (coreErrorMsg.includes("Initialization failed")) {
+        // **Crucial Check:** Look for the specific API key error message *exactly* as thrown by the backend flow
+        if (errorMsg.includes("Chatbot flow failed: Invalid API Key. Please check your GOOGLE_GENAI_API_KEY.")) {
+             // Display a user-friendly message indicating the configuration problem
+             errorMessageText = "Sorry, the chatbot is currently unavailable due to a configuration issue (Invalid API Key). Please contact support or check the server logs for details on setting the GOOGLE_GENAI_API_KEY.";
+        } else if (errorMsg.includes("Initialization failed")) {
              errorMessageText = "Sorry, the chatbot is currently unavailable due to a server initialization error. Please contact support.";
-        } else if (coreErrorMsg.includes("model was not found")) {
+        } else if (errorMsg.includes("model was not found")) {
              errorMessageText = "Sorry, there's an issue with the AI model configuration. Please contact support.";
-        } else if (coreErrorMsg.includes("quota exceeded")) {
+        } else if (errorMsg.includes("quota exceeded")) {
             errorMessageText = "Sorry, the request limit has been reached. Please try again later.";
         }
         // Fallback for other errors, including the specific message if available
-        else if (coreErrorMsg) {
-           // Show a generic message but include the specific error detail for debugging
-           errorMessageText = `Sorry, an error occurred. Please try again later. (Details: ${coreErrorMsg})`;
+        else {
+           // Remove the generic prefix if present to avoid redundancy
+           const specificErrorDetail = errorMsg.replace("Failed to get chatbot response from flow: ", "");
+           errorMessageText = `Sorry, an error occurred. Please try again later. (Details: ${specificErrorDetail || 'Unknown error'})`;
         }
 
 
