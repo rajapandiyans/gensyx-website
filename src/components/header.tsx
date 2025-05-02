@@ -1,7 +1,8 @@
 
 'use client';
 
-import * as React from 'react';
+
+import  React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -43,13 +44,8 @@ export function Header() {
           <Image
             src="/images/gensyx-logo.jpg" // Place your logo here: public/images/gensyx-logo.png
             alt="GenSyx Logo"
-<<<<<<< HEAD
             width={140} // Adjust width as needed, keeping aspect ratio
             height={32} // Adjust height as needed, keeping aspect ratio
-=======
-            width={70} // Explicit width
-            height={32} // Explicit height
->>>>>>> 53c9cfa (I see this error with the app, reported by NextJS, please fix it. The error is reported as HTML but presented visually to the user).)
             priority // Load logo faster
             // Removed className="h-8 w-auto" to avoid conflict with width/height props
           />
