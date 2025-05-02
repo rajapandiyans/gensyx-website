@@ -7,7 +7,7 @@ import { ArrowRight, Code, Search, Palette, BarChart3, Network, UserCheck } from
 const services = [
   {
     id: "website-design", // Matches the key in serviceDetailsData
-    title: "Web Design & Dev",
+    title: "Web Design & Development",
     icon: Code,
     description: "Building responsive, high-performance websites that captivate and convert.",
     link: "/services/website-design",
@@ -39,7 +39,7 @@ const services = [
   },
   {
     id: "social-media", // Matches the key in serviceDetailsData
-    title: "Social Media Mgmt",
+    title: "Social Media Management",
     icon: Network,
     description: "Engaging content and community management to grow your online presence.",
     link: "/services/social-media",

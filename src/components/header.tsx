@@ -19,37 +19,21 @@ const navItems = [
   { href: '/contact', label: 'Contact Us' },
 ];
 
-// Paths where the main navigation should be hidden or adjusted
-// Removed AUTH_PATHS as login/signup are removed
-// const AUTH_PATHS = ['/login', '/signup'];
-
 export function Header() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  // Removed isAuthPage check as login/signup are removed
-  // const isAuthPage = AUTH_PATHS.includes(pathname);
-
-  // // Don't render header on auth pages
-  // if (isAuthPage) {
-  //   return null;
-  // }
 
   const isActive = (path: string) => pathname === path || (path === '/services' && pathname.startsWith('/services/'));
 
   return (
     <header className="header">
       <div className="header-container justify-between">
-        {/* Logo */}
+        {/* Logo Text */}
         <Link href="/" className="flex items-center gap-2 mr-4 flex-shrink-0">
-          {/* Updated image path to the new logo */}
-          <Image
-            src="/images/gensyx-logo.jpg" // Corrected logo path
-            alt="GenSyx Logo"
-            width={70} // Adjust width as needed, keeping aspect ratio
-            height={28} // Adjust height as needed, keeping aspect ratio
-            priority // Load logo faster
-            // Removed className="h-8 w-auto" to avoid conflict with width/height props
-          />
+           {/* Replaced Image with styled text */}
+           <span className="text-2xl font-bold tracking-tight">
+             Gen<span style={{ color: '#cbacf9' }}>Syx</span>
+           </span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -68,16 +52,6 @@ export function Header() {
           ))}
         </nav>
 
-        {/* Removed Desktop Auth Buttons */}
-        {/* <div className="hidden md:flex items-center gap-3 ml-auto">
-           <Button variant="ghost" size="sm" asChild>
-              <Link href="/login">Login</Link>
-           </Button>
-           <Button variant="default" size="sm" asChild>
-              <Link href="/signup">Sign Up</Link>
-           </Button>
-        </div> */}
-
 
         {/* Mobile Menu Trigger */}
         <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -91,14 +65,10 @@ export function Header() {
              {/* Mobile Menu Header */}
              <div className="flex justify-between items-center mb-8 border-b pb-4">
                <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
-                 <Image
-                   src="/images/gensyx-logo.png" // Use new logo path here too
-                   alt="GenSyx Logo"
-                    width={120} // Explicit width for mobile
-                    height={28} // Explicit height for mobile
-                   priority
-                   // Removed className="h-7 w-auto" to avoid conflict with width/height props
-                 />
+                  {/* Replaced Image with styled text for mobile */}
+                 <span className="text-xl font-bold tracking-tight">
+                   Gen<span style={{ color: '#cbacf9' }}>Syx</span>
+                 </span>
                </Link>
                 <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
                   <X />
@@ -122,21 +92,9 @@ export function Header() {
                 </Link>
               ))}
             </nav>
-
-            {/* Removed Mobile Auth Buttons */}
-            {/* <div className="mt-auto flex flex-col gap-3 pt-6 border-t">
-               <Button variant="ghost" size="lg" asChild>
-                 <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>Login</Link>
-               </Button>
-               <Button variant="default" size="lg" asChild>
-                 <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)}>Sign Up</Link>
-               </Button>
-            </div> */}
           </SheetContent>
         </Sheet>
       </div>
     </header>
   );
 }
-
-    
