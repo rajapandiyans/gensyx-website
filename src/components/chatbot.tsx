@@ -89,20 +89,24 @@ export function Chatbot() {
        console.error("Chatbot error fetching response:", error);
        console.error("Full error object:", error); // Log the full error structure
 
-        // Check for specific error messages coming from the backend flow
-        const errorMsg = error.message || '';
-        if (errorMsg.includes("API Key Error") || errorMsg.includes("Missing API Key")) {
-            errorMessageText = "Sorry, the chatbot is currently unavailable due to a configuration issue (API Key). Please contact support.";
-        } else if (errorMsg.includes("AI Service Unconfigured")) {
-             errorMessageText = "Sorry, the AI assistant is not configured correctly. Please contact the administrator.";
-        } else if (errorMsg.includes("model was not found")) {
+        // Extract the core message from the potentially nested error
+       const errorMsg = error.message || '';
+       const coreErrorMsg = errorMsg.replace("Failed to get chatbot response from flow: ", ""); // Remove prefix if present
+
+        // **Crucial Check:** Directly look for the specific API key error message thrown by the backend flow
+        if (coreErrorMsg.includes("Invalid API Key. Please check your GOOGLE_GENAI_API_KEY")) {
+             errorMessageText = "Sorry, the chatbot is currently unavailable due to a configuration issue (API Key). Please contact support.";
+        } else if (coreErrorMsg.includes("Initialization failed")) {
+             errorMessageText = "Sorry, the chatbot is currently unavailable due to a server initialization error. Please contact support.";
+        } else if (coreErrorMsg.includes("model was not found")) {
              errorMessageText = "Sorry, there's an issue with the AI model configuration. Please contact support.";
-        } else if (errorMsg.includes("quota exceeded")) {
+        } else if (coreErrorMsg.includes("quota exceeded")) {
             errorMessageText = "Sorry, the request limit has been reached. Please try again later.";
         }
         // Fallback for other errors, including the specific message if available
-        else if (errorMsg) {
-           errorMessageText = `Sorry, an error occurred: ${errorMsg}`;
+        else if (coreErrorMsg) {
+           // Show a generic message but include the specific error detail for debugging
+           errorMessageText = `Sorry, an error occurred. Please try again later. (Details: ${coreErrorMsg})`;
         }
 
 
@@ -152,8 +156,10 @@ export function Chatbot() {
                   'chatbot-message-error': message.sender === 'error',
                 })}
               >
-                 {message.sender === 'error' && <AlertCircle className="h-5 w-5 text-destructive mr-2 flex-shrink-0 mt-0.5" />}
-                 <div className="message-bubble">{message.text}</div>
+                 <div className="message-bubble flex items-start gap-2">
+                   {message.sender === 'error' && <AlertCircle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />}
+                   <span>{message.text}</span>
+                 </div>
               </div>
             ))}
             {isLoading && (

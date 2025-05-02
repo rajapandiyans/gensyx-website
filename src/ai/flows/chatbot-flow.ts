@@ -28,7 +28,7 @@ let prompt: any; // Define prompt variable outside try-catch
 try {
   prompt = ai.definePrompt({
     name: 'chatbotPrompt',
-    model: 'googleai/gemini-1.5-flash', // Use a known stable model like gemini-1.5-flash
+    model: 'googleai/gemini-1.5-flash', // Use gemini-1.5-flash (stable and generally available)
     input: {
       schema: ChatbotInputSchema,
     },
@@ -58,6 +58,7 @@ If the user asks for social media links, provide the list of links from the cont
 If you cannot answer based on the context, say "I do not have information about that based on the provided context."
 `,
   });
+  console.log("Chatbot prompt defined successfully.");
 } catch (error: any) {
   console.error("FATAL: Error defining chatbot prompt:", error.message, error.stack);
   // Setting prompt to null indicates a failure in definition, which will be checked before execution.
@@ -78,20 +79,23 @@ try {
       outputSchema: ChatbotOutputSchema,
     },
     async (input) => {
-      // Check if the prompt definition failed earlier
+      // Check 1: Was the prompt definition successful during initialization?
       if (!prompt) {
-        console.error("Chatbot flow cannot execute because the prompt definition failed during initialization.");
-        throw new Error("Chatbot prompt is not available due to an initialization error.");
+        const initErrorMsg = "Chatbot flow cannot execute because the prompt definition failed during server initialization. Check server logs for 'FATAL: Error defining chatbot prompt'.";
+        console.error(initErrorMsg);
+        // Propagate a clear error indicating initialization failure
+        throw new Error("Chatbot Service Error: Initialization failed (Prompt definition). Please check server logs.");
       }
 
-      // Check if AI is configured with a valid API key *before* making the call
+      // Check 2: Is the AI (specifically the API key) configured correctly?
       if (!isAiConfigured()) {
-          console.error("Chatbot flow cannot execute because AI is not configured. Missing GOOGLE_GENAI_API_KEY.");
-          // Throw a specific error indicating configuration issue
-          throw new Error("AI Service Unconfigured: Missing API Key. Please check server configuration.");
+          const configErrorMsg = "Chatbot flow cannot execute because AI is not configured. This usually means the GOOGLE_GENAI_API_KEY environment variable is missing or invalid. Check server startup logs.";
+          console.error(configErrorMsg);
+          // Throw a specific error indicating the configuration issue - this is caught by the frontend
+          throw new Error("Chatbot flow failed: Invalid API Key. Please check your GOOGLE_GENAI_API_KEY.");
       }
 
-
+      // If checks pass, attempt to execute the prompt
       try {
         // console.log("Executing chatbot prompt with input:", input);
         const llmResponse = await prompt(input);
@@ -102,19 +106,18 @@ try {
           console.error("Chatbot flow received invalid or missing output from LLM for query:", input.query, "Response object:", JSON.stringify(llmResponse));
           // Check for explicit errors in the response structure
           if (llmResponse && 'error' in llmResponse) {
-            // Rethrow the error from the LLM response itself
              throw new Error(`Chatbot flow failed: LLM returned an error - ${llmResponse.error}`);
           }
           throw new Error(`Chatbot flow failed: Invalid or missing 'reply' in LLM output structure. Received: ${JSON.stringify(llmResponse)}`);
         }
         return llmResponse.output;
+
       } catch (error: any) {
         // Log the specific error during prompt execution
         console.error("Error executing chatbot prompt for query:", input.query, "Error:", error.message, "Stack:", error.stack);
 
-         // Explicitly check for API key related errors (common causes)
-         // This pattern matching might need adjustment based on exact error messages from Google AI
         const errorMsgLower = error.message?.toLowerCase() || '';
+        // Explicitly check for API key related errors from Google AI (most likely cause if isAiConfigured was true but call fails)
         if (
           errorMsgLower.includes('api key') ||
           errorMsgLower.includes('invalid key') ||
@@ -123,27 +126,32 @@ try {
           error.status === 'UNAUTHENTICATED' || // Check gRPC status if available
           (error.cause && (error.cause as any).message?.toLowerCase().includes('api key')) // Check nested cause
         ) {
-           console.error("API Key Error detected during chatbot flow execution.");
-           // Throw a very specific error for the frontend to potentially catch
-           throw new Error(`API Key Error: Chatbot failed due to an invalid or missing API Key. Please verify the GOOGLE_GENAI_API_KEY environment variable.`);
+           const apiKeyErrorMsg = "API Key Error detected during chatbot flow execution. The GOOGLE_GENAI_API_KEY provided is likely invalid or lacks permissions.";
+           console.error(apiKeyErrorMsg);
+           // Throw the specific error message caught by the frontend
+           throw new Error(`Chatbot flow failed: Invalid API Key. Please check your GOOGLE_GENAI_API_KEY.`);
         }
 
         // Handle model not found errors
-         if (errorMsgLower.includes('model') && errorMsgLower.includes('not found')) {
-             throw new Error(`Chatbot flow failed: The specified AI model was not found. Please check the model name in the flow definition.`);
+         if (errorMsgLower.includes('model') && (errorMsgLower.includes('not found') || errorMsgLower.includes('does not exist'))) {
+             const modelNotFoundMsg = `Chatbot flow failed: The specified AI model ('${prompt.config?.model || 'unknown'}') was not found or is unavailable in your region.`;
+             console.error(modelNotFoundMsg);
+             throw new Error(modelNotFoundMsg);
          }
 
          // Handle resource exhausted (e.g., quota limits)
          if (error.status === 'RESOURCE_EXHAUSTED' || errorMsgLower.includes('quota')) {
-             throw new Error(`Chatbot flow failed: API quota exceeded or resource limits reached. Please check your Google AI project quotas.`);
+             const quotaErrorMsg = `Chatbot flow failed: API quota exceeded or resource limits reached. Please check your Google AI project quotas.`;
+             console.error(quotaErrorMsg);
+             throw new Error(quotaErrorMsg);
          }
-
 
         // Rethrow a generic error for other issues, including the original message
         throw new Error(`Chatbot flow failed during prompt execution: ${error.message || 'An unknown error occurred.'}`);
       }
     }
   );
+  console.log("Chatbot flow defined successfully.");
 } catch (error: any) {
   console.error("FATAL: Error defining chatbot flow:", error.message, error.stack);
   // Setting flow to null indicates a failure in definition.
@@ -153,18 +161,21 @@ try {
 
 // Wrapper function to call the flow - adding more detailed logging and pre-checks
 export async function getChatbotResponse(input: ChatbotInput): Promise<ChatbotOutput> {
-  // Check if the flow definition itself failed during initialization
+  // Check 1: Was the flow definition successful during initialization?
   if (!chatbotFlow) {
-    console.error("Cannot get chatbot response because the chatbot flow definition failed.");
-    throw new Error("Chatbot flow is not available due to an initialization error.");
+    const initErrorMsg = "Cannot get chatbot response because the chatbot flow definition failed during server initialization. Check server logs for 'FATAL: Error defining chatbot flow'.";
+    console.error(initErrorMsg);
+    // Propagate a clear error indicating initialization failure
+    throw new Error("Chatbot Service Error: Initialization failed (Flow definition). Please check server logs.");
   }
 
-   // Check AI configuration status again before invoking the flow
+   // Check 2: Is the AI (specifically the API key) configured correctly? (Redundant check, but safe)
    if (!isAiConfigured()) {
-        console.error("Attempted to call chatbot response, but AI is not configured. Missing GOOGLE_GENAI_API_KEY.");
-        throw new Error("AI Service Unconfigured: Missing API Key. Cannot process request.");
+        const configErrorMsg = "Attempted to call chatbot response, but AI is not configured. This usually means the GOOGLE_GENAI_API_KEY environment variable is missing or invalid. Check server startup logs.";
+        console.error(configErrorMsg);
+        // Throw the specific error caught by the frontend
+        throw new Error("Chatbot flow failed: Invalid API Key. Please check your GOOGLE_GENAI_API_KEY.");
    }
-
 
   console.log("Calling chatbotFlow with input:", JSON.stringify(input));
   try {
@@ -176,6 +187,6 @@ export async function getChatbotResponse(input: ChatbotInput): Promise<ChatbotOu
     console.error("Error invoking chatbotFlow:", error.message, "Stack:", error.stack);
     // Rethrow the error to the caller (e.g., the React component)
     // Ensure the specific error message (like the API Key error) is propagated
-    throw new Error(`Failed to get chatbot response: ${error.message || 'Unknown error during flow execution'}`);
+    throw new Error(`Failed to get chatbot response from flow: ${error.message || 'Unknown error during flow execution'}`);
   }
 }
