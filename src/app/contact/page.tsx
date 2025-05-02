@@ -20,9 +20,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import { MapPin, Mail, Phone, Send, Github, Twitter, Linkedin, Instagram } from 'lucide-react';
 import Link from "next/link";
-// Removed Firebase imports as they are no longer needed for this form
-// import { db } from "@/lib/firebase/firebase";
-// import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 // Define the form schema using Zod
 const contactFormSchema = z.object({
@@ -41,8 +38,6 @@ const contactFormSchema = z.object({
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
-// --- Removed Firestore Server Action ---
-
 export default function ContactPage() {
   const { toast } = useToast();
   const form = useForm<ContactFormValues>({
@@ -58,6 +53,10 @@ export default function ContactPage() {
   const { formState: { isSubmitting } } = form;
 
   // Fetch EmailJS credentials from environment variables
+  // IMPORTANT: Ensure these variables are set in your .env.local file
+  // NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
+  // NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
+  // NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
   const emailJsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
   const emailJsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
   const emailJsPublicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
@@ -65,13 +64,13 @@ export default function ContactPage() {
   async function onSubmit(data: ContactFormValues) {
 
     if (!emailJsServiceId || !emailJsTemplateId || !emailJsPublicKey) {
-        console.error("EmailJS environment variables are not configured.");
+        console.error("EmailJS environment variables are not configured. Please check your .env.local file.");
         toast({
           title: "Configuration Error",
-          description: "Unable to send message. Please contact support.",
+          description: "Unable to send message due to missing configuration. Please contact support or try again later.",
           variant: "destructive",
         });
-        return;
+        return; // Stop submission if config is missing
     }
 
     const templateParams = {
@@ -81,6 +80,7 @@ export default function ContactPage() {
     };
 
     try {
+        console.log("Sending email with params:", templateParams);
         const response = await emailjs.send(
             emailJsServiceId,
             emailJsTemplateId,
@@ -91,16 +91,17 @@ export default function ContactPage() {
         console.log('EmailJS SUCCESS!', response.status, response.text);
         toast({
             title: "Message Sent!",
-            description: "Your message has been sent successfully!",
-            variant: "default",
+            description: "Thank you for reaching out. Your message has been sent successfully!",
+            variant: "default", // Use default for success
         });
         form.reset(); // Reset form after successful submission
 
     } catch (error: any) {
         console.error('EmailJS FAILED...', error);
+        // Provide a more user-friendly error message
         toast({
             title: "Submission Error",
-            description: `Failed to send message: ${error?.text || 'Please try again later.'}`,
+            description: `We encountered an issue sending your message. Error: ${error?.text || 'Unknown error'}. Please try again later or contact us directly.`,
             variant: "destructive",
         });
     }
@@ -254,3 +255,4 @@ export default function ContactPage() {
     </div>
   );
 }
+
