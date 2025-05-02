@@ -30,7 +30,7 @@ export default function RootLayout({
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}>
         <div className="flex flex-col min-h-screen"> {/* Ensure main content area takes height */}
-          <Header /> {/* Use the Header component */}
+          <Header /> {/* Header is now smart enough to hide itself on auth pages */}
           <main className="flex-grow"> {/* Let main content grow */}
             {children}
           </main>

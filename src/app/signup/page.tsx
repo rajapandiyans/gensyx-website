@@ -18,8 +18,9 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { UserPlus, User, Mail, Lock } from 'lucide-react';
-// Removed import for deleted email service
-// import { sendVerificationEmail } from '@/services/email';
+import { db } from "@/lib/firebase/firebase"; // Import Firestore instance
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import bcrypt from 'bcrypt'; // Import bcrypt
 
 // Define the form schema using Zod
 const signupFormSchema = z.object({
@@ -28,7 +29,7 @@ const signupFormSchema = z.object({
   }),
   email: z.string().email({
     message: "Please enter a valid email address.",
-  }),
+  }).transform((email) => email.toLowerCase()), // Normalize email to lowercase
   password: z.string().min(8, {
     message: "Password must be at least 8 characters long.",
   }),
@@ -36,24 +37,35 @@ const signupFormSchema = z.object({
 
 type SignupFormValues = z.infer<typeof signupFormSchema>;
 
-// Server action to handle signup (placeholder)
+// Server action to handle signup
 async function handleSignup(data: SignupFormValues) {
-  console.log("Attempting signup with:", data);
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  const success = Math.random() > 0.1;
-  if (!success) {
-    throw new Error("Signup failed. This email might already be registered.");
+  console.log("Attempting signup with:", { name: data.name, email: data.email });
+
+  // 1. Check if user already exists
+  const userDocRef = doc(db, "users", data.email); // Use email as document ID (normalized)
+  const userDocSnap = await getDoc(userDocRef);
+
+  if (userDocSnap.exists()) {
+    throw new Error("This email address is already registered.");
   }
-  // Removed call to sendVerificationEmail as the service is removed
-  // try {
-  //    await sendVerificationEmail(data.email);
-  //    console.log("Verification email sent to:", data.email);
-  // } catch (emailError) {
-  //     console.error("Failed to send verification email:", emailError);
-  //     // Optionally, inform the user that the verification email failed, but the account was created
-  // }
-  console.log("Simulating account creation for:", data.email); // Log simulation
-  return { success: true, message: "Account created! Welcome." }; // Adjusted success message
+
+  // 2. Hash the password
+  const saltRounds = 10; // Recommended salt rounds
+  const hashedPassword = await bcrypt.hash(data.password, saltRounds);
+  console.log("Password hashed successfully.");
+
+  // 3. Store user data in Firestore
+  await setDoc(userDocRef, {
+    name: data.name,
+    email: data.email, // Store normalized email
+    hashedPassword: hashedPassword,
+    createdAt: new Date(), // Optional: add a timestamp
+  });
+
+  console.log("User data stored successfully in Firestore for:", data.email);
+
+  // Removed email verification simulation as it's not implemented
+  return { success: true, message: "Account created successfully! You can now log in." };
 }
 
 
@@ -81,13 +93,14 @@ export default function SignupPage() {
            variant: "default",
          });
          form.reset();
-         // TODO: Optionally redirect
+         // TODO: Optionally redirect to login page after a short delay
        }
      } catch (error) {
         const message = error instanceof Error ? error.message : "Signup failed. Please try again.";
+        console.error("Signup Error:", error); // Log the error server-side
         toast({
           title: "Signup Error",
-          description: message,
+          description: message, // Display user-friendly message
           variant: "destructive",
         });
      }
@@ -117,6 +130,7 @@ export default function SignupPage() {
                          placeholder="e.g., John Smith"
                          className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"
                          {...field} // Spread field props here
+                         disabled={isSubmitting}
                        />
                      </FormControl>
                      <FormMessage />
@@ -135,6 +149,7 @@ export default function SignupPage() {
                          placeholder="you@example.com"
                          className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"
                          {...field} // Spread field props here
+                          disabled={isSubmitting}
                        />
                      </FormControl>
                      <FormMessage />
@@ -153,6 +168,7 @@ export default function SignupPage() {
                          placeholder="Choose a strong password (min 8 chars)"
                          className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"
                          {...field} // Spread field props here
+                          disabled={isSubmitting}
                        />
                      </FormControl>
                      <FormMessage />

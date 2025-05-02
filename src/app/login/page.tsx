@@ -18,28 +18,51 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { LogIn, Lock, Mail } from 'lucide-react';
+import { db } from "@/lib/firebase/firebase"; // Import Firestore instance
+import { doc, getDoc } from "firebase/firestore";
+import bcrypt from 'bcrypt'; // Import bcrypt
 
 // Define the form schema using Zod
 const loginFormSchema = z.object({
   email: z.string().email({
     message: "Please enter a valid email address.",
-  }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
+  }).transform((email) => email.toLowerCase()), // Normalize email to lowercase
+  password: z.string().min(1, { // Password cannot be empty
+    message: "Password is required.",
   }),
 });
 
 type LoginFormValues = z.infer<typeof loginFormSchema>;
 
-// Server action to handle login (placeholder)
+// Server action to handle login
 async function handleLogin(data: LoginFormValues) {
-  console.log("Attempting login with:", data);
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  if (data.password !== 'password123') {
-      throw new Error("Invalid email or password combination.");
+  console.log("Attempting login with email:", data.email);
+
+  // 1. Fetch user data from Firestore using the normalized email
+  const userDocRef = doc(db, "users", data.email);
+  const userDocSnap = await getDoc(userDocRef);
+
+  if (!userDocSnap.exists()) {
+    console.log("Login failed: User not found for email:", data.email);
+    throw new Error("Invalid email or password combination.");
   }
-  console.log("Login successful!");
-  return { success: true, message: "Login successful! Redirecting..." };
+
+  const userData = userDocSnap.data();
+  console.log("User data found for:", data.email);
+
+  // 2. Compare the provided password with the stored hashed password
+  const isPasswordValid = await bcrypt.compare(data.password, userData.hashedPassword);
+
+  if (!isPasswordValid) {
+    console.log("Login failed: Invalid password for email:", data.email);
+    throw new Error("Invalid email or password combination.");
+  }
+
+  console.log("Password validated successfully for:", data.email);
+  // Login successful
+  // In a real app, you would typically generate a session token (e.g., JWT) here
+  // and send it back to the client to store (e.g., in cookies or local storage).
+  return { success: true, message: "Login successful! Redirecting...", userName: userData.name };
 }
 
 
@@ -62,16 +85,20 @@ export default function LoginPage() {
        if (result.success) {
          toast({
            title: "Login Successful",
-           description: "Welcome back!",
+           description: `Welcome back, ${result.userName}!`, // Use the name from DB
            variant: "default",
          });
-        // TODO: Redirect user
+        // TODO: Implement actual session management and redirection
+        // Example: Redirect to a dashboard or home page
+        // router.push('/dashboard');
        }
     } catch (error) {
       const message = error instanceof Error ? error.message : "Login failed. Please try again.";
+      // Log the specific error server-side for debugging, but show generic message to user
+      console.error("Login failed for", data.email, ":", error);
       toast({
         title: "Login Failed",
-        description: message,
+        description: "Invalid email or password combination.", // Keep the message generic for security
         variant: "destructive",
       });
     }
@@ -102,6 +129,7 @@ export default function LoginPage() {
                          placeholder="you@example.com"
                          className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"
                          {...field} // Spread field props here
+                         disabled={isSubmitting}
                        />
                      </FormControl>
                      <FormMessage />
@@ -120,6 +148,7 @@ export default function LoginPage() {
                          placeholder="••••••••"
                          className="transform hover:scale-[1.02] transition-transform duration-200 bg-input border-border/50 focus:border-primary focus:ring-primary/50"
                          {...field} // Spread field props here
+                          disabled={isSubmitting}
                        />
                      </FormControl>
                      <FormMessage />
@@ -152,4 +181,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
