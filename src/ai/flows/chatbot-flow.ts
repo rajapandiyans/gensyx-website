@@ -28,6 +28,7 @@ let prompt: any; // Define prompt variable outside try-catch
 try {
    prompt = ai.definePrompt({
     name: 'chatbotPrompt',
+    model: 'googleai/gemini-1.5-flash-latest', // Specify the model here
     input: {
       schema: ChatbotInputSchema,
     },
