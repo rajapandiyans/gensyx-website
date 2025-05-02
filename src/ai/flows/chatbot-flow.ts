@@ -43,12 +43,18 @@ Context about GenSyx Solutions:
 - **Featured Projects:** GPT3 Integration (AI solutions), Travela Booking Platform (travel planning), Caterserv Event Planning (vendor booking), Modern E-Commerce Store (online retail). Project links are available on the website.
 - **Contact:** gensyx6@gmail.com, 9361104465, Coimbatore, India.
 - **About:** Founded on innovation and client-centricity. Grown into a comprehensive digital services agency focused on adapting to the digital landscape and delivering exceptional digital experiences through strong client partnerships. Expertise spans web development, SEO, branding, digital marketing, social media, etc.
-- **Social Media:** GitHub (https://github.com/Gensyx-Solutions), X/Twitter (https://x.com/GensyxSolutions), LinkedIn (https://www.linkedin.com/company/gensyx-solutions/), Instagram (https://www.instagram.com/gensyx_solutions?igsh=OTduZ3RibWI2Nm5m)
+- **Social Media:**
+    - GitHub: https://github.com/Gensyx-Solutions
+    - X/Twitter: https://x.com/GensyxSolutions
+    - LinkedIn: https://www.linkedin.com/company/gensyx-solutions/
+    - Instagram: https://www.instagram.com/gensyx_solutions?igsh=OTduZ3RibWI2Nm5m
 
 
 User Query: {{{query}}}
 
-Answer the user's query based *only* on the context above. Keep your reply concise and relevant. If you cannot answer based on the context, say "I do not have information about that based on the provided context."
+Answer the user's query based *only* on the context above. Keep your reply concise and relevant.
+If the user asks for social media links, provide the list of links from the context.
+If you cannot answer based on the context, say "I do not have information about that based on the provided context."
 `,
   });
 } catch (error: any) {
@@ -131,3 +137,4 @@ export async function getChatbotResponse(input: ChatbotInput): Promise<ChatbotOu
        throw new Error(`Failed to get chatbot response from flow: ${error.message || 'Unknown error during flow execution'}`);
    }
 }
+

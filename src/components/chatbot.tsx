@@ -15,12 +15,27 @@ interface Message {
   sender: 'user' | 'assistant' | 'error';
 }
 
+// Function to get time-based greeting
+const getTimeBasedGreeting = (): string => {
+  const hour = new Date().getHours();
+  if (hour < 12) {
+    return "Good morning!";
+  } else if (hour < 18) {
+    return "Good afternoon!";
+  } else {
+    return "Good evening!";
+  }
+};
+
+
 export function Chatbot() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [input, setInput] = React.useState('');
   const [messages, setMessages] = React.useState<Message[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
+  const [initialGreetingSet, setInitialGreetingSet] = React.useState(false);
+
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -30,13 +45,21 @@ export function Chatbot() {
     scrollToBottom();
   }, [messages]);
 
-  // Initial greeting message
+  // Initial greeting message - Runs only on client after hydration
   React.useEffect(() => {
-    if (isOpen && messages.length === 0) {
-       setMessages([{ id: 'init-greet', text: "Hi there! How can I help you with GenSyx Solutions today?", sender: 'assistant' }]);
+    if (isOpen && !initialGreetingSet) {
+      const greeting = getTimeBasedGreeting();
+      setMessages([{ id: 'init-greet', text: `${greeting} How can I help you with GenSyx Solutions today?`, sender: 'assistant' }]);
+      setInitialGreetingSet(true); // Ensure greeting is set only once per session/open
     }
-   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]); // Run only when isOpen changes
+     // If chatbot is closed, reset the greeting flag for next open
+     if (!isOpen) {
+        setInitialGreetingSet(false);
+        // Optionally clear messages on close: setMessages([]);
+     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, initialGreetingSet]); // Add initialGreetingSet to dependencies
+
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
