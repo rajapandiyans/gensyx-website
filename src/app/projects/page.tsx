@@ -45,8 +45,8 @@ export default function ProjectsPage() {
       {/* Background Image and Overlay */}
        <div
         className="absolute inset-0 -z-10 h-full w-full bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/projectShowcaseGrid/1920/1080')" }}
-        data-ai-hint="modern architecture grid blueprint design technical"
+        style={{ backgroundImage: "url('https://picsum.photos/seed/technologyCircuitCode/1920/1080')" }} // Updated seed for technology theme
+        data-ai-hint="technology circuit board code software development abstract tech" // Updated AI hint
        ></div>
        <div className="bg-overlay"></div> {/* Use shared overlay class */}
 
