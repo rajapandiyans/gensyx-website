@@ -43,9 +43,9 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2 mr-4 flex-shrink-0">
           {/* Updated image path to the new logo */}
           <Image
-            src="/images/gensyx-logo.png" // Corrected logo path
+            src="/images/gensyx-logo.jpg" // Corrected logo path
             alt="GenSyx Logo"
-            width={120} // Adjust width as needed, keeping aspect ratio
+            width={70} // Adjust width as needed, keeping aspect ratio
             height={28} // Adjust height as needed, keeping aspect ratio
             priority // Load logo faster
             // Removed className="h-8 w-auto" to avoid conflict with width/height props
