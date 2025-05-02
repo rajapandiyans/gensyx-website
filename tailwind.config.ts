@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -147,8 +148,7 @@ export default {
   },
    plugins: [
        require("tailwindcss-animate"),
-       // Removed require('tailwindcss-3d') as it might cause conflicts or is not needed
-       require('@tailwindcss/typography'), // Added for potential prose styling
+       // Removed require('@tailwindcss/typography') as it's not installed
         function ({ matchUtilities, theme }) { // Added text-shadow utility
           matchUtilities(
             {
