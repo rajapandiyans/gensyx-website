@@ -61,7 +61,7 @@ export default function ServicesPage() {
       {/* Background Image and Overlay */}
        <div
         className="absolute inset-0 -z-10 h-full w-full bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/servicesAbstractTech/1920/1080')" }}
+        style={{ backgroundImage: "url('https://wallpaperbat.com/img/59432-wallpaper-futuristic-technology.jpg')" }}
         data-ai-hint="abstract technology background digital services connection nodes blue purple"
        ></div>
         <div className="bg-overlay"></div> {/* Use shared overlay class */}

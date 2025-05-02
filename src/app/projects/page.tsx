@@ -41,7 +41,7 @@ export default function ProjectsPage() {
       {/* Background Image and Overlay */}
        <div
         className="absolute inset-0 -z-10 h-full w-full bg-cover bg-center bg-fixed"
-        style={{ backgroundImage: "url('https://picsum.photos/seed/technologyCircuitCode/1920/1080')" }}
+        style={{ backgroundImage: "url('https://wallpapercave.com/wp/wp2823533.jpg')" }}
         data-ai-hint="technology circuit board code software development abstract tech"
        ></div>
        <div className="bg-overlay"></div> {/* Use shared overlay class */}

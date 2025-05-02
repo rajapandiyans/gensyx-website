@@ -11,28 +11,28 @@ const featuredProjects = [
     id: 1,
     title: "GPT3 Integration",
     description: "Harnessing AI for creative and business solutions.",
-    imageUrl: "/images/gpt3-integration.png", // Custom image path
+    imageUrl: "/images/gpt3.jpg", // Custom image path
     link: "https://gpt3-gensyx.vercel.app/#wgpt3",
   },
   {
     id: 2,
     title: "Travela Booking Platform",
     description: "Your perfect travel companion for seamless trip planning.",
-    imageUrl: "/images/travela-platform.png", // Custom image path
+    imageUrl: "/images/travela.jpg", // Custom image path
     link: "https://tourism-gensyx.vercel.app/",
   },
    {
     id: 3,
     title: "Caterserv Event Planning",
     description: "Simplify event planning with all-in-one vendor bookings.",
-    imageUrl: "/images/caterserv-planning.png", // Custom image path
+    imageUrl: "/images/caterserv.jpg", // Custom image path
     link: "https://caterserv-gensyx.vercel.app/",
   },
   {
     id: 4,
     title: "Modern E-Commerce Store",
     description: "Seamless UX, secure payments, and AI-driven recommendations.",
-    imageUrl: "/images/ecommerce-store.png", // Custom image path
+    imageUrl: "/images/multishop.jpg", // Custom image path
     link: "https://e-commerce-gensyx.vercel.app/index.html",
   },
 ];
