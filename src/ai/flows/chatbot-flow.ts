@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview Chatbot AI flow for GenSyx Solutions.
@@ -23,15 +24,17 @@ const ChatbotOutputSchema = z.object({
 export type ChatbotOutput = z.infer<typeof ChatbotOutputSchema>;
 
 // Define the Genkit prompt
-const prompt = ai.definePrompt({
-  name: 'chatbotPrompt',
-  input: {
-    schema: ChatbotInputSchema,
-  },
-  output: {
-    schema: ChatbotOutputSchema,
-  },
-  prompt: `You are a helpful and friendly chatbot assistant for GenSyx Solutions. Your purpose is to answer questions about the company, its services, projects, mission, vision, and contact information based ONLY on the context provided below. Be concise and helpful. If the question is outside the scope of the provided context or asks for opinions, politely decline to answer.
+let prompt: any; // Define prompt variable outside try-catch
+try {
+   prompt = ai.definePrompt({
+    name: 'chatbotPrompt',
+    input: {
+      schema: ChatbotInputSchema,
+    },
+    output: {
+      schema: ChatbotOutputSchema,
+    },
+    prompt: `You are a helpful and friendly chatbot assistant for GenSyx Solutions. Your purpose is to answer questions about the company, its services, projects, mission, vision, and contact information based ONLY on the context provided below. Be concise and helpful. If the question is outside the scope of the provided context or asks for opinions, politely decline to answer.
 
 Context about GenSyx Solutions:
 - **Mission:** To empower businesses with innovative and effective digital solutions that drive growth, enhance brand visibility, and create lasting connections with their audiences. We strive to be the catalyst for our clients' digital success stories.
@@ -45,47 +48,86 @@ Context about GenSyx Solutions:
 
 User Query: {{{query}}}
 
-Answer the user's query based *only* on the context above. Keep your reply concise and relevant.
+Answer the user's query based *only* on the context above. Keep your reply concise and relevant. If you cannot answer based on the context, say "I do not have information about that based on the provided context."
 `,
-});
+  });
+} catch (error: any) {
+    console.error("FATAL: Error defining chatbot prompt:", error.message, error.stack);
+    // You might want to throw the error or handle it gracefully
+    // For now, log it and let subsequent calls fail.
+     prompt = null; // Set prompt to null to indicate failure
+}
+
 
 // Define the Genkit flow
-const chatbotFlow = ai.defineFlow<
-  typeof ChatbotInputSchema,
-  typeof ChatbotOutputSchema
->(
-  {
-    name: 'chatbotFlow',
-    inputSchema: ChatbotInputSchema,
-    outputSchema: ChatbotOutputSchema,
-  },
-  async (input) => {
-     try {
+let chatbotFlow: any; // Define flow variable outside try-catch
+try {
+   chatbotFlow = ai.defineFlow<
+    typeof ChatbotInputSchema,
+    typeof ChatbotOutputSchema
+  >(
+    {
+      name: 'chatbotFlow',
+      inputSchema: ChatbotInputSchema,
+      outputSchema: ChatbotOutputSchema,
+    },
+    async (input) => {
+       if (!prompt) { // Check if prompt definition failed
+            console.error("Chatbot flow cannot execute because prompt definition failed.");
+            throw new Error("Chatbot prompt is not available.");
+       }
+      try {
+        // console.log("Executing chatbot prompt with input:", input);
         const llmResponse = await prompt(input);
-        // Ensure output exists before returning
-        if (!llmResponse.output) {
-            console.error("Chatbot flow received no output from LLM for query:", input.query);
-            throw new Error("Chatbot flow failed: No output received from LLM.");
+        // console.log("LLM response received:", llmResponse);
+
+        // Ensure output exists and has the 'reply' property before returning
+        if (!llmResponse?.output?.reply) {
+            // Log more details about the missing output
+            console.error("Chatbot flow received invalid or missing output from LLM for query:", input.query, "Response object:", llmResponse);
+             // Check if there was an error in the response structure itself
+             if (llmResponse && 'error' in llmResponse) {
+               throw new Error(`Chatbot flow failed: LLM returned an error - ${llmResponse.error}`);
+             }
+            // Attempt to get more details if available
+            const responseText = llmResponse ? JSON.stringify(llmResponse) : 'undefined';
+            throw new Error(`Chatbot flow failed: Invalid or missing output structure received from LLM. Received: ${responseText}`);
         }
         return llmResponse.output;
-    } catch (error: any) {
-        console.error("Error executing chatbot prompt for query:", input.query, "Error:", error);
-        // Rethrow a more specific error
-         throw new Error(`Chatbot flow failed: ${error.message || 'Unknown error during prompt execution.'}`);
+      } catch (error: any) {
+        // Log the specific error during prompt execution
+        console.error("Error executing chatbot prompt for query:", input.query, "Error:", error.message, "Stack:", error.stack);
+        // Check if it's an API key issue
+         if (error.message && (error.message.includes('API key not valid') || error.message.includes('API_KEY_INVALID'))) {
+           throw new Error(`Chatbot flow failed: Invalid API Key. Please check your GOOGLE_GENAI_API_KEY.`);
+         }
+        // Rethrow a more specific error, preserving original message if possible
+         throw new Error(`Chatbot flow failed during prompt execution: ${error.message || 'Unknown error.'}`);
+      }
     }
-  }
-);
+  );
+ } catch (error: any) {
+     console.error("FATAL: Error defining chatbot flow:", error.message, error.stack);
+     chatbotFlow = null; // Set flow to null to indicate failure
+ }
+
 
 // Wrapper function to call the flow - adding more detailed logging
 export async function getChatbotResponse(input: ChatbotInput): Promise<ChatbotOutput> {
-   console.log("Calling chatbotFlow with input:", input);
+    if (!chatbotFlow) { // Check if flow definition failed
+        console.error("Cannot get chatbot response because the chatbot flow definition failed.");
+        throw new Error("Chatbot flow is not available due to an initialization error.");
+    }
+   console.log("Calling chatbotFlow with input:", JSON.stringify(input));
    try {
      const result = await chatbotFlow(input);
-     console.log("Chatbot flow returned result:", result);
+     console.log("Chatbot flow returned result:", JSON.stringify(result));
      return result;
    } catch (error: any) {
-       console.error("Error calling chatbotFlow:", error);
-       // Rethrow the error to be handled by the calling component
-       throw new Error(`Failed to get chatbot response: ${error.message || 'Unknown error'}`);
+       // Log the error from calling the flow itself
+       console.error("Error calling chatbotFlow:", error.message, "Stack:", error.stack);
+       // Rethrow the error with a clear indication of failure point
+       // Include the original error message for context
+       throw new Error(`Failed to get chatbot response from flow: ${error.message || 'Unknown error during flow execution'}`);
    }
 }

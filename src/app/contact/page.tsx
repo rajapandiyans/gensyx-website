@@ -20,6 +20,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import { MapPin, Mail, Phone, Send, Github, Twitter, Linkedin, Instagram } from 'lucide-react';
 import Link from "next/link";
+import React from "react"; // Import React for useEffect
 
 // Define the form schema using Zod
 const contactFormSchema = z.object({
@@ -38,8 +39,35 @@ const contactFormSchema = z.object({
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
+// Fetch EmailJS credentials from environment variables
+// IMPORTANT: Ensure these variables are set in your .env.local file AND exposed via next.config.js or prefixed with NEXT_PUBLIC_
+// NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
+// NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
+// NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
+const emailJsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+const emailJsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+const emailJsPublicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
 export default function ContactPage() {
   const { toast } = useToast();
+  const [isConfigured, setIsConfigured] = React.useState(false);
+
+  // Check configuration on mount
+  React.useEffect(() => {
+    if (!emailJsServiceId || !emailJsTemplateId || !emailJsPublicKey) {
+        console.error("EmailJS environment variables are not configured. Please check your environment configuration.");
+        toast({
+          title: "Configuration Error",
+          description: "Contact form is unavailable due to missing configuration.",
+          variant: "destructive",
+          duration: 10000, // Make it stay longer
+        });
+        setIsConfigured(false);
+    } else {
+      setIsConfigured(true);
+    }
+  }, [toast]); // Add toast as dependency
+
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -52,25 +80,16 @@ export default function ContactPage() {
 
   const { formState: { isSubmitting } } = form;
 
-  // Fetch EmailJS credentials from environment variables
-  // IMPORTANT: Ensure these variables are set in your .env.local file
-  // NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
-  // NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
-  // NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
-  const emailJsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-  const emailJsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-  const emailJsPublicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
   async function onSubmit(data: ContactFormValues) {
-
-    if (!emailJsServiceId || !emailJsTemplateId || !emailJsPublicKey) {
-        console.error("EmailJS environment variables are not configured. Please check your .env.local file.");
+     // Double-check configuration before sending
+    if (!isConfigured) {
         toast({
           title: "Configuration Error",
-          description: "Unable to send message due to missing configuration. Please contact support or try again later.",
+          description: "Unable to send message due to missing configuration. Please contact support.",
           variant: "destructive",
         });
-        return; // Stop submission if config is missing
+        return;
     }
 
     const templateParams = {
@@ -82,10 +101,10 @@ export default function ContactPage() {
     try {
         console.log("Sending email with params:", templateParams);
         const response = await emailjs.send(
-            emailJsServiceId,
-            emailJsTemplateId,
+            emailJsServiceId!, // Use non-null assertion as we've checked in useEffect
+            emailJsTemplateId!,
             templateParams,
-            emailJsPublicKey
+            emailJsPublicKey!
         );
 
         console.log('EmailJS SUCCESS!', response.status, response.text);
@@ -129,7 +148,9 @@ export default function ContactPage() {
           <Card className="lg:col-span-3 card-base animate-subtle-slide-up shadow-xl bg-card/80 backdrop-blur-md border border-border/30"> {/* Card transparency */}
             <CardHeader>
               <CardTitle className="text-2xl md:text-3xl text-foreground">Send Us a Message</CardTitle>
-              <CardDescription className="text-muted-foreground">We'll get back to you as soon as possible.</CardDescription>
+              <CardDescription className="text-muted-foreground">
+                {isConfigured ? "We'll get back to you as soon as possible." : "Form currently unavailable."}
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <Form {...form}>
@@ -147,6 +168,7 @@ export default function ContactPage() {
                             placeholder="e.g., Jane Doe"
                             className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50"
                             {...field} // Spread field props here
+                            disabled={!isConfigured || isSubmitting} // Disable if not configured
                           />
                         </FormControl>
                         <FormMessage />
@@ -166,6 +188,7 @@ export default function ContactPage() {
                             placeholder="e.g., jane.doe@example.com"
                             className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50"
                              {...field} // Spread field props here
+                             disabled={!isConfigured || isSubmitting} // Disable if not configured
                           />
                         </FormControl>
                         <FormMessage />
@@ -185,13 +208,14 @@ export default function ContactPage() {
                             className="resize-none min-h-[120px] bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50"
                             rows={5}
                             {...field} // Spread field props here
+                            disabled={!isConfigured || isSubmitting} // Disable if not configured
                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" className="w-full mt-2 transform hover:scale-105 transition-transform duration-300" size="lg" disabled={isSubmitting}>
+                  <Button type="submit" className="w-full mt-2 transform hover:scale-105 transition-transform duration-300" size="lg" disabled={!isConfigured || isSubmitting}>
                     <span className="flex items-center justify-center gap-2">
                       <Send className="mr-1 h-5 w-5" />
                       {isSubmitting ? "Sending..." : "Send Message"}
