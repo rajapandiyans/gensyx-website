@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/header'; // Import the Header component
 import { Toaster } from '@/components/ui/toaster';
-import { ChatbotWidget } from '@/components/chatbot/chatbot-widget'; // Import the ChatbotWidget
+// import { ChatbotWidget } from '@/components/chatbot/chatbot-widget'; // Remove ChatbotWidget import
 
 
 const geistSans = Geist({
@@ -37,7 +37,7 @@ export default function RootLayout({
             {children}
           </main>
         </div>
-        <ChatbotWidget /> {/* Add the chatbot widget here */}
+        {/* <ChatbotWidget /> */} {/* Remove the chatbot widget */}
         <Toaster />
 
       </body>
