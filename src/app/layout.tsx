@@ -1,8 +1,10 @@
+
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/header'; // Import the Header component
 import { Toaster } from '@/components/ui/toaster';
+import { ChatbotWidget } from '@/components/chatbot/chatbot-widget'; // Import the ChatbotWidget
 
 
 const geistSans = Geist({
@@ -35,6 +37,7 @@ export default function RootLayout({
             {children}
           </main>
         </div>
+        <ChatbotWidget /> {/* Add the chatbot widget here */}
         <Toaster />
 
       </body>
