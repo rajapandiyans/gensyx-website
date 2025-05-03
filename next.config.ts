@@ -29,10 +29,13 @@ const nextConfig: NextConfig = {
       // This prevents the build error, assuming OpenTelemetry tracing is server-side only.
       config.resolve.fallback = {
         ...(config.resolve.fallback || {}),
-        async_hooks: false, // Ensure this fallback is set to false for client builds
+        // Ensure this fallback is set to false for client builds
+        // Setting it to false tells webpack to provide an empty module for this dependency on the client side.
+        async_hooks: false,
       };
     }
 
+    // Return the modified config
     return config;
   },
 };
