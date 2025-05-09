@@ -1,9 +1,10 @@
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Rocket, Code, Target, Eye, Zap, CheckCircle, Award, Users, Search, Palette, ExternalLink, ArrowRight, BarChart3, Network, UserCheck } from "lucide-react";
 import Image from "next/image";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"; // Import CardFooter
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"; // Ensure Avatar components are imported
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Updated featured projects to use custom image paths (assuming images are placed in public/images)
 const featuredProjects = [
@@ -83,6 +84,32 @@ const featuredServices = [
   },
 ];
 
+// Customizable Testimonials Data
+const testimonialsData = [
+  {
+    id: 1,
+    quote: "GenSyx Solutions transformed our online presence with a stunning website and effective SEO strategies. Our traffic has increased significantly!",
+    clientName: "Alex Chen",
+    clientPosition: "CEO, Tech Innovators Inc.",
+    avatarUrl: "https://i.pravatar.cc/40?u=alexchen",
+  },
+  {
+    id: 2,
+    quote: "The branding work GenSyx did for us was exceptional. They truly understood our vision and created a brand identity that resonates with our audience.",
+    clientName: "Sarah Miller",
+    clientPosition: "Founder, Bloom Creatives",
+    avatarUrl: "https://i.pravatar.cc/40?u=sarahmiller",
+  },
+  {
+    id: 3,
+    quote: "Working with GenSyx on our digital marketing campaigns has been a game-changer. Their team is knowledgeable, responsive, and delivers results.",
+    clientName: "David Kim",
+    clientPosition: "Marketing Director, Fusion Corp",
+    avatarUrl: "https://i.pravatar.cc/40?u=davidkim",
+  },
+];
+
+
 export default function Home() {
   return (
     <div className="flex flex-col min-h-[calc(100vh-4rem)]">
@@ -99,7 +126,7 @@ export default function Home() {
         <div className="relative z-10 flex flex-col items-center">
           {/* Heading Group with Icon */}
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 mb-6 animate-fade-in-down">
-            <Zap size={48} className="text-primary animate-pulse-glow order-1 md:order-none md:size-16" strokeWidth={1.5}/> {/* Apply responsive size via className */}
+            <Zap size={48} className="text-primary animate-pulse-glow order-1 md:order-none md:size-16" strokeWidth={1.5}/>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-shadow-lg order-2 md:order-none">
               <span className="text-primary">GenSyx</span> Solutions
             </h1>
@@ -266,7 +293,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section - Added */}
+      {/* Testimonials Section - Updated with customizable data */}
       <section
         className="relative py-16 md:py-24 bg-cover bg-center isolate"
         style={{ backgroundImage: "url('https://picsum.photos/seed/testimonialWaveFresh/1920/1080')" }}
@@ -279,25 +306,25 @@ export default function Home() {
             Hear from businesses we've helped succeed in the digital world.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => ( // Placeholder loop for 3 testimonials
+            {testimonialsData.map((testimonial, index) => (
                <Card
-                 key={`testimonial-${i}`}
+                 key={testimonial.id}
                  className="card-base animate-subtle-slide-up border-border/30 hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1 bg-card/80 backdrop-blur-md"
-                 style={{ animationDelay: `${i * 0.1}s` }}
+                 style={{ animationDelay: `${index * 0.1}s` }}
                >
                  <CardContent className="pt-6">
                    <blockquote className="border-l-4 border-primary pl-4 italic text-muted-foreground">
-                     "Working with GenSyx was a game-changer for our online presence. Their expertise and dedication are unmatched."
+                     {testimonial.quote}
                    </blockquote>
                  </CardContent>
                  <CardFooter className="pt-4 pb-6 flex items-center gap-3">
                    <Avatar>
-                     <AvatarImage src={`https://i.pravatar.cc/40?u=testimonial${i}`} alt={`Client ${i}`} />
-                     <AvatarFallback>{`C${i}`}</AvatarFallback>
+                     <AvatarImage src={testimonial.avatarUrl} alt={testimonial.clientName} />
+                     <AvatarFallback>{testimonial.clientName.substring(0,1).toUpperCase()}</AvatarFallback>
                    </Avatar>
                    <div>
-                     <p className="font-semibold text-foreground">Client Name {i}</p>
-                     <p className="text-sm text-muted-foreground">Company Position</p>
+                     <p className="font-semibold text-foreground">{testimonial.clientName}</p>
+                     <p className="text-sm text-muted-foreground">{testimonial.clientPosition}</p>
                    </div>
                  </CardFooter>
                </Card>

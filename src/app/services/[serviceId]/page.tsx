@@ -23,7 +23,7 @@ const serviceDetailsData: { [key: string]: any } = {
       "SEO-Friendly Foundations for Visibility",
       "Ongoing Maintenance & Support Options",
     ],
-    visuals: ["/images/webdev-1.png", "/images/webdev-2.png"], // Custom image paths
+    visuals: ["/images/web-dev.jpg", "/images/web-design.jpg"], // Custom image paths
   },
   "seo": {
     title: "Search Engine Optimization (SEO)",
@@ -38,7 +38,7 @@ const serviceDetailsData: { [key: string]: any } = {
       "Performance Tracking & Analytics Reporting",
       "Algorithm Update Monitoring & Adaptation",
     ],
-     visuals: ["/images/seo-1.png", "/images/seo-2.png"], // Custom image paths
+     visuals: ["/images/seo-1.jpg", "/images/seo-2.jpg"], // Custom image paths
   },
    "branding": {
     title: "Branding & Identity",
@@ -53,7 +53,7 @@ const serviceDetailsData: { [key: string]: any } = {
       "Brand Strategy & Positioning",
       "Visual Identity Application Across Platforms",
     ],
-     visuals: ["/images/branding-1.png", "/images/branding-2.png"], // Custom image paths
+     visuals: ["/images/brand.jpg", "/images/logos.jpg"], // Custom image paths
   },
    "digital-marketing": {
      title: "Digital Marketing Strategy",
@@ -68,7 +68,7 @@ const serviceDetailsData: { [key: string]: any } = {
        "Marketing Analytics & ROI Reporting",
        "Integrated Multi-Channel Strategy",
      ],
-      visuals: ["/images/digital-marketing-1.png", "/images/digital-marketing-2.png"], // Custom image paths
+      visuals: ["/images/digital-marketing-1.jpg", "/images/digital-marketing-2.jpg"], // Custom image paths
    },
    "social-media": {
      title: "Social Media Management",
@@ -83,7 +83,7 @@ const serviceDetailsData: { [key: string]: any } = {
        "Performance Analytics & Growth Reporting",
        "Brand Reputation Management",
      ],
-      visuals: ["/images/social-media-1.png", "/images/social-media-2.png"], // Custom image paths
+      visuals: ["/images/social-media-1.jpeg", "/images/social-media-2.jpeg"], // Custom image paths
    },
    "google-profile": {
      title: "Google Business Profile Optimization",
@@ -98,7 +98,7 @@ const serviceDetailsData: { [key: string]: any } = {
        "Local SEO Integration & Citation Building",
        "Detailed Performance Insights & Reporting",
      ],
-      visuals: ["/images/gbp-1.png", "/images/gbp-2.png"], // Custom image paths
+      visuals: ["/images/gbp-1.jpg", "/images/gbp-2.jpg"], // Custom image paths
    },
 };
 
