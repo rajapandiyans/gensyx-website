@@ -233,7 +233,7 @@ export default function ContactPage() {
                 </div>
                  <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
                   <WhatsAppIcon className="h-6 w-6 text-primary flex-shrink-0" />
-                  <a href="https://wa.me/919361104465" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary text-base">WhatsApp: +91 9361104465</a>
+                  <a href="https://wa.me/919361104465" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary text-base">WhatsApp</a>
                 </div>
                 <div className="flex items-start gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
                   <MapPin className="h-6 w-6 text-primary flex-shrink-0 mt-1" strokeWidth={1.5} />
