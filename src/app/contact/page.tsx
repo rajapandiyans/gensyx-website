@@ -240,7 +240,7 @@ export default function ContactPage() {
                 </div>
                 <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
                   <Phone className="h-6 w-6 text-primary flex-shrink-0" strokeWidth={1.5} />
-                  <span className="text-foreground text-base">9361104465</span>
+                  <a href="tel:9361104465" className="text-foreground hover:text-primary text-base">9361104465</a>
                 </div>
                 <div className="flex items-start gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
                   <MapPin className="h-6 w-6 text-primary flex-shrink-0 mt-1" strokeWidth={1.5} />
