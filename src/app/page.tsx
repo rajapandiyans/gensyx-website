@@ -5,6 +5,7 @@ import { Rocket, Code, Target, Eye, Zap, CheckCircle, Award, Users, Search, Pale
 import Image from "next/image";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 
 // Updated featured projects to use custom image paths (assuming images are placed in public/images)
 const featuredProjects = [
@@ -380,6 +381,10 @@ export default function Home() {
             <Link href="https://www.instagram.com/gensyx_solutions?igsh=OTduZ3RibWI2Nm5m" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
               <Instagram size={24} />
               <span className="sr-only">Instagram</span>
+            </Link>
+            <Link href="https://wa.me/919361104465" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
+              <WhatsAppIcon className="h-6 w-6" /> {/* Increased size slightly for consistency */}
+              <span className="sr-only">WhatsApp</span>
             </Link>
           </div>
           &copy; 2025 GenSyx Solutions. All rights reserved.
