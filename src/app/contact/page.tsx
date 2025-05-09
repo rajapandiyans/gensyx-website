@@ -18,9 +18,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { MapPin, Mail, Phone, Send, Github, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { MapPin, Mail, Phone, Send, Github, Twitter, Linkedin, Instagram, MessageSquare } from 'lucide-react';
 import Link from "next/link";
 import React from "react"; // Import React for useEffect
+import { WhatsAppIcon } from "@/components/icons/whatsapp-icon";
 
 // Define the form schema using Zod
 const contactFormSchema = z.object({
@@ -40,10 +41,6 @@ const contactFormSchema = z.object({
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 // Fetch EmailJS credentials from environment variables
-// IMPORTANT: Ensure these variables are set in your .env.local file AND exposed via next.config.js or prefixed with NEXT_PUBLIC_
-// NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
-// NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
-// NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
 const emailJsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
 const emailJsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
 const emailJsPublicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
@@ -101,7 +98,7 @@ export default function ContactPage() {
     try {
         console.log("Sending email with params:", templateParams);
         const response = await emailjs.send(
-            emailJsServiceId!, // Use non-null assertion as we've checked in useEffect
+            emailJsServiceId!, 
             emailJsTemplateId!,
             templateParams,
             emailJsPublicKey!
@@ -111,13 +108,12 @@ export default function ContactPage() {
         toast({
             title: "Message Sent!",
             description: "Thank you for reaching out. Your message has been sent successfully!",
-            variant: "default", // Use default for success
+            variant: "default", 
         });
-        form.reset(); // Reset form after successful submission
+        form.reset(); 
 
     } catch (error: any) {
         console.error('EmailJS FAILED...', error);
-        // Provide a more user-friendly error message
         toast({
             title: "Submission Error",
             description: `We encountered an issue sending your message. Error: ${error?.text || 'Unknown error'}. Please try again later or contact us directly.`,
@@ -128,24 +124,22 @@ export default function ContactPage() {
 
   return (
      <div className="relative isolate overflow-hidden bg-background py-16 md:py-20 lg:py-24">
-       {/* Background Image and Overlay */}
        <div
         className="absolute inset-0 -z-10 h-full w-full bg-cover bg-center bg-fixed"
         style={{ backgroundImage: "url('https://picsum.photos/seed/contactMapNetwork/1920/1080')" }}
         data-ai-hint="abstract network connection lines map global communication blue"
        ></div>
-       <div className="bg-overlay"></div> {/* Use shared overlay class */}
+       <div className="bg-overlay"></div> 
 
 
-      <div className="container mx-auto px-4 relative z-10"> {/* Content container */}
+      <div className="container mx-auto px-4 relative z-10"> 
         <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-8 animate-fade-in-down text-primary">Get in Touch</h1>
         <p className="text-center text-lg text-muted-foreground mb-16 max-w-3xl mx-auto animate-fade-in-down" style={{ animationDelay: '0.1s' }}>
           We're excited to hear about your project or answer any questions you may have. Reach out using the form below or through our contact details.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-          {/* Contact Form Card (Spanning 3 columns on large screens) */}
-          <Card className="lg:col-span-3 card-base animate-subtle-slide-up shadow-xl bg-card/80 backdrop-blur-md border border-border/30"> {/* Card transparency */}
+          <Card className="lg:col-span-3 card-base animate-subtle-slide-up shadow-xl bg-card/80 backdrop-blur-md border border-border/30"> 
             <CardHeader>
               <CardTitle className="text-2xl md:text-3xl text-foreground">Send Us a Message</CardTitle>
               <CardDescription className="text-muted-foreground">
@@ -154,7 +148,6 @@ export default function ContactPage() {
             </CardHeader>
             <CardContent>
               <Form {...form}>
-                {/* Form now directly calls the onSubmit handler which uses EmailJS */}
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
@@ -163,12 +156,11 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Your Name</FormLabel>
                         <FormControl>
-                           {/* Ensure Input receives all necessary field props */}
                           <Input
                             placeholder="e.g., Jane Doe"
                             className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50"
-                            {...field} // Spread field props here
-                            disabled={!isConfigured || isSubmitting} // Disable if not configured
+                            {...field} 
+                            disabled={!isConfigured || isSubmitting} 
                           />
                         </FormControl>
                         <FormMessage />
@@ -182,13 +174,12 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Your Email</FormLabel>
                         <FormControl>
-                          {/* Ensure Input receives all necessary field props */}
                           <Input
                             type="email"
                             placeholder="e.g., jane.doe@example.com"
                             className="bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50"
-                             {...field} // Spread field props here
-                             disabled={!isConfigured || isSubmitting} // Disable if not configured
+                             {...field} 
+                             disabled={!isConfigured || isSubmitting} 
                           />
                         </FormControl>
                         <FormMessage />
@@ -202,13 +193,12 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Your Message</FormLabel>
                         <FormControl>
-                           {/* Ensure Textarea receives all necessary field props */}
                           <Textarea
                             placeholder="Tell us how we can help..."
                             className="resize-none min-h-[120px] bg-input/70 border-border/50 focus:border-primary focus:ring-primary/50"
                             rows={5}
-                            {...field} // Spread field props here
-                            disabled={!isConfigured || isSubmitting} // Disable if not configured
+                            {...field} 
+                            disabled={!isConfigured || isSubmitting} 
                           />
                         </FormControl>
                         <FormMessage />
@@ -226,9 +216,8 @@ export default function ContactPage() {
             </CardContent>
           </Card>
 
-          {/* Contact Info & Socials Card (Spanning 2 columns on large screens) */}
           <div className="lg:col-span-2 space-y-8 animate-subtle-slide-up" style={{ animationDelay: '0.2s' }}>
-            <Card className="card-base shadow-xl bg-card/80 backdrop-blur-md border border-border/30"> {/* Card transparency */}
+            <Card className="card-base shadow-xl bg-card/80 backdrop-blur-md border border-border/30"> 
               <CardHeader>
                 <CardTitle className="text-2xl md:text-3xl text-foreground">Contact Information</CardTitle>
                 <CardDescription className="text-muted-foreground">Other ways to reach us.</CardDescription>
@@ -242,6 +231,10 @@ export default function ContactPage() {
                   <Phone className="h-6 w-6 text-primary flex-shrink-0" strokeWidth={1.5} />
                   <a href="tel:9361104465" className="text-foreground hover:text-primary text-base">9361104465</a>
                 </div>
+                 <div className="flex items-center gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
+                  <WhatsAppIcon className="h-6 w-6 text-primary flex-shrink-0" />
+                  <a href="https://wa.me/919361104465" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary text-base">WhatsApp: +91 9361104465</a>
+                </div>
                 <div className="flex items-start gap-4 p-3 rounded-md hover:bg-muted/50 transition-colors transform hover:translate-x-1">
                   <MapPin className="h-6 w-6 text-primary flex-shrink-0 mt-1" strokeWidth={1.5} />
                   <span className="text-foreground text-base">Coimbatore, India</span>
@@ -249,25 +242,24 @@ export default function ContactPage() {
               </CardContent>
             </Card>
 
-             {/* Social Media Links Card */}
              <Card className="card-base shadow-xl bg-card/80 backdrop-blur-md border border-border/30">
                <CardHeader>
                   <CardTitle className="text-2xl md:text-3xl text-foreground">Connect With Us</CardTitle>
                </CardHeader>
-               <CardContent className="flex justify-around items-center space-x-4 pt-2 pb-4">
-                 <Link href="https://github.com/Gensyx-Solutions" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
+               <CardContent className="flex justify-around items-center flex-wrap gap-4 pt-2 pb-4">
+                 <Link href="https://github.com/Gensyx-Solutions" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
                     <Github size={28} />
                    <span className="sr-only">GitHub</span>
                  </Link>
-                 <Link href="https://x.com/i/flow/login?redirect_after_login=%2FGensyxSolutions" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
+                 <Link href="https://x.com/i/flow/login?redirect_after_login=%2FGensyxSolutions" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
                     <Twitter size={28} />
                    <span className="sr-only">X (Twitter)</span>
                  </Link>
-                 <Link href="https://www.linkedin.com/company/gensyx-solutions/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
+                 <Link href="https://www.linkedin.com/company/gensyx-solutions/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
                     <Linkedin size={28} />
                    <span className="sr-only">LinkedIn</span>
                  </Link>
-                 <Link href="https://www.instagram.com/gensyx_solutions?igsh=OTduZ3RibWI2Nm5m" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
+                 <Link href="https://www.instagram.com/gensyx_solutions?igsh=OTduZ3RibWI2Nm5m" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
                     <Instagram size={28} />
                    <span className="sr-only">Instagram</span>
                  </Link>
@@ -279,4 +271,3 @@ export default function ContactPage() {
     </div>
   );
 }
-

@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Rocket, Code, Target, Eye, Zap, CheckCircle, Award, Users, Search, Palette, ExternalLink, ArrowRight, BarChart3, Network, UserCheck } from "lucide-react";
+import { Rocket, Code, Target, Eye, Zap, CheckCircle, Award, Users, Search, Palette, ExternalLink, ArrowRight, BarChart3, Network, UserCheck, Github, Twitter, Linkedin, Instagram } from "lucide-react";
 import Image from "next/image";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -14,6 +14,7 @@ const featuredProjects = [
     description: "Harnessing AI for creative and business solutions.",
     imageUrl: "/images/gpt3.jpg", // Custom image path
     link: "https://gpt3-gensyx.vercel.app/#wgpt3",
+    dataAiHint: "artificial intelligence neural network",
   },
   {
     id: 2,
@@ -21,6 +22,7 @@ const featuredProjects = [
     description: "Your perfect travel companion for seamless trip planning.",
     imageUrl: "/images/travela.jpg", // Custom image path
     link: "https://tourism-gensyx.vercel.app/",
+    dataAiHint: "travel booking online platform",
   },
    {
     id: 3,
@@ -28,6 +30,7 @@ const featuredProjects = [
     description: "Simplify event planning with all-in-one vendor bookings.",
     imageUrl: "/images/caterserv.jpg", // Custom image path
     link: "https://caterserv-gensyx.vercel.app/",
+    dataAiHint: "event planning catering service",
   },
   {
     id: 4,
@@ -35,6 +38,7 @@ const featuredProjects = [
     description: "Seamless UX, secure payments, and AI-driven recommendations.",
     imageUrl: "/images/multishop.jpg", // Custom image path
     link: "https://e-commerce-gensyx.vercel.app/index.html",
+    dataAiHint: "ecommerce online shopping",
   },
 ];
 
@@ -227,6 +231,7 @@ export default function Home() {
                     <Image
                        src={project.imageUrl} // Use updated custom image path
                        alt={project.title}
+                       data-ai-hint={project.dataAiHint}
                        fill
                        className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Responsive sizes
@@ -356,10 +361,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer Section - Updated Copyright */}
-      <footer className="py-6 bg-card border-t border-border/20">
+      {/* Footer Section - Updated Copyright and added social media links */}
+      <footer className="py-8 bg-card border-t border-border/20">
         <div className="container mx-auto text-center text-muted-foreground text-sm">
-          &copy; 2025 GenSyx Solutions. All rights reserved. {/* Updated year */}
+          <div className="flex justify-center items-center space-x-6 mb-6">
+            <Link href="https://github.com/Gensyx-Solutions" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
+              <Github size={24} />
+              <span className="sr-only">GitHub</span>
+            </Link>
+            <Link href="https://x.com/i/flow/login?redirect_after_login=%2FGensyxSolutions" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
+              <Twitter size={24} />
+              <span className="sr-only">X (Twitter)</span>
+            </Link>
+            <Link href="https://www.linkedin.com/company/gensyx-solutions/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
+              <Linkedin size={24} />
+              <span className="sr-only">LinkedIn</span>
+            </Link>
+            <Link href="https://www.instagram.com/gensyx_solutions?igsh=OTduZ3RibWI2Nm5m" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
+              <Instagram size={24} />
+              <span className="sr-only">Instagram</span>
+            </Link>
+          </div>
+          &copy; 2025 GenSyx Solutions. All rights reserved.
         </div>
       </footer>
 
