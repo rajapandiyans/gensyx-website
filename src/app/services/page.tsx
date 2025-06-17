@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,44 +15,12 @@ const services = [
     aiHint: "website interface code responsive",
   },
   {
-    id: "seo", // Matches the key in serviceDetailsData
-    title: "SEO Strategy",
-    icon: Search,
-    description: "Boosting your visibility on search engines to attract qualified organic traffic.",
-    link: "/services/seo",
-     aiHint: "search engine optimization graph",
-  },
-  {
     id: "branding", // Matches the key in serviceDetailsData
     title: "Branding & Identity",
     icon: Palette,
     description: "Crafting memorable logos and cohesive brand identities that stand out.",
     link: "/services/branding",
      aiHint: "brand logo design identity",
-  },
-  {
-    id: "digital-marketing", // Matches the key in serviceDetailsData
-    title: "Digital Marketing",
-    icon: BarChart3,
-    description: "Data-driven strategies across online channels to reach audiences and drive leads.",
-    link: "/services/digital-marketing",
-     aiHint: "digital marketing analytics chart",
-  },
-  {
-    id: "social-media", // Matches the key in serviceDetailsData
-    title: "Social Media Management",
-    icon: Network,
-    description: "Engaging content and community management to grow your online presence.",
-    link: "/services/social-media",
-     aiHint: "social media connection network",
-  },
-  {
-    id: "google-profile", // Matches the key in serviceDetailsData
-    title: "Google Business Profile",
-    icon: UserCheck,
-    description: "Optimizing your Google profile for maximum local visibility and customer trust.",
-    link: "/services/google-profile",
-     aiHint: "google business profile optimization",
   },
 ];
 
@@ -76,7 +45,7 @@ export default function ServicesPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 justify-center"> {/* Centered grid for 2 items */}
           {services.map((service, index) => {
             const ServiceIcon = service.icon; // Get the icon component
             return (

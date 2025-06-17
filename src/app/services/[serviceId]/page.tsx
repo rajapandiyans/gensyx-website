@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
@@ -25,21 +26,6 @@ const serviceDetailsData: { [key: string]: any } = {
     ],
     visuals: ["/images/web-dev.jpg", "/images/web-design.jpg"], // Custom image paths
   },
-  "seo": {
-    title: "Search Engine Optimization (SEO)",
-    icon: Search,
-    description: "Increase your website's visibility on search engines like Google and Bing. Our SEO strategies are designed to attract qualified organic traffic, improve rankings, and drive measurable results.",
-    features: [
-      "In-Depth Keyword Research & Competitive Analysis",
-      "Comprehensive On-Page & Technical SEO Audits",
-      "Content Strategy & Optimization",
-      "High-Quality Link Building & Outreach",
-      "Local SEO Optimization (Google Maps & Directories)",
-      "Performance Tracking & Analytics Reporting",
-      "Algorithm Update Monitoring & Adaptation",
-    ],
-     visuals: ["/images/seo-1.jpg", "/images/seo-2.jpg"], // Custom image paths
-  },
    "branding": {
     title: "Branding & Identity",
     icon: Palette,
@@ -55,51 +41,6 @@ const serviceDetailsData: { [key: string]: any } = {
     ],
      visuals: ["/images/brand.jpg", "/images/logos.jpg"], // Custom image paths
   },
-   "digital-marketing": {
-     title: "Digital Marketing Strategy",
-     icon: BarChart3,
-     description: "Navigate the complex digital landscape with a comprehensive marketing strategy. We combine various online channels to reach your audience, generate leads, and achieve your marketing objectives.",
-     features: [
-       "Pay-Per-Click (PPC) Campaign Management (Google, Social)",
-       "Content Marketing & Blog Strategy",
-       "Email Marketing Automation & Campaigns",
-       "Social Media Marketing & Advertising",
-       "Conversion Rate Optimization (CRO)",
-       "Marketing Analytics & ROI Reporting",
-       "Integrated Multi-Channel Strategy",
-     ],
-      visuals: ["/images/digital-marketing-1.jpg", "/images/digital-marketing-2.jpg"], // Custom image paths
-   },
-   "social-media": {
-     title: "Social Media Management",
-     icon: Network,
-     description: "Build and nurture your online community. We manage your social media presence across relevant platforms, creating engaging content, fostering interaction, and driving brand awareness.",
-     features: [
-       "Platform-Specific Strategy & Account Setup",
-       "Content Creation, Curation & Scheduling",
-       "Community Engagement & Interaction Monitoring",
-       "Targeted Social Media Advertising Campaigns",
-       "Influencer Collaboration & Outreach",
-       "Performance Analytics & Growth Reporting",
-       "Brand Reputation Management",
-     ],
-      visuals: ["/images/social-media-1.jpeg", "/images/social-media-2.jpeg"], // Custom image paths
-   },
-   "google-profile": {
-     title: "Google Business Profile Optimization",
-     icon: UserCheck,
-     description: "Optimize your Google Business Profile to dominate local search results. We ensure your profile is accurate, engaging, and effectively attracts local customers.",
-     features: [
-       "Complete Profile Setup & Verification Assistance",
-       "NAP (Name, Address, Phone) Consistency Management",
-       "Engaging Google Posts & Updates Creation",
-       "Proactive Review Generation & Response Strategy",
-       "Q&A Monitoring & Management",
-       "Local SEO Integration & Citation Building",
-       "Detailed Performance Insights & Reporting",
-     ],
-      visuals: ["/images/gbp-1.jpg", "/images/gbp-2.jpg"], // Custom image paths
-   },
 };
 
 export default function ServiceDetailPage() {
@@ -202,5 +143,3 @@ export default function ServiceDetailPage() {
     </div>
   );
 }
-
-    

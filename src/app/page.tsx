@@ -43,7 +43,7 @@ const featuredProjects = [
   },
 ];
 
-// Updated featured services data to include all services with correct icons and links
+// Updated featured services data to include only Web Design and Branding
 const featuredServices = [
   {
     id: "website-design",
@@ -52,40 +52,12 @@ const featuredServices = [
     description: "Building responsive, high-performance websites that captivate.",
     link: "/services/website-design",
   },
-  {
-    id: "seo",
-    title: "SEO Strategy",
-    icon: Search,
-    description: "Boosting visibility on search engines for organic traffic.",
-    link: "/services/seo",
-  },
    {
     id: "branding",
     title: "Branding & Identity",
     icon: Palette,
     description: "Crafting memorable logos and cohesive brand identities.",
     link: "/services/branding",
-  },
-   {
-    id: "digital-marketing",
-    title: "Digital Marketing",
-    icon: BarChart3, // Added
-    description: "Data-driven strategies to reach audiences and drive leads.",
-    link: "/services/digital-marketing",
-  },
-   {
-    id: "social-media",
-    title: "Social Media Mgmt",
-    icon: Network, // Added
-    description: "Engaging content and community management for growth.",
-    link: "/services/social-media",
-  },
-    {
-    id: "google-profile",
-    title: "Google Business", // Shortened
-    icon: UserCheck, // Added
-    description: "Optimizing your Google profile for local visibility.",
-    link: "/services/google-profile",
   },
 ];
 
@@ -172,7 +144,7 @@ export default function Home() {
           <p className="text-center text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">
             Offering a suite of services designed to build, grow, and enhance your online presence.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"> {/* Adjusted grid for better responsiveness */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 justify-center"> {/* Adjusted grid for 2 items, centered */}
             {featuredServices.map((service, index) => {
               const ServiceIcon = service.icon; // Get the icon component
               return (
