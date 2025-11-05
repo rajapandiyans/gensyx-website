@@ -251,7 +251,7 @@ export default function ContactPage() {
                     <Github size={28} />
                    <span className="sr-only">GitHub</span>
                  </Link>
-                 <Link href="https://x.com/i/flow/login?redirect_after_login=%2FGensyxSolutions" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
+                 <Link href="https://x.com/GensyxSolutions" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="text-muted-foreground hover:text-primary transition-colors transform hover:scale-110">
                     <Twitter size={28} />
                    <span className="sr-only">X (Twitter)</span>
                  </Link>
